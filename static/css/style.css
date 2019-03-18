@@ -1,0 +1,134 @@
+.login {
+    background-image: url("/static/img/bg_login.jpg");
+    background-position: right top;
+}
+
+.registration {
+    background-image: url("/static/img/bg_reg.jpg");
+    background-position: right top;
+}
+
+.container .form {
+    position: relative;
+    margin-top: 10%;
+    width: 500px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: #979797 9px 17px 59px -4px;
+}
+
+.logo {
+    width: 100%;
+    display: inline-block;
+    background: url("/static/img/IU_logo_1.png") right top;
+    overflow: hidden;
+    background-size: cover;
+    clear: both;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.form-control.email {
+    border-color: #348F41;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    border-radius: 30px;
+    width: 20px;
+    position: relative;
+    margin-top: 10%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+}
+
+.form-control.pswd {
+    border-color: #348F41;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    border-radius: 30px;
+    width: 20px;
+    position: relative;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.btn.btn{
+    border-color: #348F41;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border-radius: 30px;
+    width: 100%;
+    margin-top: 7%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+}
+
+.rlink{
+    width: 100%;
+    position: relative;
+    margin-top: 3%;
+    text-align: center;
+}
+
+.tmp{
+    margin-top: 10%;
+    color: white;
+}
+
+::placeholder{
+    font-size:  1.2em;
+
+}
+
+.rform{
+    text-align: center;
+    font-size: larger;
+    color: #0071CE;
+}
+
+.form-control.name{
+    border-color: #0071CE;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border-radius: 30px;
+    width: 20px;
+    position: relative;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.form-control.infield{
+    border-color: #0071CE;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border-radius: 30px;
+    width: 20px;
+    position: relative;
+    margin-top: 2%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.container.regform{
+    position: relative;
+    margin-top: 5%;
+    width: 500px;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: #979797 9px 17px 59px -4px;
+}
+
+.btn.btn.register{
+    border-color: #0071CE;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    border-radius: 30px;
+    width: 100%;
+    margin-top: 7%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+}

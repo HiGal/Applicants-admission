@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<link rel="stylesheet" href="../static/css/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<body class="login">
+<form action="/login" method="post">
+    <div class="container">
+        <div class="container form">
+            <div class="container">
+                <img class="logo" src="/static/img/IU_logo_1.png">
+
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control email" placeholder="Username" aria-label="Username"
+                       aria-describedby="basic-addon1" name="username" id="username" required>
+            </div>
+            <div class="input-group mb3">
+                <input class="form-control pswd" type="password" placeholder="Enter password" aria-label="Password"
+                       aria-describedby="basic-addon1" name="password" id="password" required>
+            </div>
+            <div class="input-group mb3">
+                <button type="button" class="btn btn-outline-primary" onclick="register()">Sign In</button>
+            </div>
+            <div class="container rlink">
+                Don't have an account?<a href="/register"> Register!</a>
+            </div>
+
+            <div class="container tmp">
+                <span>dada</span>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    function register() {
+        var data = {
+            "username":document.getElementById("username").value,
+            "password":document.getElementById("password").value
+        };
+        alert(JSON.stringify(data));
+        $.ajax({
+            url:"/register",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                alert(data);
+            }
+        });
+
+    }
+</script>
+</body>
+</html>
