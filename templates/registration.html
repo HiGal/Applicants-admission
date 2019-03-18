@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="/static/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -17,7 +15,7 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <body class="registration">
-<form action="/register" method="post">
+<form>
     <div class="container">
         <div class="container regform">
 
@@ -27,30 +25,30 @@
             </div>
             <div class="input-group mb-3">
                 <input type="text" class="form-control name" placeholder="First Name" name="name"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" id="name" required>
             </div>
             <div class="input-group mb-3">
                 <input type="text" class="form-control infield" placeholder="Second Name" name="sname"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" id="sname" required>
             </div>
             <div class="input-group mb-3">
                 <input type="date" class="form-control infield" name="birthday"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" id="birthday" required>
             </div>
             <div class="input-group mb-3">
                 <input type="text" class="form-control infield" placeholder="E-mail" name="email"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" id="email" required>
             </div>
             <div class="input-group mb-3">
                 <input type="password" class="form-control infield" placeholder="Password" name="password"
-                       aria-describedby="basic-addon1" required>
+                       aria-describedby="basic-addon1" id="password" required>
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control infield" placeholder="Confirm Passowrd" name="cpassword"
-                       aria-describedby="basic-addon1" required>
+                <input type="password" class="form-control infield" placeholder="Confirm Passowrd" name="cpassword"
+                       aria-describedby="basic-addon1" id="cpassword" required>
             </div>
             <div class="input-group mb-3">
-                <button type="submit" class="btn btn-outline-primary register">Register</button>
+                <a class="btn btn-outline-primary register" onclick="register()">Register</a>
             </div>
             <div class="container rlink">
                 Already have an account? <a href="/login"> Sign In!</a>
@@ -62,4 +60,26 @@
     </div>
 </form>
 </body>
+<script>
+    function register() {
+        var data = {
+            'name': document.getElementById('name').value,
+            'sname': document.getElementById('sname').value,
+            'bdate': document.getElementById('birthday').value,
+            'email': document.getElementById('email').value,
+            'password': document.getElementById('password').value,
+            'cpassword': document.getElementById('cpassword').value
+        };
+
+        $.ajax({
+            url: "/register",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                alert(data);
+            }
+        })
+    }
+</script>
 </html>

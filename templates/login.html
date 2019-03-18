@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="../static/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
@@ -18,7 +16,7 @@
         crossorigin="anonymous"></script>
 
 <body class="login">
-<form action="/login" method="post">
+<form>
     <div class="container">
         <div class="container form">
             <div class="container">
@@ -34,36 +32,36 @@
                        aria-describedby="basic-addon1" name="password" id="password" required>
             </div>
             <div class="input-group mb3">
-                <button type="button" class="btn btn-outline-primary" onclick="register()">Sign In</button>
+                <a class="btn btn-outline-primary" onclick="login()">Sign In</a>
             </div>
             <div class="container rlink">
                 Don't have an account?<a href="/register"> Register!</a>
             </div>
 
             <div class="container tmp">
-                <span>dada</span>
+                <br>
             </div>
         </div>
     </div>
 </form>
+</body>
 <script>
-    function register() {
-        var data = {
-            "username":document.getElementById("username").value,
-            "password":document.getElementById("password").value
+    function login() {
+        var data ={
+            "username": document.getElementById("username").value,
+            "password": document.getElementById("password").value
         };
-        alert(JSON.stringify(data));
         $.ajax({
-            url:"/register",
+            url: "/login",
             method: "POST",
             contentType: "application/json",
             data: JSON.stringify(data),
-            success: function (data) {
-                alert(data);
+            success: function (resp) {
+                alert(resp);
             }
+
         });
 
     }
 </script>
-</body>
 </html>
