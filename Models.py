@@ -4,8 +4,9 @@ import psycopg2
 class User:
 
     def __init__(self, username=None, password=None):
-        self.conn = psycopg2.connect(dbname='appadmission', user='team7',
-                                     password='123', host='localhost')
+        self.conn = psycopg2.connect(dbname='ddlnar37d92bn9', user='nmlgmsljgwxbma',
+                                     password='c97f630d0d9f0497070fb3f8e1468a1e742d190d2a5d8366d484d3c21bf8d5a9',
+                                     host='ec2-107-20-177-161.compute-1.amazonaws.com')
         self.username = username
         self.password = password
 
