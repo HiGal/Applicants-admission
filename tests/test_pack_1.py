@@ -3,6 +3,7 @@ from faker import Faker
 import app
 import json
 
+
 class RegistrationTest(unittest.TestCase):
 
     def setUp(self):
@@ -13,7 +14,7 @@ class RegistrationTest(unittest.TestCase):
         faker = Faker()
         profile = faker.simple_profile()
         print(profile['name'].split())
-        name, sname = profile['name'].split()[0],profile['name'].split()[1]
+        name, sname = profile['name'].split()[0], profile['name'].split()[1]
         email = profile['mail']
         birthdate = profile['birthdate'].strftime("%Y-%m-%d")
         password = profile['username']
@@ -33,11 +34,13 @@ class RegistrationTest(unittest.TestCase):
         rv = self.app.post('/register', data=json.dumps(data), content_type='application/json')
         assert b'Account successfully created' in rv.data
 
+    # Test when password and check password field are not the same
     def test_registration_2(self):
         data = self.generate_data()
-        data['cpassword'] = data['cpassword']+'ad'
+        data['cpassword'] = data['cpassword'] + 'ad'
         rv = self.app.post('/register', data=json.dumps(data), content_type='application/json')
         assert b'Password are not the same!' in rv.data
+
 
 if __name__ == '__main__':
     unittest.main()
