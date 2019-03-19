@@ -16,7 +16,7 @@ def login():
         data = request.get_json(silent=True)
         user = User(data['username'], data['password'])
         if user.verify():
-            return "Success!"
+            return Response("Success!")
         else:
             return Response("Username or Password incorrect")
     return render_template('login.html')
