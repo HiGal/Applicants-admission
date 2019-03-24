@@ -1,10 +1,10 @@
 .login {
-    background-image: url("/static/img/bg_login.jpg");
+    background-image: url("/static/img/login_page.svg");
     background-position: right top;
 }
 
 .registration {
-    background-image: url("/static/img/bg_reg.jpg");
+    background-image: url("/static/img/registration.svg");
     background-position: right top;
 }
 
