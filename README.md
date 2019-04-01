@@ -7,3 +7,5 @@ _[S19] Software Project, Innopolis University, 2019_
 ## Accessing the app
 
 https://applicants-admission.herokuapp.com/
+
+## Issues are welcome
