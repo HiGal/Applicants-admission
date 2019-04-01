@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Registration</title>
 </head>
-<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="../static/css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -37,18 +37,36 @@
             </div>
             <div class="input-group mb-3">
                 <input type="text" class="form-control infield" placeholder="E-mail" name="email"
-                       aria-describedby="basic-addon1" id="email" required>
+                       aria-describedby="basic-addon1" id="email"
+                       data-toggle="email" data-placement="right" data-html="true"
+                       title="Example: abc@example.com"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       required>
             </div>
             <div class="input-group mb-3">
+
                 <input type="password" class="form-control infield" placeholder="Password" name="password"
-                       aria-describedby="basic-addon1" id="password" required>
+                       data-toggle="tooltip" data-placement="right" data-html="true"
+                       title="Password should be next:<br>
+                                - Contain at least 8 characters<br>
+                                - Contain at least 1 number<br>
+                                - Contain at least 1 lowercase character (a-z)<br>
+                                - Contain at least 1 uppercase character (A-Z)<br>
+                                - Contains only 0-9 a-z A-Z
+                               "
+                       aria-describedby="basic-addon1" id="password"
+                       pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/" required>
+
             </div>
             <div class="input-group mb-3">
+
                 <input type="password" class="form-control infield" placeholder="Confirm Passowrd" name="cpassword"
-                       aria-describedby="basic-addon1" id="cpassword" required>
+                       aria-describedby="basic-addon1" id="cpassword"
+                       pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/">
+
             </div>
             <div class="input-group mb-3">
-                <a class="btn btn-outline-primary register" onclick="register()">Register</a>
+                <a class="btn btn-outline-primary register" onclick="click()">Register</a>
             </div>
             <div class="container rlink">
                 Already have an account? <a href="/login"> Sign In!</a>
@@ -61,6 +79,12 @@
 </form>
 </body>
 <script>
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="email"]').tooltip();
+    });
+
     function register() {
         var data = {
             'name': document.getElementById('name').value,

@@ -1,4 +1,5 @@
 import psycopg2
+import hashlib
 
 
 class User:
@@ -12,8 +13,10 @@ class User:
 
     def verify(self):
         cursor = self.conn.cursor()
+        password = hashlib.md5(self.password.encode()).hexdigest()
+        print(password)
         cursor.execute('select * from sys_user where username = \'{}\' and password = \'{}\''
-                       .format(self.username, self.password))
+                       .format(self.username, password))
         tmp = cursor.fetchall()
         if len(tmp) != 0:
             cursor.close()
@@ -22,8 +25,9 @@ class User:
         return False
 
     def register(self, username, password, name, sname, email, bdate):
+        password = hashlib.md5(password.encode()).hexdigest()
         cursor = self.conn.cursor()
-        cursor.execute('insert into sys_user (username, password,name, sname, email,birthday) '
+        cursor.execute('insert into sys_user (username, password,name, surname, email,birthday) '
                        'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'
                        .format(username, password, name, sname, email, bdate))
         self.conn.commit()
