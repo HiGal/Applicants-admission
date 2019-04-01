@@ -65,7 +65,7 @@
                             <hr>
                         </div>
                         <div id="edit_name" style="display: none;">
-                            <input type="text" class="form-control"  placeholder="Enter your first name">
+                            <input type="text" id="edit_name_in" class="form-control"  placeholder="Enter your first name">
                         </div>
                     </div>
                     <div class="row1">
@@ -74,7 +74,7 @@
                             <hr>
                         </div>
                         <div id="edit_sname" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your second name">
+                            <input type="text" id="edit_sname_in" class="form-control" placeholder="Enter your second name">
                         </div>
                     </div>
 
@@ -84,7 +84,7 @@
                             <hr>
                         </div>
                         <div id="edit_citizen" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your citizenship">
+                            <input type="text" id="edit_citizen_in" class="form-control" placeholder="Enter your citizenship">
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                             <hr>
                         </div>
                         <div id="edit_bdate" style="display: none">
-                            <input type="date" class="form-control" placeholder="Enter your birth date">
+                            <input type="date" id="edit_bdate_in" class="form-control" placeholder="Enter your birth date">
                         </div>
                     </div>
                     <div class="row1">
@@ -124,6 +124,26 @@
 </body>
 
 <script>
+    function send() {
+        var data ={
+            'name': document.getElementById('edit_name_in').value,
+            'sname': document.getElementById('edit_sname_in').value,
+            'bdate': document.getElementById('edit_bdate_in').value,
+            'citizenship': document.getElementById('edit_citizen_in').value,
+            'gender': document.getElementById('edit_sex').value
+        };
+
+        $.ajax({
+            url: '/edit-profile-info',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                alert(data);
+            }
+        })
+
+    }
     function edit() {
         document.getElementById('edit_name').style.display = 'block';
         document.getElementById('div_name').style.display = 'none';
@@ -139,13 +159,7 @@
         document.getElementById('btn-save').style.display = 'block';
     }
 
-    function send() {
-        var data ={
-            'name': document.getElementById('edit_name').value,
-            'sname': document.getElementById('edit_bdate').value,
-            'email': document.getElementById('')
-        }
-    }
+
 </script>
 
 </html>
