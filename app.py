@@ -4,9 +4,6 @@ from Models import User
 app = Flask(__name__)
 app.secret_key = 'xyz'
 
-# TODO: need to replace this shit with session
-user_glob = None
-
 
 def hash_password(password: str) -> str:
     from hashlib import md5
@@ -41,12 +38,21 @@ def register():
         email = data['email']
         bdate = data['bdate']
         if data['password'] == data['cpassword']:
-            password = data['password']
+            password = hash_password(data['password'])
             user.register(email, password, name, sname, email, bdate)
             return Response("Account successfully created")
         else:
             return Response("Password are not the same!")
     return render_template('registration.html')
+
+
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    user_tuple = session.get('user')
+    user = User(user_tuple[0], user_tuple[1])
+    data = user.get_info()
+    return jsonify(data)
+    # return render_template('profile.html', data=data)
 
 
 @app.route('/contacts')
