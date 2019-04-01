@@ -111,3 +111,11 @@ input[type=date] {
     font-size: 16px;
     margin-top: 5px;
 }
+
+.add_school {
+    border-radius: 18px;
+    border-color: #1A428A;
+    border-width: 1px;
+    background-color: white;
+    margin-top: 20px;
+}

@@ -51,28 +51,55 @@
             <div class="row">
                 <div class="col-6 label">
                     <div class="row1">
-                        <label class="field">School:</label>
-                        <div class="text">
-                            School
+                        <div id="div_school" style="display: block">
+                            <label class="field">School:</label>
+                            <div class="text">
+                                School
+                            </div>
+                            <hr>
                         </div>
-                        <hr>
+                        <div id="edit_school" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your school">
+                        </div>
                     </div>
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
-                        <label class="field">Release year:</label>
-                        <div class="text">
-                            Release year
+                        <div id="div_release_year" style="display: block">
+                                <label class="field">Release year:</label>
+                            <div class="text">
+                                Release year
+                            </div>
+                            <hr>
                         </div>
-                        <hr>
+                        <div id="edit_release_year" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your release year">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container">
-            <a class="btn btn-outline-primary edit" onclick="">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
         </div>
     </div>
 </div>
 </body>
+<script>
+    function edit() {
+        document.getElementById('edit_school').style.display = 'block';
+        document.getElementById('div_school').style.display = 'none';
+        document.getElementById('edit_release_year').style.display = 'block';
+        document.getElementById('div_release_year').style.display = 'none';
+        document.getElementById('btn-edit').style.display = 'none';
+        document.getElementById('btn-save').style.display = 'block';
+    }
+
+    //TODO
+    function append() {
+
+    }
+</script>
+
 </html>
