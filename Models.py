@@ -61,11 +61,11 @@ class User:
 
 
 class PassportData:
-	def __init__(self, username, passport_series=None, passport_num=None, issue_date=None, issuing_authority=None):
+	def __init__(self, username, passport_series=None, passport_number=None, issue_date=None, issuing_authority=None):
 		self.conn = db_connect()
 		self.username = username
 		self.passport_series = passport_series
-		self.passport_number = passport_num
+		self.passport_number = passport_number
 		self.issue_date = issue_date
 		self.issuing_authority = issuing_authority
 
