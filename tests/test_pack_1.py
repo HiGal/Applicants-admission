@@ -4,7 +4,7 @@ import app
 import json
 
 
-class RegistrationTest(unittest.TestCase):
+class PersonalInfoTest(unittest.TestCase):
 
     def setUp(self):
         app.app.testing = True
@@ -58,6 +58,8 @@ class RegistrationTest(unittest.TestCase):
             'password': '1234'
         }
         rv = self.app.post('/login', data=json.dumps(data_incorr2), content_type='application/json')
+        print(rv)
+        print("this ^")
         assert b'Username or Password incorrect' == rv.data
 
 

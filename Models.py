@@ -32,3 +32,13 @@ class User:
                        .format(username, password, name, sname, email, bdate))
         self.conn.commit()
         cursor.close()
+
+    def update_info(self, username, fname, sname, bdate, gender, citizenship):
+        table_name = "sys_applicant_info"
+        cursor = self.conn.cursor()
+        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');" \
+              % (table_name, username, fname, sname, bdate, gender, citizenship)
+        # print(str)
+        cursor.execute(str)
+        self.conn.commit()
+        cursor.close()

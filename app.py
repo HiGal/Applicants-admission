@@ -44,5 +44,26 @@ def register():
     return render_template('registration.html')
 
 
+@app.route('/personal-info', methods=['GET','POST'])
+def update_info():  # In front end there should be added multiple checkers for and all these labels are required
+    if request.method == 'POST':
+        user = User()
+        data = request.get_json(silent=True)
+        username = data['username']
+        fname = data['fname']
+        sname = data['sname']
+        bdate = data['bdate']
+        gender = data['gender']
+        citizenship = data['citizenship']
+        user.update_info(username, fname, sname, bdate, gender, citizenship)
+
+        return Response('Basic info successfully created')
+    return render_template('personal_info.html')
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run()
