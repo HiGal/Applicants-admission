@@ -1,8 +1,12 @@
-from flask import Flask
 from flask import Flask, redirect, render_template, request, json, Response
 from Models import User
 
 app = Flask(__name__)
+
+
+def hash_password(password: str) -> str:
+    from hashlib import md5
+    return md5(password.encode()).hexdigest()
 
 
 @app.route('/')
