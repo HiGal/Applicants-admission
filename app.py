@@ -1,5 +1,4 @@
-from flask import Flask, redirect, render_template, request, Response, session, jsonify
-from datetime import datetime
+from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
 from Models import User
 
 app = Flask(__name__)
