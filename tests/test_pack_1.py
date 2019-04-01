@@ -4,7 +4,7 @@ import app
 import json
 
 
-class PersonalInfoTest(unittest.TestCase):
+class RegistrationTest(unittest.TestCase):
 
     def setUp(self):
         app.app.testing = True
