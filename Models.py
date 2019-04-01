@@ -110,7 +110,7 @@ class PassportData:
             'WHERE username=\'{}\';'.format(self.username)
         )
 
-        if len(cursor.rowcount) == 0:
+        if cursor.rowcount == 0:
             cursor.close()
             return False
 
