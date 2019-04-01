@@ -61,6 +61,19 @@ def contacts():
     user = User(tuple[0], tuple[1])
     return jsonify(user.contacts())
 
+@app.route('/edit-profile-info', methods=['GET', 'POST'])
+def edit_profile_info():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        tuple = session.get('user')
+        user = User(tuple[0], tuple[1])
+        name = data['name']
+        sname = data['sname']
+        citizenship = data['citizenship']
+        bdate = data['bdate']
+        gender = data['gender']
+        user.update_personal_info(name, sname, citizenship, bdate, gender)
+    return render_template('profile.html')
 
 if __name__ == '__main__':
     app.run()
