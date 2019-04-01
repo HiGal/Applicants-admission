@@ -14,8 +14,7 @@ class User:
     def verify(self):
         cursor = self.conn.cursor()
         password = hashlib.md5(self.password.encode()).hexdigest()
-        print(password)
-        cursor.execute('select * from sys_user where username = \'{}\' and password = \'{}\''
+        cursor.execute('select * from sys_user where username = \'{}\' and password = \'{}\';'
                        .format(self.username, password))
         tmp = cursor.fetchall()
         if len(tmp) != 0:
@@ -32,3 +31,32 @@ class User:
                        .format(username, password, name, sname, email, bdate))
         self.conn.commit()
         cursor.close()
+
+    def contacts(self):
+        cursor = self.conn.cursor()
+        cursor.execute('select * from user_contact where uname=\'{}\';'.format(self.username))
+        tmp = cursor.fetchall()
+        data = {
+            'index': tmp[0][0],
+            'region': tmp[0][1],
+            'city': tmp[0][2],
+            'street': tmp[0][3],
+            'building': tmp[0][4],
+            'corpus': tmp[0][5],
+            'flat': tmp[0][6]
+        }
+        cursor.close()
+        return data
+
+    def get_info(self):
+        cursor = self.conn.cursor()
+        cursor.execute('select * from sys_user where username=\'{}\';'.format(self.username))
+        tmp = cursor.fetchall()[0]
+        data = {
+            'name': tmp[2],
+            'surname': tmp[3],
+            'email': tmp[4],
+            'birthday': tmp[5],
+            'sex': tmp[6]
+        }
+        return data
