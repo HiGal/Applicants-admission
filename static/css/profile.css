@@ -78,7 +78,7 @@
 }
 
 .row1 hr{
-    margin-top: 40px;
+    margin-top: 5px;
 }
 
 span.img_hr {
@@ -90,4 +90,24 @@ span.img_hr {
     margin-right: auto;
     border-style: inset;
     border-width: 1px;
+}
+
+input[type=text] {
+    border-radius: 18px;
+    border-color: #1A428A;
+    margin-bottom: 20px;
+
+
+}
+
+input[type=date] {
+    border-radius: 18px;
+    border-color: #1A428A;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-family: Elektra Text Pro;
+    font-size: 16px;
+    margin-top: 5px;
 }
