@@ -59,49 +59,64 @@
                     <div class="row1">
                         <div id="div_name" style="display: block">
                             <label class="field">First name:</label>
+                            <div class="text">
+                                {{ data['name'] }}
+                            </div>
                             <hr>
                         </div>
-                        <div id="edit_name" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your name">
+                        <div id="edit_name" style="display: none;">
+                            <input type="text" id="edit_name_in" class="form-control"  placeholder="Enter your first name">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_sname" style="display: block">
+                            <label class="field">Second name:</label>
+                            <div class="text">
+                                {{ data['surname'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_sname" style="display: none">
+                            <input type="text" id="edit_sname_in" class="form-control" placeholder="Enter your second name">
                         </div>
                     </div>
 
                     <div class="row1">
-                        <div id="div_bdate" style="display: block">
-                            <label class="field">Birth day (dd.mm.yyyy):</label>
-                            <hr>
-                        </div>
-                        <div id="edit_bdate" style="display: none">
-                            <input type="date" class="form-control" placeholder="Enter your birth date">
-                        </div>
-                    </div>
-                    <div class="row1">
                         <div id="div_citizen" style="display: block">
                             <label class="field">Citezenship:</label>
+                            <div class="text">
+                                Citizenship
+                            </div>
                             <hr>
                         </div>
                         <div id="edit_citizen" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your birth date">
+                            <input type="text" id="edit_citizen_in" class="form-control" placeholder="Enter your citizenship">
                         </div>
                     </div>
                 </div>
                 <div class="col-5 label">
-                    <div class="row1">
-                        <div id="div_sname" style="display: block">
-                            <label class="field">Second name:</label>
+                   <div class="row1">
+                        <div id="div_bdate" style="display: block">
+                            <label class="field">Birth day (dd.mm.yyyy):</label>
+                            <div class="text">
+                                {{ data['birthday'] }}
+                            </div>
                             <hr>
                         </div>
-                        <div id="edit_sname" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your birth date">
+                        <div id="edit_bdate" style="display: none">
+                            <input type="date" id="edit_bdate_in" class="form-control" placeholder="Enter your birth date">
                         </div>
                     </div>
                     <div class="row1">
                         <div id="div_sex" style="display: block">
                             <label class="field">Sex:</label>
+                            <div class="text">
+                                {{ data['sex'] }}
+                            </div>
                             <hr>
                         </div>
                         <div id="edit_sex" style="display:none;">
-                            <select class="custom-select ">
+                            <select class="custom-select" style="border-radius: 18px; border-bottom-color: #1A428A">
                                 <option selected>Choose your sex</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
@@ -113,7 +128,7 @@
         </div>
         <div class="container">
             <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
-            <a class="btn btn-outline-primary edit" id="btn-ok" onclick="send()" style="display: none">Ok</a>
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
 
         </div>
     </div>
@@ -121,6 +136,25 @@
 </body>
 
 <script>
+    function send() {
+        var data ={
+            'name': document.getElementById('edit_name_in').value,
+            'sname': document.getElementById('edit_sname_in').value,
+            'bdate': document.getElementById('edit_bdate_in').value,
+            'citizenship': document.getElementById('edit_citizen_in').value,
+            'gender': document.getElementById('edit_sex').value
+        };
+
+        $.ajax({
+            url: '/edit-profile-info',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+
+        })
+
+    }
+
     function edit() {
         document.getElementById('edit_name').style.display = 'block';
         document.getElementById('div_name').style.display = 'none';
@@ -133,8 +167,10 @@
         document.getElementById('edit_sex').style.display = 'block';
         document.getElementById('div_sex').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
-        document.getElementById('btn-ok').style.display = 'block';
+        document.getElementById('btn-save').style.display = 'block';
     }
+
+
 </script>
 
 </html>
