@@ -118,8 +118,9 @@
                         <div id="edit_sex" style="display:none;">
                             <select class="custom-select" style="border-radius: 18px; border-bottom-color: #1A428A">
                                 <option selected>Choose your sex</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="ND">prefer not to say</option>
                             </select>
                         </div>
                     </div>
@@ -138,19 +139,25 @@
 <script>
     function send() {
         var data ={
-            'name': document.getElementById('edit_name_in').value,
+            'fname': document.getElementById('edit_name_in').value,
             'sname': document.getElementById('edit_sname_in').value,
             'bdate': document.getElementById('edit_bdate_in').value,
             'citizenship': document.getElementById('edit_citizen_in').value,
-            'gender': document.getElementById('edit_sex').value
+            'gender': 'M'//document.getElementById('edit_sex').value
         };
 
         $.ajax({
-            url: '/edit-profile-info',
+            url: '/personal-info',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
-
+             success: function (data) {
+                 if (data.redirect) {
+                     window.location.href = data.redirect;
+                 } else {
+                     alert(data);
+                 }
+             }
         })
 
     }

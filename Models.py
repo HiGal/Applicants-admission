@@ -36,12 +36,18 @@ class User:
 
     def register(self, username, password, name, sname, email, bdate):
         password = hashlib.md5(password.encode()).hexdigest()
+        self.password = password
+        self.username = username
         cursor = self.conn.cursor()
         cursor.execute(
             'insert into sys_user (username, password,name, surname, email,birthday) '
             'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'
                 .format(username, password, name, sname, email, bdate)
         )
+
+        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s','%s', '%s', '%s')" \
+              % ('sys_applicant_info', username, name, sname, bdate, 'null', 'null')
+        cursor.execute(str)
         self.conn.commit()
         cursor.close()
 
@@ -77,9 +83,10 @@ class User:
     def update_info(self, username, fname, sname, bdate, gender, citizenship):
         table_name = "sys_applicant_info"
         cursor = self.conn.cursor()
-        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');" \
-              % (table_name, username, fname, sname, bdate, gender, citizenship)
-        # print(str)
+
+        str = "UPDATE %s SET name = '%s', surname = '%s', birthday='%s', sex='%s', citizenship='%s' WHERE username = '%s';" \
+              % (table_name, fname, sname, bdate, gender, citizenship, username)
+        print(str)
         cursor.execute(str)
         self.conn.commit()
         cursor.close()

@@ -63,6 +63,8 @@ def contacts():
     return jsonify(user.contacts())
 
 
+
+
 @app.route('/edit-profile-info', methods=['GET', 'POST'])
 def edit_profile_info():
     if request.method == 'POST':
@@ -82,9 +84,11 @@ def edit_profile_info():
 @app.route('/personal-info', methods=['GET','POST'])
 def update_info():
     if request.method == 'POST':
-        user = User()
+        tuple = session.get('user')
+        user = User(tuple[0], tuple[1])
         data = request.get_json(silent=True)
-        username = data['username']
+        username = user.username
+
         fname = data['fname']
         sname = data['sname']
         bdate = data['bdate']
