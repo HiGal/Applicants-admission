@@ -6,7 +6,7 @@
     margin-top: 20%;
     width: 100%;
     display: inline-block;
-    background: url("/static/img/IU_logo_1.png") right top;
+    background: url("/static/img/logo.svg") right top;
     overflow: hidden;
     background-size: cover;
     clear: both;
@@ -22,16 +22,17 @@
 
 .nav-link{
     height:80px;
-    line-height:3.5;
+    line-height:4.0;
     text-align:center;
     margin-left:2%;
     margin-right: 2%;
-    font-family: Roboto, sans-serif;
+    font-family: Elektra Text Pro, sans-serif;
     font-weight:800;
+    color: #97CAEB
 }
 
 .nav span{
-    margin-bottom:50px;
+    margin-bottom:30px;
 }
 
 .kostyl{
@@ -45,6 +46,10 @@
     margin-bottom:3%;
     padding-top:1.5%;
     padding-bottom:1.5%;
+    border-radius: 18px;
+    border-color: #97CAEB;
+    font-family: Elektra Text Pro; 
+    color: #97CAEB;
 }
 
 .btn.btn.edit{
@@ -52,6 +57,10 @@
     margin-left: 38%;
     padding: 2% 2%;
     width: 15%;
+    border-radius: 18px;
+    border-width: 3px;
+    font-family: Elektra Text Pro; 
+    color: #1A428A;
 }
 
 .profile{
@@ -61,6 +70,11 @@
 
 .container.content{
     margin-top: 5%;
+}
+
+.field {
+    font-family: Elektra Text Pro;
+    color: lightgray;
 }
 
 .row1 hr{
