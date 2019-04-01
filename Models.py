@@ -45,4 +45,18 @@ class User:
             'corpus': tmp[0][5],
             'flat': tmp[0][6]
         }
+        cursor.close()
+        return data
+
+    def get_info(self):
+        cursor = self.conn.cursor()
+        cursor.execute('select * from sys_user where username=\'{}\';')
+        tmp = cursor.fetchall()[0]
+        data = {
+            'name': tmp[2],
+            'surname': tmp[3],
+            'email': tmp[4],
+            'birthday': tmp[5],
+            'sex': tmp[6]
+        }
         return data
