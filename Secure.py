@@ -9,6 +9,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 def create_key(password: bytes, salt: bytes, length: int = 32) -> bytes:
 	"""
 	Creates a key for encryption.
+
 	:param password: Encryption password in bytes
 	:param salt: Encryption salt in bytes
 	:param length: Desired key length (default is 32)
@@ -31,6 +32,7 @@ def create_key(password: bytes, salt: bytes, length: int = 32) -> bytes:
 def encrypt(data: bytes, key: bytes) -> bytes:
 	"""
 	Encrypts the data.
+
 	:param data: Data in bytes
 	:param key: Key in bytes
 	:return: Encrypted data in bytes.
@@ -42,6 +44,7 @@ def encrypt(data: bytes, key: bytes) -> bytes:
 def decrypt(data: bytes, key: bytes) -> bytes:
 	"""
 	Decrypts the data.
+
 	:param data: Encrypted data in bytes.
 	:param key: Key in bytes.
 	:return: Source data in bytes.
