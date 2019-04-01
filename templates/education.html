@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Personal account</title>
+    <title>Education</title>
 </head>
 <link rel="stylesheet" href="../static/css/profile.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -15,24 +15,23 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <body>
-
 <div class="row">
     <div class="col-3">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
-            <a class="nav-link active" id="profile" data-toggle="pill" href="#profile" role="tab"
-               aria-controls="profile" aria-selected="true">Personal info</a>
+            <a class="nav-link" id="profile" data-toggle="pill" href="profile.html" role="tab"
+               aria-controls="profile" aria-selected="false">Personal info</a>
             <a class="nav-link" id="contacts" data-toggle="pill" href="contacts.html" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
             <a class="nav-link" id="passport" data-toggle="pill" href="passport.html" role="tab"
                aria-controls="passport"
                aria-selected="false">Passport <span>/</span> ID</a>
-            <a class="nav-link" id="education" data-toggle="pill" href="education.html" role="tab"
+            <a class="nav-link active" id="education" data-toggle="pill" href="#education" role="tab"
                aria-controls="education"
-               aria-selected="false">Education</a>
+               aria-selected="true">Education</a>
             <a class="nav-link" id="portfolio" data-toggle="pill" href="#portfolio" role="tab"
                aria-controls="portfolio"
                aria-selected="false">Portfolio</a>
@@ -48,34 +47,17 @@
         <div class="container header">
             <a class="btn btn-outline-primary logout" href="/login">Log out</a>
         </div>
-
-        <div class="container">
-            <img class="profile" src="../static/img/profile.png" width="128" height="128">
-        </div>
-
         <div class="container content">
             <div class="row">
                 <div class="col-6 label">
                     <div class="row1">
-                        <label class="field">First name:</label>
-                        <hr>
-                    </div>
-                    <div class="row1">
-                        <label class="field">Birth day (dd.mm.yyyy):</label>
-                        <hr>
-                    </div>
-                    <div class="row1">
-                        <label class="field">Citezenship:</label>
+                        <label class="field">School:</label>
                         <hr>
                     </div>
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
-                        <label class="field">Second name:</label>
-                        <hr>
-                    </div>
-                    <div class="row1">
-                        <label class="field">Sex:</label>
+                        <label class="field">Release year:</label>
                         <hr>
                     </div>
                 </div>
@@ -86,7 +68,5 @@
         </div>
     </div>
 </div>
-
 </body>
-
 </html>
