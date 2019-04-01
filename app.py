@@ -47,9 +47,13 @@ def register():
     return render_template('registration.html')
 
 
-@app.route('/profile/<username>', methods=['GET', 'POST'])
-def profile(username=None):
-    return render_template('profile.html', username=username)
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    user_tuple = session.get('user')
+    user = User(user_tuple[0], user_tuple[1])
+    data = user.get_info()
+    return jsonify(data)
+    # return render_template('profile.html', data=data)
 
 
 @app.route('/contacts')
@@ -57,6 +61,21 @@ def contacts():
     tuple = session.get('user')
     user = User(tuple[0], tuple[1])
     return jsonify(user.contacts())
+
+
+@app.route('/edit-profile-info', methods=['GET', 'POST'])
+def edit_profile_info():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        tuple = session.get('user')
+        user = User(tuple[0], tuple[1])
+        name = data['name']
+        sname = data['sname']
+        citizenship = data['citizenship']
+        bdate = data['bdate']
+        gender = data['gender']
+        user.update_personal_info(name, sname, citizenship, bdate, gender)
+    return render_template('profile.html')
 
 
 if __name__ == '__main__':
