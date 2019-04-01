@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
+from flask import Flask, redirect, render_template, request, Response, session, jsonify
+from datetime import datetime
 from Models import User
 
 app = Flask(__name__)
@@ -22,7 +23,7 @@ def login():
         user = User(data['username'], data['password'])
         session['user'] = (data['username'], data['password'])
         if user.verify():
-            return Response("Success!")
+            return Response('/profile')
         else:
             return Response("Username or Password incorrect")
     return render_template('login.html')
@@ -46,13 +47,13 @@ def register():
     return render_template('registration.html')
 
 
-@app.route('/profile', methods=['GET', 'POST'])
+@app.route('/profile')
 def profile():
     user_tuple = session.get('user')
     user = User(user_tuple[0], user_tuple[1])
     data = user.get_info()
-    return jsonify(data)
-    # return render_template('profile.html', data=data)
+    data['birthday'] = data['birthday'].strftime('%d-%m-%yyyy')
+    return render_template('profile.html', data=data)
 
 
 @app.route('/contacts')
@@ -60,6 +61,7 @@ def contacts():
     tuple = session.get('user')
     user = User(tuple[0], tuple[1])
     return jsonify(user.contacts())
+
 
 @app.route('/edit-profile-info', methods=['GET', 'POST'])
 def edit_profile_info():
@@ -74,6 +76,7 @@ def edit_profile_info():
         gender = data['gender']
         user.update_personal_info(name, sname, citizenship, bdate, gender)
     return render_template('profile.html')
+
 
 if __name__ == '__main__':
     app.run()
