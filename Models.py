@@ -23,7 +23,8 @@ class User:
 
     def verify(self):
         cursor = self.conn.cursor()
-        password = hashlib.md5(self.password.encode()).hexdigest()
+        password = self.password
+        password = hashlib.md5(password.encode()).hexdigest()
         cursor.execute('select * from sys_user where username = \'{}\' and password = \'{}\';'
                        .format(self.username, password))
         tmp = cursor.fetchall()
@@ -72,6 +73,16 @@ class User:
             'sex': tmp[6]
         }
         return data
+
+    def update_info(self, username, fname, sname, bdate, gender, citizenship):
+        table_name = "sys_applicant_info"
+        cursor = self.conn.cursor()
+        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');" \
+              % (table_name, username, fname, sname, bdate, gender, citizenship)
+        # print(str)
+        cursor.execute(str)
+        self.conn.commit()
+        cursor.close()
 
 
 class PassportData:
@@ -126,3 +137,5 @@ class PassportData:
         self.issuing_authority = Secure.decrypt(record[4].encode(), encryption_key).decode()
 
         return True
+
+

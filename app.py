@@ -19,6 +19,7 @@ def hello_world():
 def login():
     if request.method == 'POST':
         data = request.get_json(silent=True)
+        data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
         session['user'] = (data['username'], data['password'])
         if user.verify():
@@ -75,6 +76,23 @@ def edit_profile_info():
         gender = data['gender']
         user.update_personal_info(name, sname, citizenship, bdate, gender)
     return render_template('profile.html')
+
+
+
+@app.route('/personal-info', methods=['GET','POST'])
+def update_info():
+    if request.method == 'POST':
+        user = User()
+        data = request.get_json(silent=True)
+        username = data['username']
+        fname = data['fname']
+        sname = data['sname']
+        bdate = data['bdate']
+        gender = data['gender']
+        citizenship = data['citizenship']
+        user.update_info(username, fname, sname, bdate, gender, citizenship)
+        return Response('Basic info successfully created')
+    return render_template('personal_info.html')
 
 
 if __name__ == '__main__':
