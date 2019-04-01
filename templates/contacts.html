@@ -53,42 +53,98 @@
                 <div class="row">
                     <div class="col-6 label">
                         <div class="row1">
-                            <label class="field">Index:</label>
-                            <hr>
+                            <div id="div_index" style="display: block">
+                                <label class="field">Index:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_index" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your index">
+                            </div>
                          </div>
                         <div class="row1">
-                            <label class="field">City:</label>
-                            <hr>
+                            <div id="div_city" style="display: block">
+                                <label class="field">City:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_city" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your city">
+                            </div>
                         </div>
                         <div class="row1">
-                            <label class="field">Building:</label>
-                            <hr>
+                            <div id="div_building" style="display: block">
+                                <label class="field">Building:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_building" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your building">
+                            </div>
                         </div>
                         <div class="row1">
-                            <label class="field">Flat:</label>
-                            <hr>
+                            <div id="div_flat" style="display: block">
+                                <label class="field">Flat:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_flat" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your flat">
+                            </div>
                         </div>
                     </div>
                     <div class="col-5 label">
                         <div class="row1">
-                            <label class="field">Region:</label>
-                            <hr>
+                            <div id="div_region" style="display: block">
+                                <label class="field">Region:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_region" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your region">
+                            </div>
                         </div>
                         <div class="row1">
-                            <label class="field">Street:</label>
-                            <hr>
+                            <div id="div_street" style="display: none">
+                                <label class="field">Street:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_street" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your street">
+                            </div>
                         </div>
                         <div class="row1">
-                            <label class="field">Course:</label>
-                            <hr>
+                            <div id="div_course" style="display: block">
+                                <label class="field">Course:</label>
+                                <hr>
+                            </div>
+                            <div id="edit_course" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your course">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
              <div class="container">
-                 <a class="btn btn-outline-primary edit" onclick="">Edit</a>
+                 <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
+                 <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
              </div>
         </div>
     </div>
 </body>
+<script>
+    function edit() {
+        document.getElementById('edit_index').style.display = 'block';
+        document.getElementById('div_index').style.display = 'none';
+        document.getElementById('edit_city').style.display = 'block';
+        document.getElementById('div_city').style.display = 'none';
+        document.getElementById('edit_building').style.display = 'block';
+        document.getElementById('div_building').style.display = 'none';
+        document.getElementById('edit_flat').style.display = 'block';
+        document.getElementById('div_flat').style.display = 'none';
+        document.getElementById('edit_region').style.display = 'block';
+        document.getElementById('div_region').style.display = 'none';
+        document.getElementById('edit_street').style.display = 'block';
+        document.getElementById('div_street').style.display = 'none';
+        document.getElementById('edit_course').style.display = 'block';
+        document.getElementById('div_course').style.display = 'none';
+        document.getElementById('btn-edit').style.display = 'none';
+        document.getElementById('btn-save').style.display = 'block';
+    }
+</script>
 </html>
