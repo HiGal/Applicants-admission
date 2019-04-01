@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
+from flask import Flask, redirect, render_template, request, Response, session, jsonify
+
 from Models import User
 
 app = Flask(__name__)
@@ -44,6 +45,11 @@ def register():
         else:
             return Response("Password are not the same!")
     return render_template('registration.html')
+
+
+@app.route('/profile/<username>', methods=['GET', 'POST'])
+def profile(username=None):
+    return render_template('profile.html', username=username)
 
 
 @app.route('/contacts')

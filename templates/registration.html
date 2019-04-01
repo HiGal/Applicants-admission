@@ -102,7 +102,11 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (data) {
-                alert(data);
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else {
+                    alert(data);
+                }
             }
         })
     }
