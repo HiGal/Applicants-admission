@@ -39,7 +39,8 @@
                 <input type="text" class="form-control infield" placeholder="E-mail" name="email"
                        aria-describedby="basic-addon1" id="email"
                        data-toggle="email" data-placement="right" data-html="true"
-                       title="Example: abc@example.com"
+                       title="Example: abc@example.com
+                        all letters must be lowercase"
                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                        required>
             </div>
@@ -55,18 +56,18 @@
                                 - Contains only 0-9 a-z A-Z
                                "
                        aria-describedby="basic-addon1" id="password"
-                       pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/" required>
+                       pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
 
             </div>
             <div class="input-group mb-3">
 
                 <input type="password" class="form-control infield" placeholder="Confirm Passowrd" name="cpassword"
                        aria-describedby="basic-addon1" id="cpassword"
-                       pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/">
+                       pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$">
 
             </div>
             <div class="input-group mb-3">
-                <a class="btn btn-outline-primary register" onclick="click()">Register</a>
+                <a class="btn btn-outline-primary register" onclick="register()">Register</a>
             </div>
             <div class="container rlink">
                 Already have an account? <a href="/login"> Sign In!</a>
