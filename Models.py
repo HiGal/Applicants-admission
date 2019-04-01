@@ -50,7 +50,7 @@ class User:
 
     def get_info(self):
         cursor = self.conn.cursor()
-        cursor.execute('select * from sys_user where username=\'{}\';')
+        cursor.execute('select * from sys_user where username=\'{}\';'.format(self.username))
         tmp = cursor.fetchall()[0]
         data = {
             'name': tmp[2],

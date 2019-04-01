@@ -47,11 +47,12 @@ def register():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
-def profile(username=None):
+def profile():
     user_tuple = session.get('user')
     user = User(user_tuple[0], user_tuple[1])
     data = user.get_info()
-    return render_template('profile.html', data=data)
+    return jsonify(data)
+    # return render_template('profile.html', data=data)
 
 
 @app.route('/contacts')
