@@ -7,6 +7,13 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
 def create_key(password: bytes, salt: bytes, length: int = 32) -> bytes:
+	"""
+	Creates a key for encryption.
+	:param password: Encryption password in bytes
+	:param salt: Encryption salt in bytes
+	:param length: Desired key length (default is 32)
+	:return: Encryption key in bytes
+	"""
 	if len(salt) < 16:
 		raise ValueError('Salt should be 16-byte or longer, but it was {} byte.'.format(len(salt)))
 
@@ -22,10 +29,22 @@ def create_key(password: bytes, salt: bytes, length: int = 32) -> bytes:
 
 
 def encrypt(data: bytes, key: bytes) -> bytes:
+	"""
+	Encrypts the data.
+	:param data: Data in bytes
+	:param key: Key in bytes
+	:return: Encrypted data in bytes.
+	"""
 	fernet = Fernet(key)
 	return fernet.encrypt(data)
 
 
 def decrypt(data: bytes, key: bytes) -> bytes:
+	"""
+	Decrypts the data.
+	:param data: Encrypted data in bytes.
+	:param key: Key in bytes.
+	:return: Source data in bytes.
+	"""
 	fernet = Fernet(key)
 	return fernet.decrypt(data)
