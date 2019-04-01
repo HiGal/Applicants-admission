@@ -20,7 +20,7 @@
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <img src="../static/img/logo.svg" class="img">
-            <span><hr></span>
+            <span><hr class="img_hr"></span>
 
             <a class="nav-link active" id="profile" data-toggle="pill" href="#profile" role="tab"
                aria-controls="profile" aria-selected="true">Personal info</a>
@@ -57,37 +57,85 @@
             <div class="row">
                 <div class="col-6 label">
                     <div class="row1">
-                        <label class="field">First name:</label>
-                        <hr>
+                        <div id="div_name" style="display: block">
+                            <label class="field">First name:</label>
+                            <hr>
+                        </div>
+                        <div id="edit_name" style="display: none">
+                            <input type="text" class="form-control" placeholder="Enter your name">
+                        </div>
+                    </div>
+
+                    <div class="row1">
+                        <div id="div_bdate" style="display: block">
+                            <label class="field">Birth day (dd.mm.yyyy):</label>
+                            <hr>
+                        </div>
+                        <div id="edit_bdate" style="display: none">
+                            <input type="date" class="form-control" placeholder="Enter your birth date">
+                        </div>
                     </div>
                     <div class="row1">
-                        <label class="field">Birth day (dd.mm.yyyy):</label>
-                        <hr>
-                    </div>
-                    <div class="row1">
-                        <label class="field">Citezenship:</label>
-                        <hr>
+                        <div id="div_citizen" style="display: block">
+                            <label class="field">Citezenship:</label>
+                            <hr>
+                        </div>
+                        <div id="edit_citizen" style="display: none">
+                            <input type="text" class="form-control" placeholder="Enter your birth date">
+                        </div>
                     </div>
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
-                        <label class="field">Second name:</label>
-                        <hr>
+                        <div id="div_sname" style="display: block">
+                            <label class="field">Second name:</label>
+                            <hr>
+                        </div>
+                        <div id="edit_sname" style="display: none">
+                            <input type="text" class="form-control" placeholder="Enter your birth date">
+                        </div>
                     </div>
                     <div class="row1">
-                        <label class="field">Sex:</label>
-                        <hr>
+                        <div id="div_sex" style="display: block">
+                            <label class="field">Sex:</label>
+                            <hr>
+                        </div>
+                        <div id="edit_sex" style="display:none;">
+                            <select class="custom-select ">
+                                <option selected>Choose your sex</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="container">
-            <a class="btn btn-outline-primary edit" onclick="">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-ok" onclick="send()" style="display: none">Ok</a>
+
         </div>
     </div>
 </div>
-
 </body>
+
+<script>
+    function edit() {
+        document.getElementById('edit_name').style.display = 'block';
+        document.getElementById('div_name').style.display = 'none';
+        document.getElementById('edit_bdate').style.display = 'block';
+        document.getElementById('div_bdate').style.display = 'none';
+        document.getElementById('edit_citizen').style.display = 'block';
+        document.getElementById('div_citizen').style.display = 'none';
+        document.getElementById('edit_sname').style.display = 'block';
+        document.getElementById('div_sname').style.display = 'none';
+        document.getElementById('edit_sex').style.display = 'block';
+        document.getElementById('div_sex').style.display = 'none';
+        document.getElementById('btn-edit').style.display = 'none';
+        document.getElementById('btn-ok').style.display = 'block';
+    }
+</script>
 
 </html>

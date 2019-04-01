@@ -42,13 +42,13 @@
 .btn.btn.logout {
     margin-top: 4%;
     width: 15%;
-    margin-left: 90%;
+    margin-left: 80%;
     margin-bottom:3%;
     padding-top:1.5%;
     padding-bottom:1.5%;
     border-radius: 18px;
     border-color: #97CAEB;
-    font-family: Elektra Text Pro; 
+    font-family: Elektra Text Pro, sans-serif;
     color: #97CAEB;
 }
 
@@ -81,7 +81,7 @@
     margin-top: 40px;
 }
 
-span hr {
+span.img_hr {
     width: 85%;
     display: block;
     margin-top: 1.5em;
