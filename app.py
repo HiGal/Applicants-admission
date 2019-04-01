@@ -1,7 +1,11 @@
-from flask import Flask, redirect, render_template, request, json, Response
+from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
 from Models import User
 
 app = Flask(__name__)
+app.secret_key = 'xyz'
+
+# TODO: need to replace this shit with session
+user_glob = None
 
 
 def hash_password(password: str) -> str:
@@ -19,6 +23,7 @@ def login():
     if request.method == 'POST':
         data = request.get_json(silent=True)
         user = User(data['username'], data['password'])
+        session['user'] = (data['username'], data['password'])
         if user.verify():
             return Response("Success!")
         else:
@@ -42,6 +47,13 @@ def register():
         else:
             return Response("Password are not the same!")
     return render_template('registration.html')
+
+
+@app.route('/contacts')
+def contacts():
+    tuple = session.get('user')
+    user = User(tuple[0], tuple[1])
+    return jsonify(user.contacts())
 
 
 if __name__ == '__main__':
