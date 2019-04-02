@@ -72,7 +72,18 @@ def profile():
 def contacts():
     tuple = session.get('user')
     user = User(tuple[0], tuple[1])
-    return jsonify(user.contacts())
+    data = user.contacts()
+    return render_template('contacts.html', data=data)
+
+
+@app.route('/passport')
+def passport():
+    return render_template('passport.html')
+
+
+@app.route('/education')
+def education():
+    return render_template('education.html')
 
 
 if __name__ == '__main__':

@@ -15,140 +15,166 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <body>
-    <div class="row">
-        <div class="col-3">
-            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <img src="../static/img/logo.svg" class="img">
-                <span><hr></span>
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <img src="../static/img/logo.svg" class="img">
+            <span><hr></span>
 
-                <a class="nav-link" id="profile" href="profile.html" role="tab"
-                   aria-controls="profile" aria-selected="false">Personal info</a>
-                <a class="nav-link active" id="contacts" href="#contacts" role="tab"
-                   aria-controls="contacts"
-                   aria-selected="true">Contacts</a>
-                <a class="nav-link" id="passport" href="passport.html" role="tab"
-                   aria-controls="passport"
-                   aria-selected="false">Passport <span>/</span> ID</a>
-                <a class="nav-link" id="education" href="education.html" role="tab"
-                   aria-controls="education"
-                   aria-selected="false">Education</a>
-                <a class="nav-link" id="portfolio" href="#portfolio" role="tab"
-                   aria-controls="portfolio"
-                   aria-selected="false">Portfolio</a>
-                <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
-                   aria-selected="false">Tests</a>
+            <a class="nav-link" id="profile" href="/profile" role="tab"
+               aria-controls="profile" aria-selected="false">Personal info</a>
+            <a class="nav-link active" id="contacts" href="#contacts" role="tab"
+               aria-controls="contacts"
+               aria-selected="true">Contacts</a>
+            <a class="nav-link" id="passport" href="/passport" role="tab"
+               aria-controls="passport"
+               aria-selected="false">Passport <span>/</span> ID</a>
+            <a class="nav-link" id="education" href="/education" role="tab"
+               aria-controls="education"
+               aria-selected="false">Education</a>
+            <a class="nav-link" id="portfolio" href="#portfolio" role="tab"
+               aria-controls="portfolio"
+               aria-selected="false">Portfolio</a>
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
+               aria-selected="false">Tests</a>
 
-                <div class="kostyl">
+            <div class="kostyl">
 
-                </div>
             </div>
-        </div>
-        <div class="col-9">
-
-            <div class="container header">
-                <a class="btn btn-outline-primary logout" href="/login">Log out</a>
-            </div>
-
-            <div class="container content">
-                <div class="row">
-                    <div class="col-6 label">
-                        <div class="row1">
-                            <div id="div_index" style="display: block">
-                                <label class="field">Index:</label>
-                                <div class="text">
-                                    Index
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_index" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your index">
-                            </div>
-                         </div>
-                        <div class="row1">
-                            <div id="div_city" style="display: block">
-                                <label class="field">City:</label>
-                                <div class="text">
-                                    City
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_city" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your city">
-                            </div>
-                        </div>
-                        <div class="row1">
-                            <div id="div_building" style="display: block">
-                                <label class="field">Building:</label>
-                                <div class="text">
-                                    Building
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_building" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your building">
-                            </div>
-                        </div>
-                        <div class="row1">
-                            <div id="div_flat" style="display: block">
-                                <label class="field">Flat:</label>
-                                <div class="text">
-                                    Flat
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_flat" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your flat">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-5 label">
-                        <div class="row1">
-                            <div id="div_region" style="display: block">
-                                <label class="field">Region:</label>
-                                <div class="text">
-                                    Region
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_region" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your region">
-                            </div>
-                        </div>
-                        <div class="row1">
-                            <div id="div_street" style="display: block">
-                                <label class="field">Street:</label>
-                                    <div class="text">
-                                        Street
-                                    </div>
-                                <hr>
-                            </div>
-                            <div id="edit_street" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your street">
-                            </div>
-                        </div>
-                        <div class="row1">
-                            <div id="div_course" style="display: block">
-                                <label class="field">Corpus:</label>
-                                <div class="text">
-                                    Corpus
-                                </div>
-                                <hr>
-                            </div>
-                            <div id="edit_course" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your course">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="container">
-                 <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
-                 <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
-             </div>
         </div>
     </div>
+    <div class="col-9">
+
+        <div class="container header">
+            <a class="btn btn-outline-primary logout" href="/login">Log out</a>
+        </div>
+
+        <div class="container content">
+            <div class="row">
+                <div class="col-6 label">
+                    <div class="row1">
+                        <div id="div_index" style="display: block">
+                            <label class="field">Index:</label>
+                            <div class="text">
+                                {{ data['index'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_index" style="display: none">
+                            <input type="text" id="index" class="form-control" placeholder="Enter your index">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_city" style="display: block">
+                            <label class="field">City:</label>
+                            <div class="text">
+                                {{ data['city'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_city" style="display: none">
+                            <input type="text" id="city" class="form-control" placeholder="Enter your city">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_building" style="display: block">
+                            <label class="field">Building:</label>
+                            <div class="text">
+                                {{ data['building'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_building" style="display: none">
+                            <input type="text" id="building" class="form-control" placeholder="Enter your building">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_flat" style="display: block">
+                            <label class="field">Flat:</label>
+                            <div class="text">
+                                {{ data['flat'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_flat" style="display: none">
+                            <input type="text" id="flat" class="form-control" placeholder="Enter your flat">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 label">
+                    <div class="row1">
+                        <div id="div_region" style="display: block">
+                            <label class="field">Region:</label>
+                            <div class="text">
+                                {{ data['region'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_region" style="display: none">
+                            <input type="text" id="region" class="form-control" placeholder="Enter your region">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_street" style="display: block">
+                            <label class="field">Street:</label>
+                            <div class="text">
+                                {{ data['street'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_street" style="display: none">
+                            <input type="text" id="street" class="form-control" placeholder="Enter your street">
+                        </div>
+                    </div>
+                    <div class="row1">
+                        <div id="div_corpus" style="display: block">
+                            <label class="field">Corpus:</label>
+                            <div class="text">
+                                {{ data['corpus'] }}
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_corpus" style="display: none">
+                            <input type="text" id="corpus" class="form-control" placeholder="Enter your corpus">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
+        </div>
+    </div>
+</div>
 </body>
 <script>
+    function send() {
+        var data = {
+            'index': document.getElementById('index').value,
+            'city': document.getElementById('city').value,
+            'building': document.getElementById('building').value,
+            'flat': document.getElementById('flat').value,
+            'region': document.getElementById('region').value,
+            'street': document.getElementById('street').value,
+            'corpus': document.getElementById('corpus').value
+
+
+        };
+
+        $.ajax({
+            url: '/contacts',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data === 'Basic info successfully created')
+                    document.location.reload();
+            }
+        })
+
+    }
+
     function edit() {
         document.getElementById('edit_index').style.display = 'block';
         document.getElementById('div_index').style.display = 'none';
@@ -162,8 +188,8 @@
         document.getElementById('div_region').style.display = 'none';
         document.getElementById('edit_street').style.display = 'block';
         document.getElementById('div_street').style.display = 'none';
-        document.getElementById('edit_course').style.display = 'block';
-        document.getElementById('div_course').style.display = 'none';
+        document.getElementById('edit_corpus').style.display = 'block';
+        document.getElementById('div_corpus').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }

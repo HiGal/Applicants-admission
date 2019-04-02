@@ -51,6 +51,8 @@ class User:
         cursor = self.conn.cursor()
         cursor.execute('select * from user_contact where uname=\'{}\';'.format(self.username))
         tmp = cursor.fetchall()
+        if len(tmp) ==0 :
+            return None
         data = {
             'index': tmp[0][0],
             'region': tmp[0][1],
@@ -62,6 +64,11 @@ class User:
         }
         cursor.close()
         return data
+
+    # def update_contacts(self):
+    #     cursor = self.conn.cursor()
+    #     cursor.execute('update user_contact set index='%s', region='%s',city='%s',street='%s',building='%s',corpus='%s',flat='%s' where;'\
+    #             %())
 
     def get_info(self):
         cursor = self.conn.cursor()
