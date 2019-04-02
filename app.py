@@ -51,7 +51,7 @@ def profile():
     user_tuple = session.get('user')
     user = User(user_tuple[0], user_tuple[1])
     data = user.get_info()
-    data['birthday'] = data['birthday'].strftime('%d-%m-%yyyy')
+    data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
     return render_template('profile.html', data=data)
 
 
