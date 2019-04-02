@@ -60,7 +60,7 @@
                         <div id="div_name" style="display: block">
                             <label class="field">First name:</label>
                             <div class="text">
-                                First Name
+                                {{ data['name'] }}
                             </div>
                             <hr>
                         </div>
@@ -72,7 +72,7 @@
                         <div id="div_sname" style="display: block">
                             <label class="field">Second name:</label>
                             <div class="text">
-                                Second name
+                                {{ data['surname'] }}
                             </div>
                             <hr>
                         </div>
@@ -99,7 +99,7 @@
                         <div id="div_bdate" style="display: block">
                             <label class="field">Birth day (dd.mm.yyyy):</label>
                             <div class="text">
-                                dd.mm.yyyy
+                                {{ data['birthday'] }}
                             </div>
                             <hr>
                         </div>
@@ -111,7 +111,7 @@
                         <div id="div_sex" style="display: block">
                             <label class="field">Sex:</label>
                             <div class="text">
-                                Sex
+                                {{ data['sex'] }}
                             </div>
                             <hr>
                         </div>
@@ -150,12 +150,11 @@
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
-            success: function (data) {
-                alert(data);
-            }
+
         })
 
     }
+
     function edit() {
         document.getElementById('edit_name').style.display = 'block';
         document.getElementById('div_name').style.display = 'none';

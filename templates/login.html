@@ -47,7 +47,7 @@
 </body>
 <script>
     function login() {
-        var data ={
+        var data = {
             "username": document.getElementById("username").value,
             "password": document.getElementById("password").value
         };
@@ -57,11 +57,7 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (resp) {
-                if (resp.redirect) {
-                    window.location.href = resp.redirect;
-                } else {
-                    alert(resp);
-                }
+                document.location.replace(resp);
             }
 
         });
