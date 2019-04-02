@@ -68,12 +68,20 @@ def profile():
         return Response('Basic info successfully created')
 
 
-@app.route('/contacts')
+@app.route('/contacts', methods=['GET', 'POST'])
 def contacts():
-    tuple = session.get('user')
-    user = User(tuple[0], tuple[1])
-    data = user.contacts()
-    return render_template('contacts.html', data=data)
+    if request.method == 'GET':
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
+        data = user.contacts()
+        return render_template('contacts.html', data=data)
+    else:
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
+        data = request.get_json(silent=True)
+        user.update_contacts(data['index'], data['region'], data['city'], data['street'],
+                             data['building'], data['corpus'], data['flat'])
+        return Response('Successfully updated!')
 
 
 @app.route('/passport')
