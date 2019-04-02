@@ -23,7 +23,8 @@ class User:
 
     def verify(self):
         cursor = self.conn.cursor()
-        password = hashlib.md5(self.password.encode()).hexdigest()
+        password = self.password
+        password = hashlib.md5(password.encode()).hexdigest()
         cursor.execute('select * from sys_user where username = \'{}\' and password = \'{}\';'
                        .format(self.username, password))
         tmp = cursor.fetchall()
@@ -35,12 +36,18 @@ class User:
 
     def register(self, username, password, name, sname, email, bdate):
         password = hashlib.md5(password.encode()).hexdigest()
+        self.password = password
+        self.username = username
         cursor = self.conn.cursor()
         cursor.execute(
             'insert into sys_user (username, password,name, surname, email,birthday) '
             'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'
                 .format(username, password, name, sname, email, bdate)
         )
+
+        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s','%s', '%s', '%s')" \
+              % ('sys_applicant_info', username, name, sname, bdate, 'null', 'null')
+        cursor.execute(str)
         self.conn.commit()
         cursor.close()
 
@@ -73,6 +80,17 @@ class User:
             'citizen': tmp[7]
         }
         return data
+
+    def update_info(self, username, fname, sname, bdate, gender, citizenship):
+        table_name = "sys_applicant_info"
+        cursor = self.conn.cursor()
+
+        str = "UPDATE %s SET name = '%s', surname = '%s', birthday='%s', sex='%s', citizenship='%s' WHERE username = '%s';" \
+              % (table_name, fname, sname, bdate, gender, citizenship, username)
+        print(str)
+        cursor.execute(str)
+        self.conn.commit()
+        cursor.close()
 
 
 class PassportData:
@@ -127,3 +145,5 @@ class PassportData:
         self.issuing_authority = Secure.decrypt(record[4].encode(), encryption_key).decode()
 
         return True
+
+
