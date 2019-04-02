@@ -47,17 +47,21 @@ class RegistrationTest(unittest.TestCase):
         }
         rv = self.app.post('/login', data=json.dumps(data_corr), content_type='application/json')
         assert b'Success!' == rv.data
+
         data_incorr1 = {
             'username': 'f.galeev',
             'password': '123'
         }
         rv = self.app.post('/login', data=json.dumps(data_incorr1), content_type='application/json')
         assert b'Username or Password incorrect' == rv.data
+
         data_incorr2 = {
             'username': 'f.galeev@innopolis.ru',
             'password': '1234'
         }
         rv = self.app.post('/login', data=json.dumps(data_incorr2), content_type='application/json')
+        print(rv)
+        print("this ^")
         assert b'Username or Password incorrect' == rv.data
 
 

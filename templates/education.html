@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Education</title>
+</head>
+<link rel="stylesheet" href="../static/css/profile.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<body>
+<div class="row">
+    <div class="col-3">
+         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <img src="../static/img/logo.svg" class="img">
+            <span><hr></span>
+
+            <a class="nav-link" id="profile" href="/profile" role="tab"
+               aria-controls="profile" aria-selected="false">Personal info</a>
+            <a class="nav-link" id="contacts" href="/contacts" role="tab"
+               aria-controls="contacts"
+               aria-selected="false">Contacts</a>
+            <a class="nav-link" id="passport" href="/passport" role="tab"
+               aria-controls="passport"
+               aria-selected="false">Passport <span>/</span> ID</a>
+            <a class="nav-link active" id="education" href="#education" role="tab"
+               aria-controls="education"
+               aria-selected="true">Education</a>
+            <a class="nav-link" id="portfolio" href="#portfolio" role="tab"
+               aria-controls="portfolio"
+               aria-selected="false">Portfolio</a>
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
+               aria-selected="false">Tests</a>
+
+            <div class="kostyl">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="container header">
+            <a class="btn btn-outline-primary logout" href="/login">Log out</a>
+        </div>
+        <div class="container content">
+            <div class="row">
+                <div class="col-6 label">
+                    <div class="row1">
+                        <div id="div_school" style="display: block">
+                            <label class="field">School:</label>
+                            <div class="text">
+                                School
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_school" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your school">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 label">
+                    <div class="row1">
+                        <div id="div_release_year" style="display: block">
+                                <label class="field">Release year:</label>
+                            <div class="text">
+                                Release year
+                            </div>
+                            <hr>
+                        </div>
+                        <div id="edit_release_year" style="display: none">
+                                <input type="text" class="form-control" placeholder="Enter your release year">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function edit() {
+        document.getElementById('edit_school').style.display = 'block';
+        document.getElementById('div_school').style.display = 'none';
+        document.getElementById('edit_release_year').style.display = 'block';
+        document.getElementById('div_release_year').style.display = 'none';
+        document.getElementById('btn-edit').style.display = 'none';
+        document.getElementById('btn-save').style.display = 'block';
+    }
+
+    //TODO
+    function append() {
+
+    }
+</script>
+
+</html>
