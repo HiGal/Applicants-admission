@@ -44,10 +44,6 @@ class User:
             'values (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\',\'{}\');'
                 .format(username, password, name, sname, email, bdate)
         )
-
-        str = "INSERT INTO %s (username, name, surname, birthday, sex, citizenship) VALUES ('%s', '%s', '%s','%s', '%s', '%s')" \
-              % ('sys_applicant_info', username, name, sname, bdate, 'null', 'null')
-        cursor.execute(str)
         self.conn.commit()
         cursor.close()
 
@@ -81,12 +77,12 @@ class User:
         }
         return data
 
-    def update_info(self, username, fname, sname, bdate, gender, citizenship):
-        table_name = "sys_applicant_info"
+    def update_info(self, fname, sname, bdate, gender, citizenship):
+        table_name = "sys_user"
         cursor = self.conn.cursor()
 
-        str = "UPDATE %s SET name = '%s', surname = '%s', birthday='%s', sex='%s', citizenship='%s' WHERE username = '%s';" \
-              % (table_name, fname, sname, bdate, gender, citizenship, username)
+        str = "UPDATE %s SET name = '%s', surname = '%s', birthday='%s', sex='%s', citizen='%s' WHERE username = '%s';" \
+              % (table_name, fname, sname, bdate, gender, citizenship, self.username)
         print(str)
         cursor.execute(str)
         self.conn.commit()
