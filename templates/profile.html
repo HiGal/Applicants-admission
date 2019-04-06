@@ -112,16 +112,16 @@
                         </div>
                     </div>
                     <div class="row1">
-                        <div id="div_sex" style="display: block">
-                            <label class="field">Sex:</label>
+                        <div id="div_gender" style="display: block">
+                            <label class="field">Gender:</label>
                             <div class="text">
-                                {{ data['sex'] }}
+                                {{ data['gender'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_sex" style="display:none;">
-                            <select class="custom-select" id="sex" style="border-radius: 18px; border-bottom-color: #1A428A">
-                                <option selected>Choose your sex</option>
+                        <div id="edit_gender" style="display:none;">
+                            <select class="custom-select" id="gender" style="border-radius: 18px; border-bottom-color: #1A428A">
+                                <option selected>Choose your gender</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                                 <option value="ND">prefer not to say</option>
@@ -147,7 +147,7 @@
             'sname': document.getElementById('edit_sname_in').value,
             'bdate': document.getElementById('edit_bdate_in').value,
             'citizenship': document.getElementById('edit_citizen_in').value,
-            'gender': document.getElementById('sex').value
+            'gender': document.getElementById('gender').value
         };
 
         $.ajax({
@@ -172,8 +172,8 @@
         document.getElementById('div_citizen').style.display = 'none';
         document.getElementById('edit_sname').style.display = 'block';
         document.getElementById('div_sname').style.display = 'none';
-        document.getElementById('edit_sex').style.display = 'block';
-        document.getElementById('div_sex').style.display = 'none';
+        document.getElementById('edit_gender').style.display = 'block';
+        document.getElementById('div_gender').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }
