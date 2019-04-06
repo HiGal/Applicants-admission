@@ -47,6 +47,9 @@
         <div class="container header">
             <a class="btn btn-outline-primary logout" href="/login">Log out</a>
         </div>
+        <div id="message-to-user" style="text-align: justify">
+            <p class="message">Please, fill out the form completely</p>
+        </div>
         <div class="container content">
             <div class="row">
                 <div class="col-6 label">
@@ -93,6 +96,7 @@
         document.getElementById('edit_release_year').style.display = 'block';
         document.getElementById('div_release_year').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
+        document.getElementById('message-to-user').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }
 
