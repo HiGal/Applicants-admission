@@ -96,7 +96,7 @@ input[type=text] {
     border-radius: 18px;
     border-color: #1A428A;
     margin-bottom: 20px;
-
+    width: 356px;
 
 }
 
@@ -104,10 +104,25 @@ input[type=date] {
     border-radius: 18px;
     border-color: #1A428A;
     margin-bottom: 20px;
+    width: 189px;
 }
 
 .text {
     font-family: Elektra Text Pro;
     font-size: 16px;
     margin-top: 5px;
+}
+
+.message {
+    font-family: Elektra Text Pro;
+    color: red;
+    font-size: 16px;
+}
+
+.add_school {
+    border-radius: 18px;
+    border-color: #1A428A;
+    border-width: 1px;
+    background-color: white;
+    margin-top: 20px;
 }

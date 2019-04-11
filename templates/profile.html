@@ -22,21 +22,21 @@
             <img src="../static/img/logo.svg" class="img">
             <span><hr class="img_hr"></span>
 
-            <a class="nav-link active" id="profile" data-toggle="pill" href="#profile" role="tab"
+            <a class="nav-link active" id="profile" href="/profile" role="tab"
                aria-controls="profile" aria-selected="true">Personal info</a>
-            <a class="nav-link" id="contacts" data-toggle="pill" href="contacts.html" role="tab"
+            <a class="nav-link" id="contacts" href="/contacts" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
-            <a class="nav-link" id="passport" data-toggle="pill" href="passport.html" role="tab"
+            <a class="nav-link" id="passport" href="passport" role="tab"
                aria-controls="passport"
                aria-selected="false">Passport <span>/</span> ID</a>
-            <a class="nav-link" id="education" data-toggle="pill" href="education.html" role="tab"
+            <a class="nav-link" id="education" href="/education" role="tab"
                aria-controls="education"
                aria-selected="false">Education</a>
-            <a class="nav-link" id="portfolio" data-toggle="pill" href="#portfolio" role="tab"
+            <a class="nav-link" id="portfolio" href="#portfolio" role="tab"
                aria-controls="portfolio"
                aria-selected="false">Portfolio</a>
-            <a class="nav-link" id="tests" data-toggle="pill" href="#tests" role="tab" aria-controls="tests"
+            <a class="nav-link" id="tests"href="#tests" role="tab" aria-controls="tests"
                aria-selected="false">Tests</a>
 
             <div class="kostyl">
@@ -48,7 +48,9 @@
         <div class="container header">
             <a class="btn btn-outline-primary logout" href="/login">Log out</a>
         </div>
-
+        <div id="message-to-user" style="text-align: justify;">
+            <p class="message">Please, fill out the form completely</p>
+        </div>edi
         <div class="container">
             <img class="profile" src="../static/img/profile.png" width="128" height="128">
         </div>
@@ -65,7 +67,8 @@
                             <hr>
                         </div>
                         <div id="edit_name" style="display: none;">
-                            <input type="text" id="edit_name_in" class="form-control"  placeholder="Enter your first name">
+                            <input type="text" id="edit_name_in" class="form-control"
+                                   placeholder="Enter your first name" value="{{ data['name'] }}">
                         </div>
                     </div>
                     <div class="row1">
@@ -77,7 +80,8 @@
                             <hr>
                         </div>
                         <div id="edit_sname" style="display: none">
-                            <input type="text" id="edit_sname_in" class="form-control" placeholder="Enter your second name">
+                            <input type="text" id="edit_sname_in" class="form-control"
+                                   placeholder="Enter your second name" value="{{ data['surname'] }}">
                         </div>
                     </div>
 
@@ -85,17 +89,18 @@
                         <div id="div_citizen" style="display: block">
                             <label class="field">Citezenship:</label>
                             <div class="text">
-                                Citizenship
+                                {{ data['citizen'] }}
                             </div>
                             <hr>
                         </div>
                         <div id="edit_citizen" style="display: none">
-                            <input type="text" id="edit_citizen_in" class="form-control" placeholder="Enter your citizenship">
+                            <input type="text" id="edit_citizen_in" class="form-control"
+                                   placeholder="Enter your citizenship" value="{{ data['citizen'] }}">
                         </div>
                     </div>
                 </div>
                 <div class="col-5 label">
-                   <div class="row1">
+                    <div class="row1">
                         <div id="div_bdate" style="display: block">
                             <label class="field">Birth day (dd.mm.yyyy):</label>
                             <div class="text">
@@ -104,22 +109,25 @@
                             <hr>
                         </div>
                         <div id="edit_bdate" style="display: none">
-                            <input type="date" id="edit_bdate_in" class="form-control" placeholder="Enter your birth date">
+                            <input type="date" id="edit_bdate_in" class="form-control"
+                                   placeholder="Enter your birth date" value="{{ data['birthday'] }}">
                         </div>
                     </div>
                     <div class="row1">
-                        <div id="div_sex" style="display: block">
-                            <label class="field">Sex:</label>
+                        <div id="div_gender" style="display: block">
+                            <label class="field">Gender:</label>
                             <div class="text">
-                                {{ data['sex'] }}
+                                {{ data['gender'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_sex" style="display:none;">
-                            <select class="custom-select" style="border-radius: 18px; border-bottom-color: #1A428A">
-                                <option selected>Choose your sex</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                        <div id="edit_gender" style="display:none;">
+                            <select class="custom-select" id="gender" style="border-radius: 18px;
+                            border-bottom-color: #1A428A; width: 189px">
+                                <option selected>Choose your gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="ND">prefer not to say</option>
                             </select>
                         </div>
                     </div>
@@ -137,20 +145,23 @@
 
 <script>
     function send() {
-        var data ={
-            'name': document.getElementById('edit_name_in').value,
+        var data = {
+            'fname': document.getElementById('edit_name_in').value,
             'sname': document.getElementById('edit_sname_in').value,
             'bdate': document.getElementById('edit_bdate_in').value,
             'citizenship': document.getElementById('edit_citizen_in').value,
-            'gender': document.getElementById('edit_sex').value
+            'gender': document.getElementById('gender').value
         };
 
         $.ajax({
-            url: '/edit-profile-info',
+            url: '/profile',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
-
+            success: function (data) {
+                if (data === 'Basic info successfully created')
+                    document.location.reload();
+            }
         })
 
     }
@@ -164,8 +175,8 @@
         document.getElementById('div_citizen').style.display = 'none';
         document.getElementById('edit_sname').style.display = 'block';
         document.getElementById('div_sname').style.display = 'none';
-        document.getElementById('edit_sex').style.display = 'block';
-        document.getElementById('div_sex').style.display = 'none';
+        document.getElementById('edit_gender').style.display = 'block';
+        document.getElementById('div_gender').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }
