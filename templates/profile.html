@@ -22,15 +22,15 @@
             <img src="../static/img/logo.svg" class="img">
             <span><hr class="img_hr"></span>
 
-            <a class="nav-link active" id="profile" data-toggle="pill" href="#profile" role="tab"
+            <a class="nav-link active" id="profile" data-toggle="pill" href="/profile" role="tab"
                aria-controls="profile" aria-selected="true">Personal info</a>
-            <a class="nav-link" id="contacts" data-toggle="pill" href="contacts.html" role="tab"
+            <a class="nav-link" id="contacts" data-toggle="pill" href="/contacts" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
-            <a class="nav-link" id="passport" data-toggle="pill" href="passport.html" role="tab"
+            <a class="nav-link" id="passport" data-toggle="pill" href="/passport" role="tab"
                aria-controls="passport"
                aria-selected="false">Passport <span>/</span> ID</a>
-            <a class="nav-link" id="education" data-toggle="pill" href="education.html" role="tab"
+            <a class="nav-link" id="education" data-toggle="pill" href="/education" role="tab"
                aria-controls="education"
                aria-selected="false">Education</a>
             <a class="nav-link" id="portfolio" data-toggle="pill" href="#portfolio" role="tab"
@@ -116,10 +116,12 @@
                             <hr>
                         </div>
                         <div id="edit_sex" style="display:none;">
-                            <select class="custom-select" style="border-radius: 18px; border-bottom-color: #1A428A">
-                                <option selected>Choose your sex</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
+                            <select class="custom-select" id="gender" style="border-radius: 18px;
+                            border-bottom-color: #1A428A; width: 189px">
+                                <option selected>Choose your gender</option>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="ND">prefer not to say</option>
                             </select>
                         </div>
                     </div>
@@ -138,15 +140,15 @@
 <script>
     function send() {
         var data ={
-            'name': document.getElementById('edit_name_in').value,
+            'fname': document.getElementById('edit_name_in').value,
             'sname': document.getElementById('edit_sname_in').value,
             'bdate': document.getElementById('edit_bdate_in').value,
             'citizenship': document.getElementById('edit_citizen_in').value,
-            'gender': document.getElementById('edit_sex').value
+            'gender': document.getElementById('gender').value
         };
-
+        alert(JSON.stringify(data));
         $.ajax({
-            url: '/edit-profile-info',
+            url: '/profile',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),

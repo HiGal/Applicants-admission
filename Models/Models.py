@@ -2,8 +2,7 @@ import hashlib
 
 import psycopg2
 
-import SecretConstants
-import Secure
+from Security import SecretConstants, Secure
 
 
 def db_connect():
