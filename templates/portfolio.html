@@ -2,9 +2,88 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Portfolio</title>
 </head>
+<link rel="stylesheet" href="../static/css/profile.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <body>
-$END$
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <img src="../static/img/logo.svg" class="img">
+            <span><hr></span>
+
+            <a class="nav-link" id="profile" href="/profile" role="tab"
+               aria-controls="profile" aria-selected="false">Personal info</a>
+            <a class="nav-link" id="contacts" href="#contacts" role="tab"
+               aria-controls="contacts"
+               aria-selected="false">Contacts</a>
+            <a class="nav-link" id="passport" href="/passport" role="tab"
+               aria-controls="passport"
+               aria-selected="false">Passport <span>/</span> ID</a>
+            <a class="nav-link" id="education" href="/education" role="tab"
+               aria-controls="education"
+               aria-selected="false">Education</a>
+            <a class="nav-link active" id="portfolio" href="/portfolio" role="tab"
+               aria-controls="portfolio"
+               aria-selected="true">Portfolio</a>
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
+               aria-selected="false">Tests</a>
+
+            <div class="kostyl">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="container header">
+            <a class="btn btn-outline-primary logout" href="/login">Log out</a>
+        </div>
+        <div class="container content">
+            <div class="row">
+                <div class="row1">
+                    <!–– TODO: fix the upload file: Design, make the button"Save" working ––>
+                    <strong class="message">Please, upload the portfolio</strong>
+                    <div class="container">
+                        <div class="row1">
+                            <input type="file" onclick="previewFile()"><br>
+                            <img src="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: block">Save</a>
+        </div>
+    </div>
+</div>
 </body>
+
+<script>
+    function previewFile() {
+        var preview = document.querySelector('pdf'); //selects the query named img
+        var file = document.querySelector('input[type=file]').files[0]; //sames as here
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
+
+        if (file) {
+            reader.readAsDataURL(file); //reads the data as a URL
+        } else {
+            preview.src = "";
+        }
+    }
+
+</script>
 </html>
