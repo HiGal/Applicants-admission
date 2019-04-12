@@ -33,7 +33,7 @@ class PersonalInfoTest(unittest.TestCase):
 
     def test_update_info(self):
         data = self.generate_data()
-        rv = self.app.post('/personal-info', data=json.dumps(data), content_type='application/json')
+        rv = self.app.post('/profile', data=json.dumps(data), content_type='application/json')
         assert b'Basic info successfully created' in rv.data
 
 
