@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
 from Models import User
-
+from Models import PassportData
 app = Flask(__name__)
 app.secret_key = 'xyz'
 
@@ -84,15 +84,26 @@ def contacts():
         return Response('Successfully updated!')
 
 
-@app.route('/passport')
+@app.route('/passport', methods=['GET', 'POST'])
 def passport():
-    return render_template('passport.html')
+
+	if request.method == 'GET':
+		username = session.get('user')[0]
+		data = PassportData(username).retrieve()
+		return render_template('passport.html')
+	else:
+		data = request.get_json(silent=True)
+		username = data['username'] #
+		passport = PassportData(username=username)
+		passport.register(passport_series=data['passport_series'], passport_num=data['passport_number'], issue_date=data['issue_date'], issuing_authority=data['issuing_authority'])
+		return Response('Success')
+
 
 
 @app.route('/education')
 def education():
-    return render_template('education.html')
+	return render_template('education.html')
 
 
 if __name__ == '__main__':
-    app.run()
+	app.run()
