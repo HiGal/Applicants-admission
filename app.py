@@ -1,5 +1,6 @@
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
+from flask import Flask, redirect, render_template, request, Response, session
 from Models import User
+from Models import PassportData
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
@@ -19,9 +20,10 @@ def hello_world():
 def login():
     if request.method == 'POST':
         data = request.get_json(silent=True)
+        data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        session['user'] = (data['username'], data['password'])
         if user.verify():
+            session['user'] = (user.username, user.password)
             return Response('/profile')
         else:
             return Response("Username or Password incorrect")
@@ -46,36 +48,62 @@ def register():
     return render_template('registration.html')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    user_tuple = session.get('user')
-    user = User(user_tuple[0], user_tuple[1])
-    data = user.get_info()
-    data['birthday'] = data['birthday'].strftime('%d-%m-%yyyy')
-    return render_template('profile.html', data=data)
-
-
-@app.route('/contacts')
-def contacts():
-    tuple = session.get('user')
-    user = User(tuple[0], tuple[1])
-    return jsonify(user.contacts())
-
-
-@app.route('/edit-profile-info', methods=['GET', 'POST'])
-def edit_profile_info():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
+        data = user.get_info()
+        data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
+        return render_template('profile.html', data=data)
+    else:
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
-        tuple = session.get('user')
-        user = User(tuple[0], tuple[1])
-        name = data['name']
+        fname = data['fname']
         sname = data['sname']
-        citizenship = data['citizenship']
         bdate = data['bdate']
         gender = data['gender']
-        user.update_personal_info(name, sname, citizenship, bdate, gender)
-    return render_template('profile.html')
+        citizenship = data['citizenship']
+        user.update_info(fname, sname, bdate, gender, citizenship)
+        return Response('Basic info successfully created')
+
+
+@app.route('/contacts', methods=['GET', 'POST'])
+def contacts():
+    if request.method == 'GET':
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
+        data = user.contacts()
+        return render_template('contacts.html', data=data)
+    else:
+        user_tuple = session.get('user')
+        user = User(user_tuple[0], user_tuple[1])
+        data = request.get_json(silent=True)
+        user.update_contacts(data['index'], data['region'], data['city'], data['street'],
+                             data['building'], data['corpus'], data['flat'])
+        return Response('Successfully updated!')
+
+
+@app.route('/passport', methods=['GET', 'POST'])
+def passport():
+    if request.method == 'GET':
+        username = session.get('user')[0]
+        data = PassportData(username).retrieve()
+        return render_template('passport.html')
+    else:
+        data = request.get_json(silent=True)
+        username = data['username']  #
+        passport = PassportData(username=username)
+        passport.register(passport_series=data['passport_series'], passport_num=data['passport_number'],
+                          issue_date=data['issue_date'], issuing_authority=data['issuing_authority'])
+        return Response('Success')
+
+
+@app.route('/education')
+def education():
+    return render_template('education.html')
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
