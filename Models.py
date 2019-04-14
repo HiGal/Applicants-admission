@@ -86,6 +86,7 @@ class User:
 
     def get_info(self):
         cursor = self.conn.cursor()
+        # MAKE SURE THAT YOU DISABLED TESTING !
         cursor.execute('select * from sys_user where username=\'{}\';'.format(self.username))
         tmp = cursor.fetchall()[0]
         data = {
@@ -129,18 +130,30 @@ class PassportData:
         number = Secure.encrypt(passport_num.encode(), encryption_key).decode()
         date = Secure.encrypt(issue_date.encode(), encryption_key).decode()
         authority = Secure.encrypt(issuing_authority.encode(), encryption_key).decode()
-
         cursor = self.conn.cursor()
-        cursor.execute(
-            'INSERT INTO passport_data (username, passport_series, passport_number, issue_date, issuing_authority) '
-            'VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\')'
-                .format(self.username, series, number, date, authority)
-        )
-        self.conn.commit()
-        cursor.close()
+        cursor.execute("SELECT username FROM passport_data WHERE passport_data.username = '%s';" % self.username)
+        if cursor.rowcount != 0:
+            cursor = self.conn.cursor()
+            print("EMPTY HERE")
+            cursor.execute(
+                "UPDATE passport_data SET passport_series= '%s', passport_number= '%s', issue_date= '%s', issuing_authority='%s' where passport_data.username = '%s' " \
+                % (series, number, date, authority, self.username)
+            )
+            self.conn.commit()
+            cursor.close()
+        else:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                'INSERT INTO passport_data (username, passport_series, passport_number, issue_date, issuing_authority) '
+                'VALUES (\'{}\',\'{}\',\'{}\',\'{}\',\'{}\')'
+                    .format(self.username, series, number, date, authority)
+            )
+            self.conn.commit()
+            cursor.close()
 
     def retrieve(self):
         cursor = self.conn.cursor()
+
         cursor.execute(
             'SELECT * FROM passport_data '
             'WHERE username=\'{}\';'.format(self.username)

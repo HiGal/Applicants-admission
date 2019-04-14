@@ -1,8 +1,10 @@
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
+from flask import Flask, redirect, render_template, request, Response, session
 from Models import User
+from Models import PassportData
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
+TESTING = False
 
 
 def hash_password(password: str) -> str:
@@ -21,8 +23,8 @@ def login():
         data = request.get_json(silent=True)
         data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        session['user'] = (data['username'], data['password'])
         if user.verify():
+            session['user'] = (user.username, user.password)
             return Response('/profile')
         else:
             return Response("Username or Password incorrect")
@@ -50,13 +52,18 @@ def register():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.get_info()
         data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
         return render_template('profile.html', data=data)
     else:
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
+
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
         fname = data['fname']
@@ -71,12 +78,17 @@ def profile():
 @app.route('/contacts', methods=['GET', 'POST'])
 def contacts():
     if request.method == 'GET':
-        user_tuple = session.get('user')
+
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.contacts()
         return render_template('contacts.html', data=data)
     else:
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
         user.update_contacts(data['index'], data['region'], data['city'], data['street'],
@@ -84,9 +96,21 @@ def contacts():
         return Response('Successfully updated!')
 
 
-@app.route('/passport')
+@app.route('/passport', methods=['GET', 'POST'])
 def passport():
-    return render_template('passport.html')
+    if request.method == 'GET':
+        username = "tester"
+        if not TESTING:
+            username = session.get('user')[0]
+        data = PassportData(username).retrieve()
+        return render_template('passport.html')
+    else:
+        data = request.get_json(silent=True)
+        username = data['username']  #
+        passport = PassportData(username=username)
+        passport.register(passport_series=data['passport_series'], passport_num=data['passport_number'],
+                          issue_date=data['issue_date'], issuing_authority=data['issuing_authority'])
+        return Response('Success')
 
 
 @app.route('/education')

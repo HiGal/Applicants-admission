@@ -5,7 +5,7 @@ import json
 import random
 
 
-class PersonalInfoTest(unittest.TestCase):
+class PassportDataTest(unittest.TestCase):
 
     def setUp(self):
         app.app.testing = True
@@ -32,9 +32,15 @@ class PersonalInfoTest(unittest.TestCase):
 
 
     def test_update_info(self):
-        data = self.generate_data()
-        rv = self.app.post('/profile', data=json.dumps(data), content_type='application/json')
-        assert b'Basic info successfully created' in rv.data
+        data = {
+            'username': 'zbl@znl.com',
+            'passport_series': '1239123',
+            'passport_number': '123123',
+            'issue_date': '05-05-2019',
+            'issuing_authority': 'SyArAr'
+        }
+        rv = self.app.post('/passport', data=json.dumps(data), content_type='application/json')
+        assert b'Success' in rv.data
 
 
 if __name__ == '__main__':
