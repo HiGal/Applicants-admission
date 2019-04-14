@@ -118,5 +118,15 @@ def education():
     return render_template('education.html')
 
 
+# @app.route('/portfolio', methods=['GET','POST'])
+# def portfolio():
+#     if request.method == 'POST':
+#         data = request.get_json(silent=True)
+#         print(data['pdf'])
+#         return Response(data['pdf'])
+#     else:
+#         return render_template('portfolio.html')
+
+
 if __name__ == '__main__':
     app.run()
