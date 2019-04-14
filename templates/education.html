@@ -17,7 +17,7 @@
 <body>
 <div class="row">
     <div class="col-3">
-         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
@@ -62,21 +62,22 @@
                             <hr>
                         </div>
                         <div id="edit_school" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your school">
+                            <input type="text" class="form-control" placeholder="Enter your school">
+                            <button class="add_school" onclick="append()">+</button>
                         </div>
                     </div>
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
                         <div id="div_release_year" style="display: block">
-                                <label class="field">Release year:</label>
+                            <label class="field">Release year:</label>
                             <div class="text">
                                 Release year
                             </div>
                             <hr>
                         </div>
                         <div id="edit_release_year" style="display: none">
-                                <input type="text" class="form-control" placeholder="Enter your release year">
+                            <input type="text" class="form-control" placeholder="Enter your release year">
                         </div>
                     </div>
                 </div>
@@ -100,9 +101,25 @@
         document.getElementById('btn-save').style.display = 'block';
     }
 
-    //TODO
+    //TODO: Add release year for additional school
     function append() {
-
+        var container = document.getElementById("edit_school");
+        container.appendChild(document.createElement("br"));
+        var x = document.getElementsByClassName("form-control");
+        container = document.getElementById("edit_school");
+        var input = document.createElement("input");
+        input.type = "text";
+        input.name = "form-controller";
+        input.style = " border-radius: 18px;\n" +
+            "    border-color: #1A428A;\n" +
+            "    margin-bottom: 20px;\n" +
+            "    width: 356px;" +
+            "margin-top: 30px;\n"+
+                "height: 40px;\n" +
+                "border-width: 1px;\n"
+        input.placeholder = "Enter your school";
+        container.appendChild(input);
+        container.appendChild(document.createElement("br"));
     }
 </script>
 
