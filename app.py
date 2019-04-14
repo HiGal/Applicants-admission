@@ -1,11 +1,15 @@
-from flask import Flask, redirect, render_template, request, Response, session
-from Models import User
-from Models import PassportData
+from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
+from Models import User, PassportData
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = '/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
 TESTING = False
-
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB
 
 def hash_password(password: str) -> str:
     from hashlib import md5
@@ -117,6 +121,24 @@ def passport():
 def education():
     return render_template('education.html')
 
+@app.route('/portfolio', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return Response('No file part')
+        file = request.files['file']
+        if file.filename == '':
+            Response('No selected file')
+            return Response(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template('portfolio.html')
+    return render_template('portfolio.html')
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
     app.run()
