@@ -52,7 +52,7 @@ def register():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        user_tuple =[ 'tester', '12312312', 'null']
+        user_tuple = ['tester', '12312312', 'null']
         if not TESTING:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
@@ -60,7 +60,7 @@ def profile():
         data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
         return render_template('profile.html', data=data)
     else:
-        user_tuple =[ 'tester', '12312312', 'null']
+        user_tuple = ['tester', '12312312', 'null']
         if not TESTING:
             user_tuple = session.get('user')
 
@@ -79,14 +79,14 @@ def profile():
 def contacts():
     if request.method == 'GET':
 
-        user_tuple =[ 'tester', '12312312', 'null']
+        user_tuple = ['tester', '12312312', 'null']
         if not TESTING:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.contacts()
         return render_template('contacts.html', data=data)
     else:
-        user_tuple =[ 'tester', '12312312', 'null']
+        user_tuple = ['tester', '12312312', 'null']
         if not TESTING:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
