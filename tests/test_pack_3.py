@@ -15,10 +15,8 @@ class AddPhoto(unittest.TestCase):
         try:
             path = os.path.dirname(os.path.realpath(__file__)) + "/test_image.jpg"
             with open(path, 'rb') as f:
-                photo_extension = "png"
+                photo_extension = "jpg"
                 photo_binary = f.read()
-
-
 
             data = {
                 'username': 'tester@tester.com',
@@ -27,7 +25,7 @@ class AddPhoto(unittest.TestCase):
             }
 
             rv = self.app.post('/add_profile_picture', data=json.dumps(data), content_type='application/json')
-            # print(rv.data)
+
             assert b'added photo successfully' in rv.data
 
         except IOError:

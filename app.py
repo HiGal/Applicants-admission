@@ -10,7 +10,8 @@ app = Flask(__name__)
 app.secret_key = 'xyz'
 TESTING = False
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
 
 def hash_password(password: str) -> str:
     from hashlib import md5
@@ -123,6 +124,7 @@ def education():
     print("HET")
     return render_template('education.html')
 
+
 @app.route('/portfolio', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
@@ -138,15 +140,16 @@ def upload_file():
             return render_template('portfolio.html')
     return render_template('portfolio.html')
 
-@app.route('/uploads/<filename>')
+
+@app.route('/uploads/<filename>', methods=['POST'])
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 
 @app.route('/add_profile_picture', methods=['POST'])
 def add_profile_picture():
     # return Response('added photo successfully')
     if request.method == 'POST':
-
         data = request.get_json(silent=True)
         user = User(data['username'])
         user.add_photo(data['photo_extension'], data['photo_binary'], user.username)
