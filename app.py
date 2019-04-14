@@ -1,6 +1,5 @@
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
+from flask import Flask, redirect, render_template, request, Response, session
 from Models import User
-
 from Models import PassportData
 
 app = Flask(__name__)
@@ -24,8 +23,8 @@ def login():
         data = request.get_json(silent=True)
         data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        session['user'] = (data['username'], data['password'])
         if user.verify():
+            session['user'] = (user.username, user.password)
             return Response('/profile')
         else:
             return Response("Username or Password incorrect")
