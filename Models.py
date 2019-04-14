@@ -94,7 +94,7 @@ class User:
             'surname': tmp[3],
             'email': tmp[4],
             'birthday': tmp[5],
-            'sex': tmp[6],
+            'gender': tmp[6],
             'citizen': tmp[7]
         }
         return data
