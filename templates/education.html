@@ -101,22 +101,25 @@
         document.getElementById('btn-save').style.display = 'block';
     }
 
+    let count = 0;
+    let max_count = 5;
+
     //TODO: Add release year for additional school
     function append() {
+        if (count >= max_count) {
+            count = max_count;
+            return;
+        }
         var container = document.getElementById("edit_school");
         container.appendChild(document.createElement("br"));
+        container.appendChild(document.createElement("br"));
+
         var x = document.getElementsByClassName("form-control");
         container = document.getElementById("edit_school");
         var input = document.createElement("input");
+        count++;
         input.type = "text";
-        input.name = "form-controller";
-        input.style = " border-radius: 18px;\n" +
-            "    border-color: #1A428A;\n" +
-            "    margin-bottom: 20px;\n" +
-            "    width: 356px;" +
-            "margin-top: 30px;\n"+
-                "height: 40px;\n" +
-                "border-width: 1px;\n"
+        input.className = "form-control";
         input.placeholder = "Enter your school";
         container.appendChild(input);
         container.appendChild(document.createElement("br"));
