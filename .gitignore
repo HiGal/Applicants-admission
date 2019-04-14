@@ -1,7 +1,7 @@
 # IntelliJ files
 .idea/
 
-# Visual Studio Code Files
+# Visual Studio Code files
 .vscode/
 
 # Python Virtual Environment
@@ -9,3 +9,6 @@ venv/
 
 # Python cache
 __pycache__/
+
+# SonarQube and SonarScanner files
+.scannerwork/
