@@ -86,8 +86,7 @@ class User:
 
     def get_info(self):
         cursor = self.conn.cursor()
-        print('select * from sys_user where username=\'{}\';'.format(self.username))
-
+        # MAKE SURE THAT YOU DISABLED TESTING
         cursor.execute('select * from sys_user where username=\'{}\';'.format(self.username))
         tmp = cursor.fetchall()[0]
         data = {
