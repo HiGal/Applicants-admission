@@ -1,7 +1,7 @@
 from flask import Flask, redirect, render_template, request, json, Response, jsonify, session
 from Models import User
-from Models import PassportData
 
+from Models import PassportData
 app = Flask(__name__)
 app.secret_key = 'xyz'
 TESTING = True
@@ -115,8 +115,8 @@ def passport():
 
 @app.route('/education')
 def education():
-    return render_template('education.html')
+	return render_template('education.html')
 
 
 if __name__ == '__main__':
-    app.run()
+	app.run()
