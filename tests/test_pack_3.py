@@ -17,15 +17,9 @@ class AddPhoto(unittest.TestCase):
             with open(path, 'rb') as f:
                 photo_extension = "png"
                 photo_binary = f.read()
-                print(photo_binary)
 
-            zinj = photo_binary.decode()
-            bin = zinj.encode()
-            if bin == photo_binary:
-                print("Hurray")
-            # photo_binary = str(photo_binary, 'utf-8', 'ignore')
 
-            return
+
             data = {
                 'username': 'tester@tester.com',
                 'photo_extension': 'jpg',
