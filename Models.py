@@ -110,12 +110,14 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def add_photo(self, photo_extension, photo_binary_data):
+    def add_photo(self, photo_extension, photo_binary_data, username):
         # this function is to insert photos in the database
-        query = """insert into user_contact (photo_extension, photo) values (%s, %s)""" % (
-            photo_extension, photo_binary_data)
+        psycopg2.Binary(photo_binary_data)
+        query = """update user_contact set photo_extension = '%s', photo = %s where uname= '%s'""" % (
+            photo_extension, photo_binary_data, username)
         cursor = self.conn.cursor()
-        cursor.execute(str)
+        print(query)
+        cursor.execute(query)
         self.conn.commit()
         cursor.close()
 

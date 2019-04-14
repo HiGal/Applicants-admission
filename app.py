@@ -115,15 +115,21 @@ def passport():
 
 @app.route('/education')
 def education():
+    print("HET")
     return render_template('education.html')
 
-@app.route('/add_profile_picture')
-def add_picture():
+
+@app.route('/add_profile_picture', methods=['POST'])
+def add_profile_picture():
+    # return Response('added photo successfully')
     if request.method == 'POST':
+
         data = request.get_json(silent=True)
         user = User(data['username'])
-        user.add_photo(data['photo_extension'],data['photo_binary'])
+        user.add_photo(data['photo_extension'], data['photo_binary'], user.username)
+
         return Response('added photo successfully')
+
 
 if __name__ == '__main__':
     app.run()
