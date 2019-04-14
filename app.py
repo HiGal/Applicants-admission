@@ -152,7 +152,7 @@ def add_profile_picture():
     if request.method == 'POST':
         data = request.get_json(silent=True)
         user = User(data['username'])
-        user.add_photo(data['photo_extension'], data['photo_binary'], user.username)
+        user.add_photo(data['photo_extension'], data['photo_binary'],data['byte_count'], user.username)
 
         return Response('added photo successfully')
 

@@ -110,16 +110,36 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def add_photo(self, photo_extension, photo_binary_data, username):
+    def add_photo(self, photo_extension, photo_binary_data, byte_count, username):
         # this function is to insert photos in the database
-        psycopg2.Binary(photo_binary_data)
-        query = """update user_contact set photo_extension = '%s', photo = %s where uname= '%s'""" % (
+        # Decode as integer and send to server and then decode it to binary form
+        photo_binary_data = photo_binary_data.to_bytes(byte_count, byteorder='big')
+
+        photo_binary_data = psycopg2.Binary(photo_binary_data)
+
+        query = """update user_contact set photo_extension = '%s', photo_data = %s where uname= '%s'""" % (
             photo_extension, photo_binary_data, username)
         cursor = self.conn.cursor()
         print(query)
         cursor.execute(query)
         self.conn.commit()
+
         cursor.close()
+
+
+
+
+    def get_photo(self, username):
+        query = """select photo_data from user_contact where uname = 'tester@tester.com';"""
+
+        print(query)
+
+        cursor = self.conn.cursor()
+        cursor.execute(query)
+        zbr = cursor.fetchall()
+        self.conn.commit()
+        cursor.close()
+
 
 class PassportData:
 
