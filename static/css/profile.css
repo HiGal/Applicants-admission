@@ -20,55 +20,65 @@
     margin-top: 20%
 }
 
-.nav-link{
-    height:80px;
-    line-height:4.0;
-    text-align:center;
-    margin-left:2%;
+.nav-link {
+    height: 80px;
+    line-height: 4.0;
+    text-align: center;
+    margin-left: 2%;
     margin-right: 2%;
     font-family: Elektra Text Pro, sans-serif;
-    font-weight:800;
+    font-weight: 800;
     color: #97CAEB
 }
 
-.nav span{
-    margin-bottom:30px;
+.nav span {
+    margin-bottom: 30px;
 }
 
-.kostyl{
-    margin-top:100%;
+.kostyl {
+    margin-top: 100%;
 }
 
 .btn.btn.logout {
     margin-top: 4%;
     width: 15%;
     margin-left: 80%;
-    margin-bottom:3%;
-    padding-top:1.5%;
-    padding-bottom:1.5%;
+    margin-bottom: 3%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
     border-radius: 18px;
     border-color: #97CAEB;
     font-family: Elektra Text Pro, sans-serif;
     color: #97CAEB;
 }
 
-.btn.btn.edit{
+.btn.btn.edit {
     margin-top: 5%;
     margin-left: 38%;
     padding: 2% 2%;
     width: 15%;
     border-radius: 18px;
     border-width: 3px;
-    font-family: Elektra Text Pro; 
+    font-family: Elektra Text Pro;
     color: #1A428A;
 }
 
-.profile{
+input[type=file] {
+    margin-top: 5%;
+    padding: 2% 2%;
+    width: 256px;
+    border-radius: 18px;
+    border-width: 3px;
+    font-family: Elektra Text Pro;
+    color: #1A428A;
+}
+
+.profile {
     border-radius: 50%;
     margin-top: 3%;
 }
 
-.container.content{
+.container.content {
     margin-top: 5%;
 }
 
@@ -77,8 +87,8 @@
     color: lightgray;
 }
 
-.row1 hr{
-    margin-top: 40px;
+.row1 hr {
+    margin-top: 5px;
 }
 
 span.img_hr {
@@ -90,4 +100,39 @@ span.img_hr {
     margin-right: auto;
     border-style: inset;
     border-width: 1px;
+}
+
+input[type=text] {
+    border-radius: 18px;
+    border-color: #1A428A;
+    margin-bottom: 20px;
+    width: 356px;
+
+}
+
+input[type=date] {
+    border-radius: 18px;
+    border-color: #1A428A;
+    margin-bottom: 20px;
+    width: 189px;
+}
+
+.text {
+    font-family: Elektra Text Pro;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.message {
+    font-family: Elektra Text Pro;
+    color: red;
+    font-size: 16px;
+}
+
+.add_school {
+    border-radius: 18px;
+    border-color: #1A428A;
+    border-width: 1px;
+    background-color: white;
+    margin-top: 20px;
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Personal account</title>
+    <title>Personal info</title>
 </head>
 <link rel="stylesheet" href="../static/css/profile.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -15,28 +15,24 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <body>
-
 <div class="row">
     <div class="col-3">
-        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <img src="../static/img/logo.svg" class="img">
-            <span><hr class="img_hr"></span>
+            <span><hr></span>
 
-            <a class="nav-link active" id="profile" href="/profile" role="tab"
-               aria-controls="profile" aria-selected="true">Personal info</a>
-            <a class="nav-link" id="contacts" href="/contacts" role="tab"
+            <a class="nav-link active" id="profile-prof" href="#profile-prof" role="tab"
+               aria-controls="profile-prof" aria-selected="true">Personal info</a>
+            <a class="nav-link" id="contacts" href="#contacts" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
-            <a class="nav-link" id="passport" href="passport" role="tab"
-               aria-controls="passport"
-               aria-selected="false">Passport <span>/</span> ID</a>
-            <a class="nav-link" id="education" href="/education" role="tab"
-               aria-controls="education"
-               aria-selected="false">Education</a>
-            <a class="nav-link" id="portfolio" href="/portfolio" role="tab"
-               aria-controls="portfolio"
-               aria-selected="false">Portfolio</a>
-            <a class="nav-link" id="tests"href="#tests" role="tab" aria-controls="tests"
+            <a class="nav-link" id="list-applicants" href="#list-applicants" role="tab"
+               aria-controls="list-applicants"
+               aria-selected="false">List of applicants <span>/</span> ID</a>
+            <a class="nav-link" id="portfolios" href="#portfolios" role="tab"
+               aria-controls="portfolios"
+               aria-selected="false">Portfolios</a>
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
                aria-selected="false">Tests</a>
 
             <div class="kostyl">
@@ -142,7 +138,6 @@
     </div>
 </div>
 </body>
-
 <script>
     function send() {
         var data = {
@@ -183,5 +178,4 @@
 
 
 </script>
-
 </html>
