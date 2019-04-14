@@ -86,6 +86,8 @@ class User:
 
     def get_info(self):
         cursor = self.conn.cursor()
+        print('select * from sys_user where username=\'{}\';'.format(self.username))
+
         cursor.execute('select * from sys_user where username=\'{}\';'.format(self.username))
         tmp = cursor.fetchall()[0]
         data = {
@@ -135,8 +137,8 @@ class PassportData:
             cursor = self.conn.cursor()
             print("EMPTY HERE")
             cursor.execute(
-                "UPDATE passport_data SET passport_series= '%s', passport_number= '%s', issue_date= '%s', issuing_authority='%s' where passport_data.username = '%s' "\
-                    %( series, number, date, authority, self.username)
+                "UPDATE passport_data SET passport_series= '%s', passport_number= '%s', issue_date= '%s', issuing_authority='%s' where passport_data.username = '%s' " \
+                % (series, number, date, authority, self.username)
             )
             self.conn.commit()
             cursor.close()

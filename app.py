@@ -5,7 +5,7 @@ from Models import PassportData
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
-TESTING = True
+TESTING = False
 
 
 def hash_password(password: str) -> str:
