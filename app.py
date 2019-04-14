@@ -1,8 +1,9 @@
+import os
 from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
 from Models import User, PassportData
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = '/uploads'
+UPLOAD_FOLDER = 'D:/lectures/Software Project/dev/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
@@ -130,7 +131,7 @@ def upload_file():
         if file.filename == '':
             Response('No selected file')
             return Response(request.url)
-        if file and allowed_file(file.filename):
+        if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template('portfolio.html')
