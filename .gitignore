@@ -1,2 +1,11 @@
-
+# IntelliJ files
 .idea/
+
+# Visual Studio Code Files
+.vscode/
+
+# Python Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
