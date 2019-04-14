@@ -8,7 +8,7 @@ ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
-TESTING = False
+TESTING = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
@@ -105,7 +105,7 @@ def contacts():
 @app.route('/passport', methods=['GET', 'POST'])
 def passport():
     if request.method == 'GET':
-        username = "tester"
+        username = "tester@tester.com"
         if not TESTING:
             username = session.get('user')[0]
         data = PassportData(username).retrieve()
@@ -121,7 +121,6 @@ def passport():
 
 @app.route('/education')
 def education():
-    print("HET")
     return render_template('education.html')
 
 
@@ -146,8 +145,9 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
-@app.route('/add_profile_picture', methods=['POST'])
-def add_profile_picture():
+@app.route('/profile_picture', methods=['POST', 'GET'])
+def profile_picture():
+
     # return Response('added photo successfully')
     if request.method == 'POST':
         data = request.get_json(silent=True)
@@ -155,6 +155,21 @@ def add_profile_picture():
         user.add_photo(data['photo_extension'], data['photo_binary'],data['byte_count'], user.username)
 
         return Response('added photo successfully')
+    else:
+        username = "tester@tester.com"
+        if not TESTING:
+            username = session.get('user')[0]
+
+        # now we are going to retrieve data from the db
+        user = User(username)
+        user.get_photo(username)
+        return Response(b'got the picture')
+        # add some template
+
+
+
+
+
 
 
 if __name__ == '__main__':

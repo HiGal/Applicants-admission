@@ -26,9 +26,8 @@ class AddPhoto(unittest.TestCase):
                 photo_extension = "jpg"
                 photo_binary = f.read()
                 f.close()
-
+            # print(photo_binary)
             photo_integer = int.from_bytes(photo_binary, byteorder='big')
-
 
             data = {
                 'username': 'tester@tester.com',
@@ -37,15 +36,16 @@ class AddPhoto(unittest.TestCase):
                 'byte_count': len(photo_binary)
             }
 
-            rv = self.app.post('/add_profile_picture', data=json.dumps(data), content_type='application/json')
-
+            rv = self.app.post('/profile_picture', data=json.dumps(data), content_type='application/json')
             assert b'added photo successfully' in rv.data
-
-
-
 
         except IOError:
             print("file does not exist")
+
+    def test_get_profile_picture(self):
+        rv = self.app.get('/profile_picture', data=json.dumps([]), content_type='application/json')
+
+        assert b'got the picture' in rv.data
 
 
 if __name__ == '__main__':

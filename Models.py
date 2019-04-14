@@ -4,6 +4,7 @@ import psycopg2
 
 import SecretConstants
 import Secure
+import os
 
 
 def db_connect():
@@ -120,25 +121,36 @@ class User:
         query = """update user_contact set photo_extension = '%s', photo_data = %s where uname= '%s'""" % (
             photo_extension, photo_binary_data, username)
         cursor = self.conn.cursor()
-        print(query)
+        # print(query)
         cursor.execute(query)
         self.conn.commit()
 
         cursor.close()
-
-
-
 
     def get_photo(self, username):
-        query = """select photo_data from user_contact where uname = 'tester@tester.com';"""
+        try:
+            query = """select photo_data from user_contact where uname = '%s';""" % username
 
-        print(query)
+            path = os.path.dirname(os.path.realpath(__file__))
+            # print(query)
 
-        cursor = self.conn.cursor()
-        cursor.execute(query)
-        zbr = cursor.fetchall()
-        self.conn.commit()
-        cursor.close()
+            cursor = self.conn.cursor()
+            cursor.execute(query)
+            memory_view = cursor.fetchone()
+
+            res = b''
+
+            for i in memory_view[0]:
+                res = res + i
+            try:
+                with open(path + "/tests/test_out.jpg", 'wb') as f:
+                    f.write(res)
+            except Exception:
+                print("Mistake in directory")
+            cursor.close()
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
 
 
 class PassportData:
