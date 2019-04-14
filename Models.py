@@ -101,15 +101,23 @@ class User:
 
     def update_info(self, fname, sname, bdate, gender, citizenship):
         table_name = "sys_user"
-        cursor = self.conn.cursor()
 
         str = "UPDATE %s SET name = '%s', surname = '%s', birthday='%s', sex='%s', citizen='%s' WHERE username = '%s';" \
               % (table_name, fname, sname, bdate, gender, citizenship, self.username)
         print(str)
+        cursor = self.conn.cursor()
         cursor.execute(str)
         self.conn.commit()
         cursor.close()
 
+    def add_photo(self, photo_extension, photo_binary_data):
+        # this function is to insert photos in the database
+        query = """insert into user_contact (photo_extension, photo) values (%s, %s)""" % (
+            photo_extension, photo_binary_data)
+        cursor = self.conn.cursor()
+        cursor.execute(str)
+        self.conn.commit()
+        cursor.close()
 
 class PassportData:
 
