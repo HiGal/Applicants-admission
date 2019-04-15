@@ -10,8 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'xyz'
 TESTING = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
-
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB
 
 def hash_password(password: str) -> str:
     from hashlib import md5
@@ -109,7 +108,7 @@ def passport():
         if not TESTING:
             username = session.get('user')[0]
         data = PassportData(username).retrieve()
-        return render_template('passport.html')
+        return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
         username = data['username']  #
@@ -139,8 +138,7 @@ def upload_file():
             return render_template('portfolio.html')
     return render_template('portfolio.html')
 
-
-@app.route('/uploads/<filename>', methods=['POST'])
+@app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
@@ -170,6 +168,16 @@ def profile_picture():
 
 
 
+
+
+# @app.route('/portfolio', methods=['GET','POST'])
+# def portfolio():
+#     if request.method == 'POST':
+#         data = request.get_json(silent=True)
+#         print(data['pdf'])
+#         return Response(data['pdf'])
+#     else:
+#         return render_template('portfolio.html')
 
 
 if __name__ == '__main__':
