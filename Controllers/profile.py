@@ -1,22 +1,30 @@
-from flask import Blueprint, session, render_template, request, Response
+from flask import Blueprint, session, render_template, request, Response, send_from_directory
 from Models.Models import User, PassportData
+from app import *
+from werkzeug.utils import secure_filename
+import os
 
 profile_controller = Blueprint('profile_controller', __name__, template_folder='templates')
+TESTING = False
 
 
 @profile_controller.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.get_info()
         data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
         return render_template('profile.html', data=data)
     else:
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
+
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
-        print(data)
         fname = data['fname']
         sname = data['sname']
         bdate = data['bdate']
@@ -29,12 +37,18 @@ def profile():
 @profile_controller.route('/contacts', methods=['GET', 'POST'])
 def contacts():
     if request.method == 'GET':
-        user_tuple = session.get('user')
+
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.contacts()
+        print(data)
         return render_template('contacts.html', data=data)
     else:
-        user_tuple = session.get('user')
+        user_tuple = ['tester', '12312312', 'null']
+        if not TESTING:
+            user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
         user.update_contacts(data['index'], data['region'], data['city'], data['street'],
@@ -45,7 +59,9 @@ def contacts():
 @profile_controller.route('/passport', methods=['GET', 'POST'])
 def passport():
     if request.method == 'GET':
-        username = session.get('user')[0]
+        username = "tester"
+        if not TESTING:
+            username = session.get('user')[0]
         data = PassportData(username).retrieve()
         return render_template('passport.html')
     else:
@@ -57,6 +73,27 @@ def passport():
         return Response('Success')
 
 
+@profile_controller.route('/portfolio', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return Response('No file part')
+        file = request.files['file']
+        if file.filename == '':
+            Response('No selected file')
+            return Response(request.url)
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template('portfolio.html')
+    return render_template('portfolio.html')
+
+
 @profile_controller.route('/education')
 def education():
     return render_template('education.html')
+
+
+@profile_controller.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)

@@ -16,8 +16,8 @@ def login():
         data = request.get_json(silent=True)
         data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        session['user'] = (data['username'], data['password'])
         if user.verify():
+            session['user'] = (user.username, user.password)
             return Response('/profile')
         else:
             return Response("Username or Password incorrect")
@@ -40,3 +40,4 @@ def register():
         else:
             return Response("Password are not the same!")
     return render_template('registration.html')
+
