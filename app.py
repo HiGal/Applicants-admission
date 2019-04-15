@@ -104,7 +104,7 @@ def passport():
         if not TESTING:
             username = session.get('user')[0]
         data = PassportData(username).retrieve()
-        return render_template('passport.html')
+        return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
         username = data['username']  #
