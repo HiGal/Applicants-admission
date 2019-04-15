@@ -264,6 +264,7 @@ class Portfolio:
         self.conn = db_connect()
         self.username = username
         self.document = b'0'
+        self.byte_count = 0
 
     def insert_file(self, document, byte_count):
         document = document.to_bytes(byte_count, byteorder='big')
@@ -301,7 +302,7 @@ class Portfolio:
 
     def retrieve(self):
         if self.document is not b'0':
-            return self.document
+            return {'attachment_integer': self.document, 'byte_count': self.byte_count}
 
         cursor = self.conn.cursor()
         cursor.execute(
@@ -311,13 +312,10 @@ class Portfolio:
         )
 
         if cursor.rowcount == 0:
-            return b'0'
+            return 0
 
         record = next(cursor)
         cursor.close()
-
-        self.document = record[0]
-        return {
-            'attachment_integer': record[0],
-            'byte_count': len(record)
-        }
+        self.byte_count = len(record[0])
+        self.document = int.from_bytes(record[0], byteorder='big')
+        return {'attachment_integer': record[0], 'byte_count': self.byte_count}
