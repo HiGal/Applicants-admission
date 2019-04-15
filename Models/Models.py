@@ -284,3 +284,23 @@ class Portfolio:
         cursor.close()
 
         self.document = document
+
+    def retrieve(self) -> bytes:
+        if self.document is not b'0':
+            return self.document
+
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT document FROM portfolios '
+            'WHERE username = %s;',
+            [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            return b'0'
+
+        record = next(cursor)
+        cursor.close()
+
+        self.document = record[0]
+        return record[0]
