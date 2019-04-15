@@ -116,7 +116,12 @@ class User:
 
     def update_info(self, fname, sname, bdate, gender, citizenship):
 
-
+        stuff = self.get_info()
+        # print(stuff)
+        if not bdate:
+            bdate = stuff['birthday']
+        if not gender:
+            gender = stuff['gender']
         cursor = self.conn.cursor()
 
         cursor.execute(
