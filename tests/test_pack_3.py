@@ -51,7 +51,6 @@ class AddPhoto(unittest.TestCase):
                 'name_of_attachment': "pdf_attachment",
                 'byte_count': len(attachment_binary)
             }
-            print("High five")
             rv = self.app.post('/add_attachment', data=json.dumps(data), content_type='application/json')
             assert b'added attachment successfully'
         except IOError:

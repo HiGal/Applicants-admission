@@ -21,6 +21,7 @@ class User:
         self.username = username
         self.password = password
 
+
     def verify(self):
         cursor = self.conn.cursor()
         password = self.password
@@ -107,14 +108,17 @@ class User:
             'surname': record[3],
             'email': record[4],
             'birthday': record[5],
-            'sex': record[6],
+            'gender': record[6],
             'citizen': record[7]
         }
 
         return data
 
     def update_info(self, fname, sname, bdate, gender, citizenship):
+
+
         cursor = self.conn.cursor()
+
         cursor.execute(
             'UPDATE sys_user SET name = %s, surname = %s, birthday = %s, sex = %s, citizen = %s '
             'WHERE username = %s;',
