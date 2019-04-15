@@ -42,11 +42,12 @@ class RegistrationTest(unittest.TestCase):
 
     def test_login(self):
         data_corr = {
-            'username': 'f.galeev@innopolis.ru',
-            'password': '123'
+            'username': 'tester@tester.com',
+            'password': '123123'
         }
         rv = self.app.post('/login', data=json.dumps(data_corr), content_type='application/json')
-        assert b'Success!' == rv.data
+        # print(rv.data)
+        assert b'/profile' == rv.data
 
         data_incorr1 = {
             'username': 'f.galeev',

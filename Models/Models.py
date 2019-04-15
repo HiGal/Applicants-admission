@@ -3,6 +3,7 @@ import hashlib
 import psycopg2
 
 from Security import SecretConstants, Secure
+import os
 
 
 def db_connect():
@@ -120,6 +121,47 @@ class User:
         )
         self.conn.commit()
         cursor.close()
+
+    def add_photo(self, photo_extension, photo_binary_data, byte_count, username):
+        # this function is to insert photos in the database
+        # Decode as integer and send to server and then decode it to binary form
+        photo_binary_data = photo_binary_data.to_bytes(byte_count, byteorder='big')
+
+        photo_binary_data = psycopg2.Binary(photo_binary_data)
+
+        query = """update user_contact set photo_extension = '%s', photo_data = %s where uname= '%s'""" % (
+            photo_extension, photo_binary_data, username)
+        cursor = self.conn.cursor()
+        # print(query)
+        cursor.execute(query)
+        self.conn.commit()
+
+        cursor.close()
+
+    def get_photo(self, username):
+        try:
+            query = """select photo_data from user_contact where uname = '%s';""" % username
+
+            path = os.path.dirname(os.path.realpath(__file__))
+            # print(query)
+
+            cursor = self.conn.cursor()
+            cursor.execute(query)
+            memory_view = cursor.fetchone()
+
+            res = b''
+
+            for i in memory_view[0]:
+                res = res + i
+            try:
+                with open(path + "/tests/test_out.jpg", 'wb') as f:
+                    f.write(res)
+            except Exception:
+                print("Mistake in directory")
+            cursor.close()
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
 
 
 class PassportData:
