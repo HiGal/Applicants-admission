@@ -23,7 +23,7 @@ def hash_password(password: str) -> str:
     return md5(password.encode()).hexdigest()
 
 
-
+TESTING = False
 
 
 @app.route('/profile', methods=['GET', 'POST'])
