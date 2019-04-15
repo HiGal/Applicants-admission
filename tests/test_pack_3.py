@@ -41,17 +41,22 @@ class AddPhoto(unittest.TestCase):
         assert b'got the picture' in rv.data
 
     def test_add_pdf_attachment(self):
+        path = os.path.dirname(os.path.realpath(__file__)) + "/attachment.pdf"
         try:
-            with open("attachment.pdf", 'rb') as f:
+            with open(path, 'rb') as f:
                 attachment_binary = f.read()
             attachment_integer = int.from_bytes(attachment_binary, byteorder='big')
             data = {
                 'attachment_integer': attachment_integer,
-                'name_of_attachment': "pdf_attachment"
+                'name_of_attachment': "pdf_attachment",
+                'byte_count': len(attachment_binary)
             }
+            print("High five")
             rv = self.app.post('/add_attachment', data=json.dumps(data), content_type='application/json')
+            assert b'added attachment successfully'
         except IOError:
             print("File is not there")
+        assert b'0'
 
     def test_get_pdf_attachment(self):
 

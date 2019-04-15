@@ -5,7 +5,7 @@ from Controllers.profile import profile_controller
 
 import os
 from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
-from Models.Models import User, PassportData
+from Models.Models import User, PassportData, Portfolio
 
 UPLOAD_FOLDER = 'D:/lectures/Software Project/dev/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
@@ -16,14 +16,15 @@ app.register_blueprint(login_controller)
 app.register_blueprint(registration_controller)
 app.register_blueprint(profile_controller)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
 
 def hash_password(password: str) -> str:
     from hashlib import md5
     return md5(password.encode()).hexdigest()
 
 
-TESTING = False
+TESTING = True
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -95,34 +96,13 @@ def education():
     return render_template('education.html')
 
 
-@app.route('/portfolio', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            return Response('No file part')
-        file = request.files['file']
-        if file.filename == '':
-            Response('No selected file')
-            return Response(request.url)
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('portfolio.html')
-    return render_template('portfolio.html')
-
-@app.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
 @app.route('/profile_picture', methods=['POST', 'GET'])
 def profile_picture():
-
     # return Response('added photo successfully')
     if request.method == 'POST':
         data = request.get_json(silent=True)
         user = User(data['username'])
-        user.add_photo(data['photo_extension'], data['photo_binary'],data['byte_count'], user.username)
+        user.add_photo(data['photo_extension'], data['photo_binary'], data['byte_count'], user.username)
 
         return Response('added photo successfully')
     else:
@@ -137,8 +117,22 @@ def profile_picture():
         # add some template
 
 
+@app.route('/add_attachment', methods=['GET', 'POST'])
+def add_attachment():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
+        attachment_integer = data['attachment_integer']
+        #print(attachment_binary)
+        # name_of_attachment = data['name_of_attachment']
+        user_portfolio = Portfolio(username)
+        user_portfolio.insert_file(attachment_integer, data['byte_count'])
 
-
+        return Response('added attachment successfully')
+    else:
+        return Response('zinj')
 
 
 
