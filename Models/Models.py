@@ -298,7 +298,7 @@ class Portfolio:
 
     def retrieve(self):
         if self.document is not b'0':
-            return self.document
+            return {'attachment_integer': self.document}
 
         cursor = self.conn.cursor()
         cursor.execute(
@@ -308,12 +308,11 @@ class Portfolio:
         )
 
         if cursor.rowcount == 0:
-            return b'0'
+            return 0
 
         record = next(cursor)
         cursor.close()
 
         self.document = record[0]
-        return {'attachment_integer': record[0],
-                'byte_count': len(record)
+        return {'attachment_integer': record[0]
                 }
