@@ -21,7 +21,6 @@ class User:
         self.username = username
         self.password = password
 
-
     def verify(self):
         cursor = self.conn.cursor()
         password = self.password
@@ -266,6 +265,10 @@ class PassportData:
         self.issuing_authority = Secure.decrypt(record[4].encode(), encryption_key).decode()
 
         return True
+
+    def get_data_without_db(self):
+        return {'passport_series': self.passport_number, 'passport_number': self.passport_number,
+                'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority}
 
 
 class Portfolio:
