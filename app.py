@@ -141,8 +141,7 @@ def add_attachment():
             username = session.get('user')[0]
             user_portfolio = Portfolio(username)
             data = user_portfolio.retrieve()
-        return Response('zinj')
-
+        return Response('got the picture')
 
 
 # @app.route('/portfolio', methods=['GET','POST'])
