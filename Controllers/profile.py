@@ -1,33 +1,14 @@
-from flask import Flask, redirect, render_template, request, Response, session
-from Controllers.login import login_controller
-from Controllers.registration import registration_controller
-from Controllers.profile import profile_controller
-
-import os
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
+from flask import Blueprint, session, render_template, request, Response, send_from_directory
 from Models.Models import User, PassportData
+from app import *
+from werkzeug.utils import secure_filename
+import os
 
-UPLOAD_FOLDER = 'D:/lectures/Software Project/dev/uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
-
-app = Flask(__name__)
-app.secret_key = 'xyz'
-app.register_blueprint(login_controller)
-app.register_blueprint(registration_controller)
-app.register_blueprint(profile_controller)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+profile_controller = Blueprint('profile_controller', __name__, template_folder='templates')
+TESTING = False
 
 
-def hash_password(password: str) -> str:
-    from hashlib import md5
-    return md5(password.encode()).hexdigest()
-
-
-
-
-
-@app.route('/profile', methods=['GET', 'POST'])
+@profile_controller.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
         user_tuple = ['tester', '12312312', 'null']
@@ -53,7 +34,7 @@ def profile():
         return Response('Basic info successfully created')
 
 
-@app.route('/contacts', methods=['GET', 'POST'])
+@profile_controller.route('/contacts', methods=['GET', 'POST'])
 def contacts():
     if request.method == 'GET':
 
@@ -62,6 +43,7 @@ def contacts():
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.contacts()
+        print(data)
         return render_template('contacts.html', data=data)
     else:
         user_tuple = ['tester', '12312312', 'null']
@@ -74,10 +56,10 @@ def contacts():
         return Response('Successfully updated!')
 
 
-@app.route('/passport', methods=['GET', 'POST'])
+@profile_controller.route('/passport', methods=['GET', 'POST'])
 def passport():
     if request.method == 'GET':
-        username = "tester@tester.com"
+        username = "tester"
         if not TESTING:
             username = session.get('user')[0]
         data = PassportData(username).retrieve()
@@ -91,12 +73,7 @@ def passport():
         return Response('Success')
 
 
-@app.route('/education')
-def education():
-    return render_template('education.html')
-
-
-@app.route('/portfolio', methods=['GET', 'POST'])
+@profile_controller.route('/portfolio', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
@@ -112,37 +89,11 @@ def upload_file():
     return render_template('portfolio.html')
 
 
-@app.route('/uploads/<filename>', methods=['POST'])
+@profile_controller.route('/education')
+def education():
+    return render_template('education.html')
+
+
+@profile_controller.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
-
-@app.route('/profile_picture', methods=['POST', 'GET'])
-def profile_picture():
-
-    # return Response('added photo successfully')
-    if request.method == 'POST':
-        data = request.get_json(silent=True)
-        user = User(data['username'])
-        user.add_photo(data['photo_extension'], data['photo_binary'],data['byte_count'], user.username)
-
-        return Response('added photo successfully')
-    else:
-        username = "tester@tester.com"
-        if not TESTING:
-            username = session.get('user')[0]
-
-        # now we are going to retrieve data from the db
-        user = User(username)
-        user.get_photo(username)
-        return Response(b'got the picture')
-        # add some template
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    app.run()
