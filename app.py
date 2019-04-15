@@ -112,7 +112,11 @@ def profile_picture():
 
         # now we are going to retrieve data from the db
         user = User(username)
-        user.get_photo(username)
+        data = user.get_photo(username)
+
+        # PAY ATTENTION THAT DATA HERE IS
+        #  data = {photo_integer, byte_count}
+        #
         return Response(b'got the picture')
         # add some template
 
@@ -132,6 +136,11 @@ def add_attachment():
 
         return Response('added attachment successfully')
     else:
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
+            user_portfolio = Portfolio(username)
+            data = user_portfolio.retrieve()
         return Response('zinj')
 
 

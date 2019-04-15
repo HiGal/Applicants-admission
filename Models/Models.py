@@ -154,12 +154,18 @@ class User:
 
             for i in memory_view[0]:
                 res = res + i
+            '''
             try:
                 with open(path + "/tests/test_out.jpg", 'wb') as f:
                     f.write(res)
+            
             except Exception:
                 print("Mistake in directory")
+            '''
             cursor.close()
+            return {'photo_integer': int.from_bytes(res, byteorder='big'),
+                    'byte_count': len(res)
+                    }
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
@@ -269,27 +275,45 @@ class Portfolio:
             'SELECT username FROM portfolios WHERE username = %s;',
             [self.username]
         )
-        print("passed first query")
+
         if cursor.rowcount == 0:
 
             cursor.execute(
                 'INSERT INTO portfolios (username, document) '
                 'VALUES (%s, %s)', (self.username, document)
             )
-            print("passed second query")
-
         else:
-            print("before 3rd query")
             cursor.execute(
                 'UPDATE portfolios '
                 'SET document = %s '
                 'WHERE username = %s;',
                 (document, self.username)
             )
-            print("passed 3rd query")
 
         self.conn.commit()
         cursor.close()
         self.document = document
         print("returned")
         return True
+
+    def retrieve(self):
+        if self.document is not b'0':
+            return self.document
+
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT document FROM portfolios '
+            'WHERE username = %s;',
+            [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            return b'0'
+
+        record = next(cursor)
+        cursor.close()
+
+        self.document = record[0]
+        return {'attachment_integer': record[0],
+                'byte_count': len(record)
+                }
