@@ -7,13 +7,6 @@
 <link rel="stylesheet" href="../static/css/profile.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 <body>
 <div class="row">
     <div class="col-3">
@@ -75,15 +68,49 @@
         var reader = new FileReader();
 
         reader.onloadend = function () {
-            preview.src = reader.result;
-        }
+            {#preview.src = reader.result;#}
+            console.log(reader.result);
+        };
 
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
+
         } else {
             preview.src = "";
         }
     }
 
+    function send() {
+        var file = document.querySelector('input[type=file]').files[0];
+
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            {#reader.readAsDataURL(reader.result);#}
+            var data = {'pdf': reader.result.split(",")[1]};
+            alert(JSON.stringify(data));
+            $.ajax({
+                url: '/portfolio',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        };
+
+        if (file) {
+            reader.readAsDataURL(file); //reads the data as a URL
+
+        }
+    }
+
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </html>

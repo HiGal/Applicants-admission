@@ -58,7 +58,7 @@
                         <div id="div_passport_series" style="display: block">
                             <label class="field">Passport series:</label>
                             <div class="text">
-                                Passport series
+                                {{ data['passport_series'] }}
                             </div>
                             <hr>
                         </div>
@@ -70,7 +70,7 @@
                         <div id="div_date_of_issue" style="display: block">
                             <label class="field">Date of issue:</label>
                             <div class="text">
-                                Date of issue
+                                {{ data['issue_date'] }}
                             </div>
                             <hr>
                         </div>
@@ -84,7 +84,7 @@
                         <div id="div_passport_number" style="display: block">
                             <label class="field">Passport number:</label>
                             <div class="text">
-                                Passport number
+                                {{ data ['passport_number'] }}
                             </div>
                             <hr>
                         </div>
@@ -96,7 +96,7 @@
                         <div id="div_authority_code" style="display: block">
                             <label class="field">Issuing authority code:</label>
                             <div class="text">
-                                Issuing authority code
+                                {{ data ['issuing_authority'] }}
                             </div>
                             <hr>
                         </div>
@@ -115,6 +115,28 @@
 </div>
 </body>
 <script>
+
+    function send() {
+        var data = {
+            'passport_series': document.getElementById('edit_passport_series').value,
+            'passport_number': document.getElementById('edit_passport_number').value,
+            'issue_date': document.getElementById('edit_date_of_issue').value,
+            'issuing_authority': document.getElementById('edit_authority_code').value
+        };
+
+        $.ajax({
+            url: '/passport',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data === 'Successfully updated!')
+                    document.location.reload();
+            }
+        })
+
+    }
+
     function edit() {
         document.getElementById('edit_passport_series').style.display = 'block';
         document.getElementById('div_passport_series').style.display = 'none';
