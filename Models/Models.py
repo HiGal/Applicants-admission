@@ -123,6 +123,7 @@ class User:
 
 
 class PassportData:
+    from typing import Optional
 
     def __init__(self, username, passport_series=None, passport_number=None, issue_date=None,
                  issuing_authority=None):
@@ -133,16 +134,34 @@ class PassportData:
         self.issue_date = issue_date
         self.issuing_authority = issuing_authority
 
+    def __get_user_hashed_pass__(self, cursor) -> Optional[str]:
+        cursor.execute(
+            'SELECT password FROM sys_user '
+            'WHERE username = %s;', [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            cursor.close()
+            return None
+
+        record = next(cursor)
+
+        return record[0]
+
     def register(self, passport_series: str, passport_num: str, issue_date: str, issuing_authority: str):
-        encryption_key = Secure.create_key(SecretConstants.PASSPORT_ENCRYPTION_PASS,
-                                           SecretConstants.PASSPORT_ENCRYPTION_SALT)
+        cursor = self.conn.cursor()
+
+        user_password = self.__get_user_hashed_pass__(cursor)
+        if not user_password:
+            return False
+
+        encryption_key = Secure.create_key(user_password.encode(), SecretConstants.PASSPORT_ENCRYPTION_SALT)
 
         series = Secure.encrypt(passport_series.encode(), encryption_key).decode()
         number = Secure.encrypt(passport_num.encode(), encryption_key).decode()
         date = Secure.encrypt(issue_date.encode(), encryption_key).decode()
         authority = Secure.encrypt(issuing_authority.encode(), encryption_key).decode()
 
-        cursor = self.conn.cursor()
         cursor.execute('SELECT username FROM passport_data WHERE passport_data.username = %s;', [self.username])
         if cursor.rowcount != 0:
             cursor.execute(
@@ -162,8 +181,12 @@ class PassportData:
         self.conn.commit()
         cursor.close()
 
-    def retrieve(self):
+    def retrieve(self) -> bool:
         cursor = self.conn.cursor()
+
+        user_password = self.__get_user_hashed_pass__(cursor)
+        if not user_password:
+            return False
 
         cursor.execute(
             'SELECT * FROM passport_data '
@@ -177,8 +200,7 @@ class PassportData:
         record = next(cursor)
         cursor.close()
 
-        encryption_key = Secure.create_key(SecretConstants.PASSPORT_ENCRYPTION_PASS,
-                                           SecretConstants.PASSPORT_ENCRYPTION_SALT)
+        encryption_key = Secure.create_key(user_password.encode(), SecretConstants.PASSPORT_ENCRYPTION_SALT)
 
         self.passport_series = Secure.decrypt(record[1].encode(), encryption_key).decode()
         self.passport_number = Secure.decrypt(record[2].encode(), encryption_key).decode()
