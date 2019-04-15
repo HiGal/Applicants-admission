@@ -269,15 +269,16 @@ class Portfolio:
         document = document.to_bytes(byte_count, byteorder='big')
         print(len(document))
         document = psycopg2.Binary(document)
+
         cursor = self.conn.cursor()
         print(self.username)
+
         cursor.execute(
             'SELECT username FROM portfolios WHERE username = %s;',
             [self.username]
         )
 
         if cursor.rowcount == 0:
-
             cursor.execute(
                 'INSERT INTO portfolios (username, document) '
                 'VALUES (%s, %s)', (self.username, document)
@@ -292,7 +293,9 @@ class Portfolio:
 
         self.conn.commit()
         cursor.close()
+
         self.document = document
+
         print("returned")
         return True
 
@@ -314,6 +317,7 @@ class Portfolio:
         cursor.close()
 
         self.document = record[0]
-        return {'attachment_integer': record[0],
-                'byte_count': len(record)
-                }
+        return {
+            'attachment_integer': record[0],
+            'byte_count': len(record)
+        }
