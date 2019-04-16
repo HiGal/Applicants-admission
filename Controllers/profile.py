@@ -63,7 +63,7 @@ def passport():
         if not TESTING:
             username = session.get('user')[0]
         data = PassportData(username).retrieve()
-        return render_template('passport.html')
+        return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
         username = data['username']  #
@@ -97,3 +97,26 @@ def education():
 @profile_controller.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
+@profile_controller.route('/profile_picture', methods=['POST', 'GET'])
+def profile_picture():
+    # return Response('added photo successfully')
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        print(data)
+        user_data = session.get('user')
+        user = User(user_data[0])
+        user.add_photo(data['photo_extension'], data['photo_binary'], data['byte_count'], user.username)
+
+        return Response('added photo successfully')
+    else:
+        username = "tester@tester.com"
+        if not TESTING:
+            username = session.get('user')[0]
+
+        # now we are going to retrieve data from the db
+        user = User(username)
+        user.get_photo(username)
+        return Response(b'got the picture')
+        # add some template

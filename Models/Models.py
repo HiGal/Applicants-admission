@@ -24,7 +24,6 @@ class User:
     def verify(self):
         cursor = self.conn.cursor()
         password = self.password
-        password = hashlib.md5(password.encode()).hexdigest()
         cursor.execute(
             'SELECT * FROM sys_user WHERE username = %s AND password = %s;',
             (self.username, password)
@@ -107,7 +106,7 @@ class User:
             'surname': record[3],
             'email': record[4],
             'birthday': record[5],
-            'sex': record[6],
+            'gender': record[6],
             'citizen': record[7]
         }
 
