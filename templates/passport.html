@@ -123,6 +123,7 @@
             'issue_date': document.getElementById('date_of_issue').value,
             'issuing_authority': document.getElementById('authority_code').value
         };
+
         $.ajax({
             url: '/passport',
             method: 'POST',
