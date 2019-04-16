@@ -38,7 +38,6 @@ class User:
         return False
 
     def register(self, username, password, name, sname, email, bdate):
-        password = hashlib.md5(password.encode()).hexdigest()
         self.password = password
         self.username = username
         cursor = self.conn.cursor()
@@ -148,8 +147,8 @@ class User:
             cursor = self.conn.cursor()
             cursor.execute(query)
             photo_data = cursor.fetchall()[0][0]
-            print(path + "../static/img/profile.png")
-            if len(photo_data) == 0:
+            print(path + "/../static/img/profile.png")
+            if photo_data is None:
                 with open(path + "/../static/img/profile.png", "rb") as f:
                     photo_data = f.read()
                 photo_data = base64.b64encode(photo_data).decode('ascii')
