@@ -16,18 +16,15 @@ app.register_blueprint(login_controller)
 app.register_blueprint(registration_controller)
 app.register_blueprint(profile_controller)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 MB
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
 
 def hash_password(password: str) -> str:
     from hashlib import md5
     return md5(password.encode()).hexdigest()
 
 
-TESTING = False
-
-
-
-
+TESTING = True
 
 if __name__ == '__main__':
     app.run()

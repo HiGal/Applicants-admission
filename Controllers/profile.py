@@ -1,11 +1,11 @@
 from flask import Blueprint, session, render_template, request, Response, send_from_directory
-from Models.Models import User, PassportData
+from Models.Models import User,Portfolio
 from app import *
 from werkzeug.utils import secure_filename
 import os
 
 profile_controller = Blueprint('profile_controller', __name__, template_folder='templates')
-TESTING = False
+TESTING = True
 
 
 @profile_controller.route('/profile', methods=['GET', 'POST'])
@@ -102,7 +102,7 @@ def add_attachment():
         if not TESTING:
             username = session.get('user')[0]
         attachment_integer = data['attachment_integer']
-        #print(attachment_binary)
+        # print(attachment_binary)
         # name_of_attachment = data['name_of_attachment']
         user_portfolio = Portfolio(username)
         user_portfolio.insert_file(attachment_integer, data['byte_count'])
@@ -115,6 +115,7 @@ def add_attachment():
             data = user_portfolio.retrieve()
         return Response('got the picture')
 
+
 @profile_controller.route('/profile_picture', methods=['POST', 'GET'])
 def profile_picture():
     # return Response('added photo successfully')
@@ -123,7 +124,7 @@ def profile_picture():
         print(data)
         user_data = session.get('user')
         user = User(user_data[0])
-        user.add_photo(data['photo_binary'],user.username)
+        user.add_photo(data['photo_binary'], user.username)
 
         return Response('added photo successfully')
     else:

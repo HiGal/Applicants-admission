@@ -246,3 +246,65 @@ class PassportData:
         self.issuing_authority = Secure.decrypt(record[4].encode(), encryption_key).decode()
 
         return True
+
+
+class Portfolio:
+    def __init__(self, username: str):
+        self.conn = db_connect()
+        self.username = username
+        self.document = b'0'
+        self.byte_count = 0
+
+    def insert_file(self, document, byte_count):
+        document = document.to_bytes(byte_count, byteorder='big')
+        print(len(document))
+        document = psycopg2.Binary(document)
+
+        cursor = self.conn.cursor()
+        print(self.username)
+
+        cursor.execute(
+            'SELECT username FROM portfolios WHERE username = %s;',
+            [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            cursor.execute(
+                'INSERT INTO portfolios (username, document) '
+                'VALUES (%s, %s)', (self.username, document)
+            )
+        else:
+            cursor.execute(
+                'UPDATE portfolios '
+                'SET document = %s '
+                'WHERE username = %s;',
+                (document, self.username)
+            )
+
+        self.conn.commit()
+        cursor.close()
+
+        self.document = document
+
+        print("returned")
+        return True
+
+    def retrieve(self):
+        if self.document is not b'0':
+            return {'attachment_integer': self.document, 'byte_count': self.byte_count}
+
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT document FROM portfolios '
+            'WHERE username = %s;',
+            [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            return 0
+
+        record = next(cursor)
+        cursor.close()
+        self.byte_count = len(record[0])
+        self.document = int.from_bytes(record[0], byteorder='big')
+        return {'attachment_integer': record[0], 'byte_count': self.byte_count}
