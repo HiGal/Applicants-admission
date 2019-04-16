@@ -254,7 +254,7 @@ class PassportData:
         return True
 
     def get_data_without_db(self):
-        return {'passport_series': self.passport_number, 'passport_number': self.passport_number,
+        return {'passport_series': self.passport_series, 'passport_number': self.passport_number,
                 'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority}
 
 
@@ -265,13 +265,11 @@ class Portfolio:
         self.document = b'0'
         self.byte_count = 0
 
-    def insert_file(self, document, byte_count):
-        document = document.to_bytes(byte_count, byteorder='big')
-        print(len(document))
-        document = psycopg2.Binary(document)
+    def insert_file(self, document):
 
         cursor = self.conn.cursor()
         print(self.username)
+        print(document)
 
         cursor.execute(
             'SELECT username FROM portfolios WHERE username = %s;',
@@ -300,9 +298,6 @@ class Portfolio:
         return True
 
     def retrieve(self):
-        if self.document is not b'0':
-            return {'attachment_integer': self.document, 'byte_count': self.byte_count}
-
         cursor = self.conn.cursor()
         cursor.execute(
             'SELECT document FROM portfolios '
@@ -315,6 +310,5 @@ class Portfolio:
 
         record = next(cursor)
         cursor.close()
-        self.byte_count = len(record[0])
-        self.document = int.from_bytes(record[0], byteorder='big')
-        return {'attachment_integer': record[0], 'byte_count': self.byte_count}
+        print(record[0])
+        return {'attachment': record[0]}

@@ -1,11 +1,11 @@
 from flask import Blueprint, session, render_template, request, Response, send_from_directory
-from Models.Models import User,Portfolio
+from Models.Models import User,Portfolio, PassportData
 from app import *
 from werkzeug.utils import secure_filename
 import os
 
 profile_controller = Blueprint('profile_controller', __name__, template_folder='templates')
-TESTING = True
+TESTING = False
 
 
 @profile_controller.route('/profile', methods=['GET', 'POST'])
@@ -62,12 +62,19 @@ def passport():
         username = "tester"
         if not TESTING:
             username = session.get('user')[0]
-        data = PassportData(username).retrieve()
+        ins = PassportData(username)
+        data = ins.retrieve()
+        data = ins.get_data_without_db()
+        print(data)
         return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
-        username = data['username']  #
+        if TESTING:
+            username = data['username']  #
+        else:
+            username = session.get('user')[0]
         passport = PassportData(username=username)
+        print(data)
         passport.register(passport_series=data['passport_series'], passport_num=data['passport_number'],
                           issue_date=data['issue_date'], issuing_authority=data['issuing_authority'])
         return Response('Success')
@@ -101,18 +108,23 @@ def add_attachment():
         username = 'tester@tester.com'
         if not TESTING:
             username = session.get('user')[0]
-        attachment_integer = data['attachment_integer']
+        print(data)
+        attachment = data['attachment']
         # print(attachment_binary)
         # name_of_attachment = data['name_of_attachment']
         user_portfolio = Portfolio(username)
-        user_portfolio.insert_file(attachment_integer, data['byte_count'])
+        user_portfolio.insert_file(attachment)
         return Response('added attachment successfully')
     else:
         username = 'tester@tester.com'
         if not TESTING:
             username = session.get('user')[0]
-            user_portfolio = Portfolio(username)
-            data = user_portfolio.retrieve()
+        user_portfolio = Portfolio(username)
+        data = user_portfolio.retrieve()
+
+        print(data)
+
+
         return Response('got the picture')
 
 
