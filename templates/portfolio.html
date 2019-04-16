@@ -87,14 +87,13 @@
         reader.onloadend = function () {
             {#reader.readAsDataURL(reader.result);#}
             var data = {'attachment': reader.result.split(",")[1]};
-            alert(JSON.stringify(data));
             $.ajax({
                 url: '/add_attachment',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (response) {
-                    console.log(response);
+                    alert("Portfolio was successfully uploaded")
                 }
             })
         };
