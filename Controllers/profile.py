@@ -94,10 +94,26 @@ def education():
     return render_template('education.html')
 
 
-@profile_controller.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
+@profile_controller.route('/add_attachment', methods=['GET', 'POST'])
+def add_attachment():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
+        attachment_integer = data['attachment_integer']
+        #print(attachment_binary)
+        # name_of_attachment = data['name_of_attachment']
+        user_portfolio = Portfolio(username)
+        user_portfolio.insert_file(attachment_integer, data['byte_count'])
+        return Response('added attachment successfully')
+    else:
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
+            user_portfolio = Portfolio(username)
+            data = user_portfolio.retrieve()
+        return Response('got the picture')
 
 @profile_controller.route('/profile_picture', methods=['POST', 'GET'])
 def profile_picture():
