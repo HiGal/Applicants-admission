@@ -45,11 +45,9 @@ class AddPhoto(unittest.TestCase):
         try:
             with open(path, 'rb') as f:
                 attachment_binary = f.read()
-            attachment_integer = int.from_bytes(attachment_binary, byteorder='big')
+            attachment = base64.b64encode(attachment_binary).decode('ascii')
             data = {
-                'attachment_integer': attachment_integer,
-                'name_of_attachment': "pdf_attachment",
-                'byte_count': len(attachment_binary)
+                'attachment': attachment
             }
             rv = self.app.post('/add_attachment', data=json.dumps(data), content_type='application/json')
             assert b'added attachment successfully'
@@ -59,7 +57,8 @@ class AddPhoto(unittest.TestCase):
 
     def test_get_pdf_attachment(self):
 
-        rv = self.app.get('/add_attachment', data=json.dumps([]), content_type='application/json')
+        rv = self.app.get('/add_attachment', content_type='application/json')
+        print(rv.data)
 
         assert b'got the picture' in rv.data
 

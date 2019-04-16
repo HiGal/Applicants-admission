@@ -1,5 +1,6 @@
 import hashlib
 import os
+import base64
 
 import psycopg2
 
@@ -24,7 +25,6 @@ class User:
     def verify(self):
         cursor = self.conn.cursor()
         password = self.password
-        password = hashlib.md5(password.encode()).hexdigest()
         cursor.execute(
             'SELECT * FROM sys_user WHERE username = %s AND password = %s;',
             (self.username, password)
@@ -38,7 +38,6 @@ class User:
         return False
 
     def register(self, username, password, name, sname, email, bdate):
-        password = hashlib.md5(password.encode()).hexdigest()
         self.password = password
         self.username = username
         cursor = self.conn.cursor()
@@ -108,7 +107,8 @@ class User:
             'email': record[4],
             'birthday': record[5],
             'gender': record[6],
-            'citizen': record[7]
+            'citizen': record[7],
+            'photo_data': self.get_photo(self.username)
         }
 
         return data
@@ -131,15 +131,10 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def add_photo(self, photo_extension, photo_binary_data, byte_count, username):
+    def add_photo(self, photo_binary_data, username):
         # this function is to insert photos in the database
         # Decode as integer and send to server and then decode it to binary form
-        photo_binary_data = photo_binary_data.to_bytes(byte_count, byteorder='big')
-
-        photo_binary_data = psycopg2.Binary(photo_binary_data)
-
-        query = """update user_contact set photo_extension = '%s', photo_data = %s where uname= '%s'""" % (
-            photo_extension, photo_binary_data, username)
+        query = """update sys_user set photo_data = '%s' where username= '%s'""" % (photo_binary_data, username)
         cursor = self.conn.cursor()
         # print(query)
         cursor.execute(query)
@@ -149,31 +144,23 @@ class User:
 
     def get_photo(self, username):
         try:
-            query = """select photo_data from user_contact where uname = '%s';""" % username
+            query = """select photo_data from sys_user where username = '%s';""" % username
 
             path = os.path.dirname(os.path.realpath(__file__))
+            print(path)
             # print(query)
 
             cursor = self.conn.cursor()
             cursor.execute(query)
-            memory_view = cursor.fetchone()
+            photo_data = cursor.fetchall()[0][0]
+            print(path + "/../static/img/profile.png")
+            if photo_data is None:
+                with open(path + "/../static/img/profile.png", "rb") as f:
+                    photo_data = f.read()
+                photo_data = base64.b64encode(photo_data).decode('ascii')
 
-            res = b''
-
-            for i in memory_view[0]:
-                res = res + i
-            '''
-            try:
-                with open(path + "/tests/test_out.jpg", 'wb') as f:
-                    f.write(res)
-            
-            except Exception:
-                print("Mistake in directory")
-            '''
             cursor.close()
-            return {'photo_integer': int.from_bytes(res, byteorder='big'),
-                    'byte_count': len(res)
-                    }
+            return photo_data
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
@@ -267,7 +254,7 @@ class PassportData:
         return True
 
     def get_data_without_db(self):
-        return {'passport_series': self.passport_number, 'passport_number': self.passport_number,
+        return {'passport_series': self.passport_series, 'passport_number': self.passport_number,
                 'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority}
 
 
@@ -278,13 +265,11 @@ class Portfolio:
         self.document = b'0'
         self.byte_count = 0
 
-    def insert_file(self, document, byte_count):
-        document = document.to_bytes(byte_count, byteorder='big')
-        print(len(document))
-        document = psycopg2.Binary(document)
+    def insert_file(self, document):
 
         cursor = self.conn.cursor()
         print(self.username)
+        print(document)
 
         cursor.execute(
             'SELECT username FROM portfolios WHERE username = %s;',
@@ -313,9 +298,6 @@ class Portfolio:
         return True
 
     def retrieve(self):
-        if self.document is not b'0':
-            return {'attachment_integer': self.document, 'byte_count': self.byte_count}
-
         cursor = self.conn.cursor()
         cursor.execute(
             'SELECT document FROM portfolios '
@@ -328,6 +310,5 @@ class Portfolio:
 
         record = next(cursor)
         cursor.close()
-        self.byte_count = len(record[0])
-        self.document = int.from_bytes(record[0], byteorder='big')
-        return {'attachment_integer': record[0], 'byte_count': self.byte_count}
+        print(record[0])
+        return {'attachment': record[0]}
