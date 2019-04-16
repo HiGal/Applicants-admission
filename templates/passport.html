@@ -27,7 +27,7 @@
             <a class="nav-link" id="contacts" href="/contacts" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
-            <a class="nav-link active" id="passport" href="#passport" role="tab"
+            <a class="nav-link active" id="passport" href="/passport" role="tab"
                aria-controls="passport"
                aria-selected="true">Passport <span>/</span> ID</a>
             <a class="nav-link" id="education"  href="/education" role="tab"
@@ -63,7 +63,8 @@
                             <hr>
                         </div>
                         <div id="edit_passport_series" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your passport series">
+                            <input type="text" id="edit_passport_series_in" class="form-control"
+                                   placeholder="Enter your passport series" value="{{ data['passport_series'] }}">
                         </div>
                     </div>
                     <div class="row1">
@@ -75,7 +76,8 @@
                             <hr>
                         </div>
                         <div id="edit_date_of_issue" style="display: none">
-                            <input type="date" class="form-control" placeholder="Enter your date of issue">
+                            <input type="date" id="edit_date_of_issue_in" class="form-control"
+                                   placeholder="Enter your date of issue" value="{{ data['issue_date'] }}">
                         </div>
                     </div>
                 </div>
@@ -89,7 +91,8 @@
                             <hr>
                         </div>
                         <div id="edit_passport_number" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your passport number">
+                            <input type="text" id="edit_passport_number_in" class="form-control"
+                                   placeholder="Enter your passport number" value="{{ data['passport_number'] }}">
                         </div>
                     </div>
                     <div class="row1">
@@ -101,7 +104,8 @@
                             <hr>
                         </div>
                         <div id="edit_authority_code" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your issuing authority code">
+                            <input type="text" id="edit_authority_code_in" class="form-control"
+                                   placeholder="Enter your issuing authority code" value="{{ data['issuing_authority'] }}">
                         </div>
                     </div>
                 </div>
@@ -118,10 +122,10 @@
 
     function send() {
         var data = {
-            'passport_series': document.getElementById('edit_passport_series').value,
-            'passport_number': document.getElementById('edit_passport_number').value,
-            'issue_date': document.getElementById('edit_date_of_issue').value,
-            'issuing_authority': document.getElementById('edit_authority_code').value
+            'passport_series': document.getElementById('edit_passport_series_in').value,
+            'passport_number': document.getElementById('edit_passport_number_in').value,
+            'issue_date': document.getElementById('edit_date_of_issue_in').value,
+            'issuing_authority': document.getElementById('edit_authority_code_in').value
         };
 
         $.ajax({
