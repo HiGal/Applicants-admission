@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img">
+            <img src="../static/img/logo.svg" class="img" alt="Logo">
             <span><hr></span>
 
             <a class="nav-link" id="profile" href="/profile" role="tab"
@@ -57,12 +57,13 @@
                         <div id="div_school" style="display: block">
                             <label class="field">School:</label>
                             <div class="text">
-                                School
+                                {{ data ['school'] }}
                             </div>
                             <hr>
                         </div>
                         <div id="edit_school" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your school">
+                            <input type="text" id="edit_school_in" class="form-control"
+                                   placeholder="Enter your school" value="{{ data['school'] }}">
                             <button class="add_school" onclick="append()">+</button>
                         </div>
                     </div>
@@ -72,12 +73,13 @@
                         <div id="div_release_year" style="display: block">
                             <label class="field">Release year:</label>
                             <div class="text">
-                                Release year
+                                {{ data['release_year'] }}
                             </div>
                             <hr>
                         </div>
                         <div id="edit_release_year" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your release year">
+                            <input type="text" id="edit_release_year_in" class="form-control"
+                                   placeholder="Enter your release year" value="{{ data['release_year'] }}">
                         </div>
                     </div>
                 </div>
