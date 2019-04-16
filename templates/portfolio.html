@@ -11,12 +11,12 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img" alt="Logo">
+            <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
             <a class="nav-link" id="profile" href="/profile" role="tab"
                aria-controls="profile" aria-selected="false">Personal info</a>
-            <a class="nav-link" id="contacts" href="/contacts" role="tab"
+            <a class="nav-link" id="contacts" href="#contacts" role="tab"
                aria-controls="contacts"
                aria-selected="false">Contacts</a>
             <a class="nav-link" id="passport" href="/passport" role="tab"
@@ -66,23 +66,18 @@
         var preview = document.querySelector('pdf'); //selects the query named img
         var file = document.querySelector('input[type=file]').files[0]; //sames as here
         var reader = new FileReader();
-
         reader.onloadend = function () {
             {#preview.src = reader.result;#}
             console.log(reader.result);
         };
-
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
-
         } else {
             preview.src = "";
         }
     }
-
     function send() {
         var file = document.querySelector('input[type=file]').files[0];
-
         var reader = new FileReader();
         reader.onloadend = function () {
             {#reader.readAsDataURL(reader.result);#}
@@ -98,13 +93,10 @@
                 }
             })
         };
-
         if (file) {
             reader.readAsDataURL(file); //reads the data as a URL
-
         }
     }
-
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"

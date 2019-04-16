@@ -20,7 +20,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img" alt="Logo">
+            <img src="../static/img/logo.svg" class="img">
             <span><hr class="img_hr"></span>
 
             <a class="nav-link active" id="profile" href="/profile" role="tab"
@@ -53,8 +53,7 @@
             <p class="message">Please, fill out the form completely</p>
         </div>
         <div class="container">
-
-            {#            <img class="profile" src="../static/img/profile.png" width="128" height="128">#}
+{#            <img class="profile" src="../static/img/profile.png" width="128" height="128">#}
             <img class='profile' src="data:image/*;base64, {{ data['photo_data'] }}" width="128" height="128">
             <div class="p-image">
                 <i class="fa fa-camera upload-button"></i>
@@ -134,7 +133,7 @@
                                 <option selected>Choose your gender</option>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
-                                <option value="ND">Prefer not to say</option>
+                                <option value="ND">prefer not to say</option>
                             </select>
                         </div>
                     </div>
@@ -160,8 +159,6 @@
             'citizenship': document.getElementById('edit_citizen_in').value,
             'gender': document.getElementById('gender').value
         };
-
-
         $.ajax({
             url: '/profile',
             method: 'POST',
@@ -172,9 +169,7 @@
                     document.location.reload();
             }
         })
-
     }
-
     function edit() {
         document.getElementById('edit_name').style.display = 'block';
         document.getElementById('div_name').style.display = 'none';
@@ -189,8 +184,6 @@
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }
-
-
 </script>
 
 <script>
@@ -199,10 +192,9 @@
         var readURL = function (input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (e) {
                     $('.profile').attr('src', e.target.result);
-                    var data = {'photo_binary': e.target.result.split(",")[1]};
+                    var data = {'photo_binary':e.target.result.split(",")[1]};
                     $.ajax({
                         url: "/profile_picture",
                         method: "POST",
@@ -213,20 +205,14 @@
                         }
                     })
                 };
-
                 reader.readAsDataURL(input.files[0]);
-
             }
         };
-
-
         $(".file-upload").on('change', function () {
             readURL(this);
         });
-
         $(".upload-button").on('click', function () {
             $(".file-upload").click();
-
         });
     });
 </script>

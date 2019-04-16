@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Contacts</title>
+    <title>Passport/ID</title>
 </head>
 <link rel="stylesheet" href="../static/css/profile.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -14,22 +14,23 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
 <body>
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img" alt="Logo">
+            <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
             <a class="nav-link" id="profile" href="/profile" role="tab"
                aria-controls="profile" aria-selected="false">Personal info</a>
-            <a class="nav-link active" id="contacts" href="#contacts" role="tab"
+            <a class="nav-link" id="contacts" href="/contacts" role="tab"
                aria-controls="contacts"
-               aria-selected="true">Contacts</a>
-            <a class="nav-link" id="passport" href="/passport" role="tab"
+               aria-selected="false">Contacts</a>
+            <a class="nav-link active" id="passport" href="#passport" role="tab"
                aria-controls="passport"
-               aria-selected="false">Passport <span>/</span> ID</a>
-            <a class="nav-link" id="education" href="/education" role="tab"
+               aria-selected="true">Passport <span>/</span> ID</a>
+            <a class="nav-link" id="education"  href="/education" role="tab"
                aria-controls="education"
                aria-selected="false">Education</a>
             <a class="nav-link" id="portfolio" href="/portfolio" role="tab"
@@ -44,7 +45,6 @@
         </div>
     </div>
     <div class="col-9">
-
         <div class="container header">
             <a class="btn btn-outline-primary logout" href="/login">Log out</a>
         </div>
@@ -55,96 +55,53 @@
             <div class="row">
                 <div class="col-6 label">
                     <div class="row1">
-                        <div id="div_index" style="display: block">
-                            <label class="field">Index:</label>
+                        <div id="div_passport_series" style="display: block">
+                            <label class="field">Passport series:</label>
                             <div class="text">
-                                {{ data['index'] }}
+                                {{ data['passport_series'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_index" style="display: none">
-                            <input type="text" id="index" class="form-control"
-                                   placeholder="Enter your index" value="{{ data['index'] }}">
+                        <div id="edit_passport_series" style="display: none">
+                            <input type="text" id="passport_series" class="form-control" placeholder="Enter your passport series">
                         </div>
                     </div>
                     <div class="row1">
-                        <div id="div_city" style="display: block">
-                            <label class="field">City:</label>
+                        <div id="div_date_of_issue" style="display: block">
+                            <label class="field">Date of issue:</label>
                             <div class="text">
-                                {{ data['city'] }}
+                                {{ data['issue_date'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_city" style="display: none">
-                            <input type="text" id="city" class="form-control"
-                                   placeholder="Enter your city" value="{{ data['city'] }}">
-                        </div>
-                    </div>
-                    <div class="row1">
-                        <div id="div_building" style="display: block">
-                            <label class="field">Building:</label>
-                            <div class="text">
-                                {{ data['building'] }}
-                            </div>
-                            <hr>
-                        </div>
-                        <div id="edit_building" style="display: none">
-                            <input type="text" id="building" class="form-control"
-                                   placeholder="Enter your building" value="{{ data['building'] }}">
-                        </div>
-                    </div>
-                    <div class="row1">
-                        <div id="div_flat" style="display: block">
-                            <label class="field">Flat:</label>
-                            <div class="text">
-                                {{ data['flat'] }}
-                            </div>
-                            <hr>
-                        </div>
-                        <div id="edit_flat" style="display: none">
-                            <input type="text" id="flat" class="form-control"
-                                   placeholder="Enter your flat" value="{{ data['flat'] }}">
+                        <div id="edit_date_of_issue" style="display: none">
+                            <input type="date" id="date_of_issue" class="form-control" placeholder="Enter your date of issue">
                         </div>
                     </div>
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
-                        <div id="div_region" style="display: block">
-                            <label class="field">Region:</label>
+                        <div id="div_passport_number" style="display: block">
+                            <label class="field">Passport number:</label>
                             <div class="text">
-                                {{ data['region'] }}
+                                {{ data ['passport_number'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_region" style="display: none">
-                            <input type="text" id="region" class="form-control"
-                                   placeholder="Enter your region" value="{{ data['region'] }}">
+                        <div id="edit_passport_number" style="display: none">
+                            <input type="text" id="passport_number" class="form-control" placeholder="Enter your passport number">
                         </div>
                     </div>
                     <div class="row1">
-                        <div id="div_street" style="display: block">
-                            <label class="field">Street:</label>
+                        <div id="div_authority_code" style="display: block">
+                            <label class="field">Issuing authority code:</label>
                             <div class="text">
-                                {{ data['street'] }}
+                                {{ data ['issuing_authority'] }}
                             </div>
                             <hr>
                         </div>
-                        <div id="edit_street" style="display: none">
-                            <input type="text" id="street" class="form-control"
-                                   placeholder="Enter your street" value="{{ data['street'] }}">
-                        </div>
-                    </div>
-                    <div class="row1">
-                        <div id="div_corpus" style="display: block">
-                            <label class="field">Corpus:</label>
-                            <div class="text">
-                                {{ data['corpus'] }}
-                            </div>
-                            <hr>
-                        </div>
-                        <div id="edit_corpus" style="display: none">
-                            <input type="text" id="corpus" class="form-control"
-                                   placeholder="Enter your corpus" value="{{ data['corpus'] }}">
+                        <div id="edit_authority_code" style="display: none">
+                            <input type="text" id="authority_code" class="form-control" placeholder="Enter your issuing authority code">
                         </div>
                     </div>
                 </div>
@@ -160,19 +117,13 @@
 <script>
     function send() {
         var data = {
-            'index': document.getElementById('index').value,
-            'city': document.getElementById('city').value,
-            'building': document.getElementById('building').value,
-            'flat': document.getElementById('flat').value,
-            'region': document.getElementById('region').value,
-            'street': document.getElementById('street').value,
-            'corpus': document.getElementById('corpus').value
-
-
+            'passport_series': document.getElementById('passport_series').value,
+            'passport_number': document.getElementById('passport_number').value,
+            'issue_date': document.getElementById('date_of_issue').value,
+            'issuing_authority': document.getElementById('authority_code').value
         };
-
         $.ajax({
-            url: '/contacts',
+            url: '/passport',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
@@ -181,24 +132,16 @@
                     document.location.reload();
             }
         })
-
     }
-
     function edit() {
-        document.getElementById('edit_index').style.display = 'block';
-        document.getElementById('div_index').style.display = 'none';
-        document.getElementById('edit_city').style.display = 'block';
-        document.getElementById('div_city').style.display = 'none';
-        document.getElementById('edit_building').style.display = 'block';
-        document.getElementById('div_building').style.display = 'none';
-        document.getElementById('edit_flat').style.display = 'block';
-        document.getElementById('div_flat').style.display = 'none';
-        document.getElementById('edit_region').style.display = 'block';
-        document.getElementById('div_region').style.display = 'none';
-        document.getElementById('edit_street').style.display = 'block';
-        document.getElementById('div_street').style.display = 'none';
-        document.getElementById('edit_corpus').style.display = 'block';
-        document.getElementById('div_corpus').style.display = 'none';
+        document.getElementById('edit_passport_series').style.display = 'block';
+        document.getElementById('div_passport_series').style.display = 'none';
+        document.getElementById('edit_date_of_issue').style.display = 'block';
+        document.getElementById('div_date_of_issue').style.display = 'none';
+        document.getElementById('edit_passport_number').style.display = 'block';
+        document.getElementById('div_passport_number').style.display = 'none';
+        document.getElementById('edit_authority_code').style.display = 'block';
+        document.getElementById('div_authority_code').style.display = 'none';
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }

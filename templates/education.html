@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img" alt="Logo">
+            <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
             <a class="nav-link" id="profile" href="/profile" role="tab"
@@ -57,13 +57,12 @@
                         <div id="div_school" style="display: block">
                             <label class="field">School:</label>
                             <div class="text">
-                                {{ data ['school'] }}
+                                School
                             </div>
                             <hr>
                         </div>
                         <div id="edit_school" style="display: none">
-                            <input type="text" id="edit_school_in" class="form-control"
-                                   placeholder="Enter your school" value="{{ data['school'] }}">
+                            <input type="text" class="form-control" placeholder="Enter your school">
                             <button class="add_school" onclick="append()">+</button>
                         </div>
                     </div>
@@ -73,13 +72,12 @@
                         <div id="div_release_year" style="display: block">
                             <label class="field">Release year:</label>
                             <div class="text">
-                                {{ data['release_year'] }}
+                                Release year
                             </div>
                             <hr>
                         </div>
                         <div id="edit_release_year" style="display: none">
-                            <input type="text" id="edit_release_year_in" class="form-control"
-                                   placeholder="Enter your release year" value="{{ data['release_year'] }}">
+                            <input type="text" class="form-control" placeholder="Enter your release year">
                         </div>
                     </div>
                 </div>
@@ -102,10 +100,8 @@
         document.getElementById('message-to-user').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
     }
-
     let count = 0;
     let max_count = 5;
-
     //TODO: Add release year for additional school
     function append() {
         if (count >= max_count) {
@@ -115,7 +111,6 @@
         var container = document.getElementById("edit_school");
         container.appendChild(document.createElement("br"));
         container.appendChild(document.createElement("br"));
-
         var x = document.getElementsByClassName("form-control");
         container = document.getElementById("edit_school");
         var input = document.createElement("input");

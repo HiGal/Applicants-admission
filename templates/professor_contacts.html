@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <img src="../static/img/logo.svg" class="img" alt="Logo">
+            <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
             <a class="nav-link" id="profile-prof" href="/profile-prof" role="tab"
@@ -157,10 +157,7 @@
             'region': document.getElementById('region').value,
             'street': document.getElementById('street').value,
             'corpus': document.getElementById('corpus').value
-
-
         };
-
         $.ajax({
             url: '/contacts',
             method: 'POST',
@@ -171,9 +168,7 @@
                     document.location.reload();
             }
         })
-
     }
-
     function edit() {
         document.getElementById('edit_index').style.display = 'block';
         document.getElementById('div_index').style.display = 'none';
