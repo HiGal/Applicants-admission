@@ -5,7 +5,7 @@ from Controllers.profile import profile_controller
 
 import os
 from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
-from Models.Models import User, PassportData
+from Models.Models import User, PassportData, Portfolio
 
 UPLOAD_FOLDER = 'D:/lectures/Software Project/dev/uploads'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])

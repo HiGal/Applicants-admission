@@ -1,10 +1,10 @@
 import hashlib
+import os
 import base64
 
 import psycopg2
 
 from Security import SecretConstants, Secure
-import os
 
 
 def db_connect():
@@ -111,12 +111,18 @@ class User:
             'photo_data': self.get_photo(self.username)
         }
 
-        print(self.get_photo(self.username))
-
         return data
 
     def update_info(self, fname, sname, bdate, gender, citizenship):
+
+        stuff = self.get_info()
+        # print(stuff)
+        if not bdate:
+            bdate = stuff['birthday']
+        if not gender:
+            gender = stuff['gender']
         cursor = self.conn.cursor()
+
         cursor.execute(
             'UPDATE sys_user SET name = %s, surname = %s, birthday = %s, sex = %s, citizen = %s '
             'WHERE username = %s;',
@@ -246,6 +252,10 @@ class PassportData:
         self.issuing_authority = Secure.decrypt(record[4].encode(), encryption_key).decode()
 
         return True
+
+    def get_data_without_db(self):
+        return {'passport_series': self.passport_number, 'passport_number': self.passport_number,
+                'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority}
 
 
 class Portfolio:
