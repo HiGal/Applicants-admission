@@ -107,7 +107,7 @@ def profile_picture():
         print(data)
         user_data = session.get('user')
         user = User(user_data[0])
-        user.add_photo(data['photo_extension'], data['photo_binary'], data['byte_count'], user.username)
+        user.add_photo(data['photo_binary'],user.username)
 
         return Response('added photo successfully')
     else:

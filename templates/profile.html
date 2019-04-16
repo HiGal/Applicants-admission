@@ -53,7 +53,8 @@
             <p class="message">Please, fill out the form completely</p>
         </div>
         <div class="container">
-            <img class="profile" src="../static/img/profile.png" width="128" height="128">
+{#            <img class="profile" src="../static/img/profile.png" width="128" height="128">#}
+            <img class='profile' src="data:image/*;base64, {{ data['photo_data'] }}" width="128" height="128">
             <div class="p-image">
                 <i class="fa fa-camera upload-button"></i>
                 <input class="file-upload" type="file" accept="image/*">
@@ -148,6 +149,7 @@
 </div>
 </body>
 
+
 <script>
     function send() {
         var data = {
@@ -199,8 +201,7 @@
 
                 reader.onload = function (e) {
                     $('.profile').attr('src', e.target.result);
-                    var data = e.target.result.split(",")[1];
-                    alert(data);
+                    var data = {'photo_binary':e.target.result.split(",")[1]};
                     $.ajax({
                         url: "/profile_picture",
                         method: "POST",
