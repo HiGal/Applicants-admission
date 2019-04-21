@@ -73,7 +73,7 @@
                             <hr>
                         </div>
                         <div id="edit_name" style="display: none;">
-                            <input type="text" id="edit_name_in" class="form-control"
+                            <input type="text" id="fname" class="form-control"
                                    placeholder="Enter your first name" value="{{ data['name'] }}">
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                             <hr>
                         </div>
                         <div id="edit_sname" style="display: none">
-                            <input type="text" id="edit_sname_in" class="form-control"
+                            <input type="text" id="sname" class="form-control"
                                    placeholder="Enter your second name" value="{{ data['surname'] }}">
                         </div>
                     </div>
@@ -100,7 +100,7 @@
                             <hr>
                         </div>
                         <div id="edit_citizen" style="display: none">
-                            <input type="text" id="edit_citizen_in" class="form-control"
+                            <input type="text" id="citizenship" class="form-control"
                                    placeholder="Enter your citizenship" value="{{ data['citizen'] }}">
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                             <hr>
                         </div>
                         <div id="edit_bdate" style="display: none">
-                            <input type="date" id="edit_bdate_in" class="form-control"
+                            <input type="date" id="birthday" class="form-control"
                                    placeholder="Enter your birth date" value="{{ data['birthday'] }}">
                         </div>
                     </div>
@@ -153,10 +153,10 @@
 <script>
     function send() {
         var data = {
-            'fname': document.getElementById('edit_name_in').value,
-            'sname': document.getElementById('edit_sname_in').value,
-            'bdate': document.getElementById('edit_bdate_in').value,
-            'citizenship': document.getElementById('edit_citizen_in').value,
+            'fname': document.getElementById('fname').value,
+            'sname': document.getElementById('sname').value,
+            'birthday': document.getElementById('birthday').value,
+            'citizenship': document.getElementById('citizenship').value,
             'gender': document.getElementById('gender').value
         };
         $.ajax({
