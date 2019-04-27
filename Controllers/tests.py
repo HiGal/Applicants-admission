@@ -23,6 +23,13 @@ def add_test():
     test.insert_test(question, choice1, choice2, choice3, choice4)
     return Response('Test added successfully')
 
-@tests_controller.route('/get_test_number_x', methods=['GET'])
-def fetch_a_test()
 
+@tests_controller.route('/get_test', methods=['GET'])
+def fetch_tests():
+    username = 'tester@tester.com'
+    if not TESTING:
+        username = session.get('user')[0]
+    test = Test(username)
+    data = test.get_tests()
+    # render_template("sometemplate", data)
+    return Response('data fetched correctly')
