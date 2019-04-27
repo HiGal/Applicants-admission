@@ -1,14 +1,12 @@
-from flask import Flask, redirect, render_template, request, Response, session
+from flask import Flask
+
 from Controllers.login import login_controller
-from Controllers.registration import registration_controller
 from Controllers.profile import profile_controller
+from Controllers.registration import registration_controller
 from Controllers.tests import tests_controller
-import os
-from flask import Flask, redirect, render_template, request, json, Response, jsonify, session, send_from_directory
-from Models.Models import User, PassportData, Portfolio
 
 UPLOAD_FOLDER = 'D:/lectures/Software Project/dev/uploads'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 app.secret_key = 'xyz'
