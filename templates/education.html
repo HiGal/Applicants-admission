@@ -77,7 +77,7 @@
                             <hr>
                         </div>
                         <div id="edit_release_year" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your release year">
+                            <input type="date" class="form-control" placeholder="Enter your release year">
                         </div>
                     </div>
                 </div>
@@ -123,6 +123,38 @@
         input.placeholder = "Enter your school";
         container.appendChild(input);
         container.appendChild(document.createElement("br"));
+    }
+
+    function send() {
+        let container = document.getElementById('edit_school').children;
+        var data = {};
+        let input_cnt = 0;
+        for (let i = 0; i < container.length; i++) {
+            if (container[i].tagName.toLowerCase() === 'input') {
+                data[input_cnt] = {"input": container[i].value};
+                input_cnt++;
+            }
+        }
+
+        container = document.getElementById('edit_release_year').children;
+        console.log(container);
+        let date_cnt = 0;
+        for (let i = 0; i < container.length; i++) {
+            if (container[i].tagName.toLowerCase() === 'input') {
+                data[date_cnt]["date"]=container[i].value;
+                date_cnt++;
+            }
+        }
+
+        $.ajax({
+            url: "/education",
+            method: "POST",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success:function () {
+                alert("done")
+            }
+        })
     }
 </script>
 

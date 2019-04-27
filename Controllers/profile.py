@@ -90,8 +90,11 @@ def upload_file():
     return render_template('portfolio.html')
 
 
-@profile_controller.route('/education')
+@profile_controller.route('/education', methods=['GET','POST'])
 def education():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        print(data)
     return render_template('education.html')
 
 
