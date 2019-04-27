@@ -1,5 +1,5 @@
 from flask import Blueprint, session, render_template, request, Response, send_from_directory
-from Models.Models import User,Portfolio, PassportData
+from Models.Models import User, Portfolio, PassportData
 from app import *
 from werkzeug.utils import secure_filename
 import os
@@ -101,9 +101,14 @@ def upload_file():
     return render_template('portfolio.html')
 
 
-@profile_controller.route('/education')
+@profile_controller.route('/education', methods=['GET', 'POST'])
 def education():
-    return render_template('education.html')
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+    else:
+        data = {"0": {"input": "KSMS", "date": "20.06.2017"},
+                "1": {"input": "KSMS", "date": "20.06.2017"}}
+        return render_template('education.html', data=data)
 
 
 @profile_controller.route('/add_attachment', methods=['GET', 'POST'])
@@ -130,7 +135,6 @@ def add_attachment():
         data = user_portfolio.retrieve()
 
         print(data)
-
 
         return Response('got the picture')
 

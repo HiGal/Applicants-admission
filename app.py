@@ -18,10 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
 
-def hash_password(password: str) -> str:
-    from hashlib import md5
-    return md5(password.encode()).hexdigest()
-
 
 TESTING = True
 
