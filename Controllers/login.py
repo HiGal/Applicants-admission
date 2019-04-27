@@ -21,8 +21,14 @@ def login():
             session['user'] = (user.username, user.password)
             return Response('/profile')
         else:
-            return Response("Username or Password incorrect")
+
+            return Response('/wrong_pass')
     return render_template('login.html')
+
+
+@login_controller.route('/wrong_pass', methods=['GET'])
+def wrong_pass():
+    return render_template('wrong_pass.html')
 
 
 @login_controller.route('/register', methods=['GET', 'POST'])
@@ -41,4 +47,3 @@ def register():
         else:
             return Response("Password are not the same!")
     return render_template('registration.html')
-

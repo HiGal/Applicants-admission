@@ -5,7 +5,6 @@ from werkzeug.utils import secure_filename
 import os
 
 tests_controller = Blueprint('tests_controller', __name__, template_folder='templates')
-TESTING = False
 
 
 @tests_controller.route('/add_test', methods=['POST'])
@@ -17,7 +16,7 @@ def add_test():
     choice3 = data['choice3']
     choice4 = data['choice4']
     username = 'tester@tester.com'
-    if not TESTING:
+    if session.get('user') is not None:
         username = session.get('user')[0]
     test = Test(username)
     test.insert_test(question, choice1, choice2, choice3, choice4)
@@ -27,9 +26,10 @@ def add_test():
 @tests_controller.route('/get_test', methods=['GET'])
 def fetch_tests():
     username = 'tester@tester.com'
-    if not TESTING:
+    if session.get('user') is not None:
         username = session.get('user')[0]
     test = Test(username)
     data = test.get_tests()
+
     # render_template("sometemplate", data)
     return Response('data fetched correctly')

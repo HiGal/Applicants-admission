@@ -5,6 +5,7 @@ import app
 import json
 import os
 
+
 # from Models.Models import *
 
 
@@ -14,22 +15,22 @@ class AddTest(unittest.TestCase):
         app.app.testing = True
         self.app = app.app.test_client()
 
-    def _test_add_question(self):
-
-        test = Test('tester@tester.com')
-        test.insert_test('What is 1 + 1?', '3', '4', '5', '2')
-
+    def test_add_question(self):
+        record = [1, 'What is 2+2?', '3', '4', '2', 'I dont know']
+        data = {
+            'question': record[1],
+            'choice1': record[2],
+            'choice2': record[3],
+            'choice3': record[4],
+            'choice4': record[5]
+        }
+        rv = self.app.post('/add_test', data=json.dumps(data), content_type='application/json')
+        assert b'Test added successfully' in rv.data
 
     def test_retrieve_questions(self):
-        test = Test('tester@tester.com')
-        data = test.get_num_records()
-        # print("Number of records: " + str(data))
-        data = test.get_tests()
-        # print(data)
-
-
-
-
+        rv = self.app.get('/get_test', content_type='application/json')
+        # print(rv.data)
+        assert b'data fetched correctly' in rv.data
 
 
 if __name__ == '__main__':
