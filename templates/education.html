@@ -54,13 +54,15 @@
             <div class="row">
                 <div class="col-6 label">
                     <div class="row1">
+                        {% for schools in data %}
                         <div id="div_school" style="display: block">
                             <label class="field">School:</label>
                             <div class="text">
-                                School
+                                {{ data[schools].input }}
                             </div>
                             <hr>
                         </div>
+                        {% endfor %}
                         <div id="edit_school" style="display: none">
                             <input type="text" class="form-control" placeholder="Enter your school">
                             <button class="add_school" onclick="append()">+</button>
@@ -69,13 +71,15 @@
                 </div>
                 <div class="col-5 label">
                     <div class="row1">
+                        {% for schools in data %}
                         <div id="div_release_year" style="display: block">
                             <label class="field">Release year:</label>
                             <div class="text">
-                                Release year
+                                {{ data[schools].date }}
                             </div>
                             <hr>
                         </div>
+                        {% endfor %}
                         <div id="edit_release_year" style="display: none">
                             <input type="date" class="form-control" placeholder="Enter your release year">
                         </div>
@@ -110,19 +114,30 @@
             count = max_count;
             return;
         }
-        var container = document.getElementById("edit_school");
-        container.appendChild(document.createElement("br"));
-        container.appendChild(document.createElement("br"));
+
+        let btn = document.getElementsByClassName('add_school');
+        console.log(btn);
+        let tmp = btn[0];
+        btn[0].remove();
 
         var x = document.getElementsByClassName("form-control");
-        container = document.getElementById("edit_school");
+        var container = document.getElementById("edit_school");
         var input = document.createElement("input");
         count++;
         input.type = "text";
         input.className = "form-control";
         input.placeholder = "Enter your school";
         container.appendChild(input);
-        container.appendChild(document.createElement("br"));
+        container.append(tmp);
+
+        container = document.getElementById("edit_release_year");
+        var date = document.createElement("input");
+        date.type = "date";
+        date.className = "form-control";
+        date.placeholder = "Enter your release year";
+        container.appendChild(date);
+
+
     }
 
     function send() {
@@ -141,7 +156,7 @@
         let date_cnt = 0;
         for (let i = 0; i < container.length; i++) {
             if (container[i].tagName.toLowerCase() === 'input') {
-                data[date_cnt]["date"]=container[i].value;
+                data[date_cnt]["date"] = container[i].value;
                 date_cnt++;
             }
         }
@@ -151,7 +166,7 @@
             method: "POST",
             contentType: 'application/json',
             data: JSON.stringify(data),
-            success:function () {
+            success: function () {
                 alert("done")
             }
         })

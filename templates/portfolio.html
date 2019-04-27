@@ -86,15 +86,14 @@
         var reader = new FileReader();
         reader.onloadend = function () {
             {#reader.readAsDataURL(reader.result);#}
-            var data = {'pdf': reader.result.split(",")[1]};
-            alert(JSON.stringify(data));
+            var data = {'attachment': reader.result.split(",")[1]};
             $.ajax({
-                url: '/portfolio',
+                url: '/add_attachment',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
                 success: function (response) {
-                    console.log(response);
+                    alert("Portfolio was successfully uploaded")
                 }
             })
         };

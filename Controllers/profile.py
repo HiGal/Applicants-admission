@@ -1,5 +1,5 @@
 from flask import Blueprint, session, render_template, request, Response, send_from_directory
-from Models.Models import User, PassportData
+from Models.Models import User, Portfolio, PassportData
 from app import *
 from werkzeug.utils import secure_filename
 import os
@@ -62,13 +62,19 @@ def passport():
         username = "tester"
         if not TESTING:
             username = session.get('user')[0]
-        passport_data = PassportData(username)
-        passport_data.retrieve()
-        return render_template('passport.html', data=passport_data.get_data_without_db())
+        ins = PassportData(username)
+        data = ins.retrieve()
+        data = ins.get_data_without_db()
+        print(data)
+        return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
-        username = data['username']  #
+        if TESTING:
+            username = data['username']  #
+        else:
+            username = session.get('user')[0]
         passport = PassportData(username=username)
+        print(data)
         passport.register(passport_series=data['passport_series'], passport_num=data['passport_number'],
                           issue_date=data['issue_date'], issuing_authority=data['issuing_authority'])
         return Response('Success')
@@ -90,14 +96,60 @@ def upload_file():
     return render_template('portfolio.html')
 
 
-@profile_controller.route('/education', methods=['GET','POST'])
+@profile_controller.route('/education', methods=['GET', 'POST'])
 def education():
     if request.method == 'POST':
         data = request.get_json(silent=True)
+    else:
+        data = {"0": {"input": "KSMS", "date": "20.06.2017"},
+                "1": {"input": "KSMS", "date": "20.06.2017"}}
+        return render_template('education.html', data=data)
+
+
+@profile_controller.route('/add_attachment', methods=['GET', 'POST'])
+def add_attachment():
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
         print(data)
-    return render_template('education.html')
+        attachment = data['attachment']
+        # print(attachment_binary)
+        # name_of_attachment = data['name_of_attachment']
+        user_portfolio = Portfolio(username)
+        user_portfolio.insert_file(attachment)
+        return Response('added attachment successfully')
+    else:
+        username = 'tester@tester.com'
+        if not TESTING:
+            username = session.get('user')[0]
+        user_portfolio = Portfolio(username)
+        data = user_portfolio.retrieve()
+
+        print(data)
+
+        return Response('got the picture')
 
 
-@profile_controller.route('/uploads/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@profile_controller.route('/profile_picture', methods=['POST', 'GET'])
+def profile_picture():
+    # return Response('added photo successfully')
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+        print(data)
+        user_data = session.get('user')
+        user = User(user_data[0])
+        user.add_photo(data['photo_binary'], user.username)
+
+        return Response('added photo successfully')
+    else:
+        username = "tester@tester.com"
+        if not TESTING:
+            username = session.get('user')[0]
+
+        # now we are going to retrieve data from the db
+        user = User(username)
+        user.get_photo(username)
+        return Response(b'got the picture')
+        # add some template

@@ -63,7 +63,7 @@
                             <hr>
                         </div>
                         <div id="edit_passport_series" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your passport series">
+                            <input type="text" id="passport_series" class="form-control" placeholder="Enter your passport series">
                         </div>
                     </div>
                     <div class="row1">
@@ -75,7 +75,7 @@
                             <hr>
                         </div>
                         <div id="edit_date_of_issue" style="display: none">
-                            <input type="date" class="form-control" placeholder="Enter your date of issue">
+                            <input type="date" id="date_of_issue" class="form-control" placeholder="Enter your date of issue">
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                             <hr>
                         </div>
                         <div id="edit_passport_number" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your passport number">
+                            <input type="text" id="passport_number" class="form-control" placeholder="Enter your passport number">
                         </div>
                     </div>
                     <div class="row1">
@@ -101,7 +101,7 @@
                             <hr>
                         </div>
                         <div id="edit_authority_code" style="display: none">
-                            <input type="text" class="form-control" placeholder="Enter your issuing authority code">
+                            <input type="text" id="authority_code" class="form-control" placeholder="Enter your issuing authority code">
                         </div>
                     </div>
                 </div>
@@ -118,11 +118,13 @@
 
     function send() {
         var data = {
-            'passport_series': document.getElementById('edit_passport_series').value,
-            'passport_number': document.getElementById('edit_passport_number').value,
-            'issue_date': document.getElementById('edit_date_of_issue').value,
-            'issuing_authority': document.getElementById('edit_authority_code').value
+            'passport_series': document.getElementById('passport_series').value,
+            'passport_number': document.getElementById('passport_number').value,
+            'issue_date': document.getElementById('date_of_issue').value,
+            'issuing_authority': document.getElementById('authority_code').value
         };
+
+
 
         $.ajax({
             url: '/passport',
