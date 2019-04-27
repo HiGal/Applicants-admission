@@ -1,6 +1,5 @@
-import hashlib
-import os
 import base64
+import os
 
 import psycopg2
 
@@ -323,14 +322,15 @@ class Test:
         cursor = self.conn.cursor()
 
         cursor.execute(
-            'SELECT * From tests_questions;'
+            'SELECT * FROM tests_questions;'
         )
         if cursor.rowcount == 0:
+            cursor.close()
             assert AssertionError
+
         array_of_records = []
-        records = cursor.fetchall()
         # print(records)
-        for record in records:
+        for record in cursor:
             # print(record)
             data = {
                 'question': record[1],
@@ -343,22 +343,21 @@ class Test:
 
         return array_of_records
 
-    def get_num_records(self):
+    def get_num_records(self) -> int:
         cursor = self.conn.cursor()
         cursor.execute(
-            'select MAX(id) from tests_questions;'
+            'SELECT COUNT(*) FROM tests_questions;'
         )
         ret = next(cursor)[0]
         cursor.close()
         return ret
 
-    def insert_test(self, question, choice1, choice2, choice3, choice4):
-        size_of_db = self.get_num_records()
+    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str):
         cursor = self.conn.cursor()
         cursor.execute(
-            'INSERT INTO tests_questions (id, question, choice1, choice2, choice3, choice4)'
-            'VALUES (%s, %s, %s, %s, %s, %s);',
-            (size_of_db + 1, question, choice1, choice2, choice3, choice4)
+            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4) '
+            'VALUES (%s, %s, %s, %s, %s);',
+            (question, choice1, choice2, choice3, choice4)
         )
         self.conn.commit()
         cursor.close()
