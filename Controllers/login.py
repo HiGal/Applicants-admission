@@ -16,7 +16,6 @@ def login():
         data = request.get_json(silent=True)
         data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        print(user.username, user.password)
         print(user.verify())
         if user.verify():
             session['user'] = (user.username, user.password)
