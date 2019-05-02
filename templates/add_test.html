@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal info</title>
+</head>
+<link rel="stylesheet" href="../static/css/profile.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<body>
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <img src="../static/img/logo.svg" class="img">
+            <span><hr></span>
+
+            <a class="nav-link" id="profile-prof" href="/professor" role="tab"
+               aria-controls="profile-prof" aria-selected="true">Personal info</a>
+
+            <a class="nav-link active" id="profile-prof" href="/add_test" role="tab"
+               aria-controls="profile-prof" aria-selected="true">Add a test</a>
+
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
+               aria-selected="false">Tests</a>
+
+            <div class="kostyl">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="container header">
+            <a class="btn btn-outline-primary logout" href="/login">Log out</a>
+        </div>
+        <h3>First choice should be the right answer!</h3>
+        <hr>
+        <div id="edit_question" style="display: block;">
+            <input type="text" id="edit_question_in" class="form-control"
+                   placeholder="Enter the question here" value="{{ data['question'] }}">
+        </div>
+
+        <div id="edit_choice1" style="display: block;">
+            <input type="text" id="edit_choice1_in" class="form-control"
+                   placeholder="Enter the choice1 here" value="{{ data['choice1'] }}">
+        </div>
+
+        <div id="edit_choice2" style="display: block;">
+            <input type="text" id="edit_choice2_in" class="form-control"
+                   placeholder="Enter the choice2 here" value="{{ data['choice2'] }}">
+        </div>
+
+        <div id="edit_choice3" style="display: block;">
+            <input type="text" id="edit_choice3_in" class="form-control"
+                   placeholder="Enter the choice3 here" value="{{ data['choice3'] }}">
+        </div>
+        <div id="edit_choice4" style="display: block;">
+            <input type="text" id="edit_choice4_in" class="form-control"
+                   placeholder="Enter the choice4 here" value="{{ data['choice4'] }}">
+        </div>
+
+        <div class="container">
+
+            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: block">Add test</a>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    function send() {
+        var data = {
+            'question': document.getElementById('edit_question_in').value,
+            'choice1': document.getElementById('edit_choice1_in').value,
+            'choice2': document.getElementById('edit_choice2_in').value,
+            'choice3': document.getElementById('edit_choice3_in').value,
+            'choice4': document.getElementById('edit_choice4_in').value
+        };
+        $.ajax({
+            url: '/add_test',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data === 'Basic info successfully created')
+                    document.location.reload();
+            }
+        })
+
+    }
+
+
+
+
+</script>
+</html>
