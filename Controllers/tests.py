@@ -1,8 +1,6 @@
-from flask import Blueprint, session, render_template, request, Response, send_from_directory
+from flask import Blueprint, session, render_template, request, Response
+
 from Models.Models import *
-from app import *
-from werkzeug.utils import secure_filename
-import os
 
 tests_controller = Blueprint('tests_controller', __name__, template_folder='templates')
 
@@ -27,10 +25,14 @@ def add_test():
 @tests_controller.route('/get_test', methods=['GET'])
 def fetch_tests():
     username = 'tester@tester.com'
+    testing = True
     if session.get('user') is not None:
+        testing = False
         username = session.get('user')[0]
     test = Test(username)
     data = test.get_tests()
-
-    # render_template("sometemplate", data)
-    return render_template('tests.html', data=data)
+    print(testing)
+    if not testing:
+        return render_template("sometemplate", data=data)
+    print(data)
+    return b'data fetched correctly'

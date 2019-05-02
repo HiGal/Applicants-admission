@@ -347,14 +347,21 @@ class Test:
         array_of_records = []
         # print(records)
         for record in cursor:
-            # print(record)
+            ans_letters = '__abcd'
+            answer = 'a'
+            for i in [2, 3, 4, 5]:
+                if record[i] == record[6]:
+                    answer = ans_letters[i]
+                    break
             data = {
                 'question': record[1],
-                'choice1': record[2],
-                'choice2': record[3],
-                'choice3': record[4],
-                'choice4': record[5],
-                'correct_choice': record[6]
+                'answers': {
+                    'a': record[2],
+                    'b': record[3],
+                    'c': record[4],
+                    'd': record[5]
+                },
+                'correctAnswer': answer
             }
             array_of_records.append(data)
 
