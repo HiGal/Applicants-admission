@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from Controllers.login import login_controller
 from Controllers.profile import profile_controller
@@ -16,6 +17,7 @@ app.register_blueprint(profile_controller)
 app.register_blueprint(tests_controller)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+CORS(app)
 
 
 

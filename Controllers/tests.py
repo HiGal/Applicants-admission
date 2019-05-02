@@ -1,4 +1,5 @@
-from flask import Blueprint, session, render_template, request, Response, send_from_directory
+from flask import Blueprint, session, render_template, request, Response, send_from_directory, jsonify
+
 from Models.Models import *
 from app import *
 from werkzeug.utils import secure_filename
@@ -33,3 +34,4 @@ def fetch_tests():
 
     # render_template("sometemplate", data)
     return Response('data fetched correctly')
+

@@ -81,26 +81,26 @@ input[type=file] {
     display: block;
 }
 
-.file-upload{
+.file-upload {
     display: none;
 }
 
 .p-image {
-  color: #666666;
-  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    color: #666666;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 }
 
 .p-image:hover {
-  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
 }
 
 .upload-button {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
 
 .upload-button:hover {
-  transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-  color: #999;
+    transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+    color: #999;
 }
 
 .container.content {
@@ -161,3 +161,20 @@ input[type=date] {
     background-color: white;
     margin-top: 20px;
 }
+
+.question {
+    font-weight: 600;
+}
+
+.answers {
+    margin-bottom: 20px;
+}
+
+/*#submit {*/
+/*    font-family: sans-serif;*/
+/*    font-size: 20px;*/
+/*    color: #fff;*/
+/*    border: 0px;*/
+/*    border-radius: 18px;*/
+/*    padding: 18px;*/
+/*}*/
