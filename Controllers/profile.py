@@ -1,18 +1,19 @@
 from flask import Blueprint, session, render_template, request, Response, send_from_directory
-from Models.Models import User,Portfolio, PassportData
+from Models.Models import User, Portfolio, PassportData
 from app import *
 from werkzeug.utils import secure_filename
 import os
 
 profile_controller = Blueprint('profile_controller', __name__, template_folder='templates')
-TESTING = False
+
 
 
 @profile_controller.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
         user_tuple = ['tester', '12312312', 'null']
-        if not TESTING:
+
+        if session.get('user') is not None:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.get_info()
@@ -20,7 +21,8 @@ def profile():
         return render_template('profile.html', data=data)
     else:
         user_tuple = ['tester', '12312312', 'null']
-        if not TESTING:
+
+        if session.get('user') is not None:
             user_tuple = session.get('user')
 
         user = User(user_tuple[0], user_tuple[1])
@@ -39,7 +41,8 @@ def contacts():
     if request.method == 'GET':
 
         user_tuple = ['tester', '12312312', 'null']
-        if not TESTING:
+
+        if session.get('user') is not None:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = user.contacts()
@@ -47,7 +50,8 @@ def contacts():
         return render_template('contacts.html', data=data)
     else:
         user_tuple = ['tester', '12312312', 'null']
-        if not TESTING:
+
+        if session.get('user') is not None:
             user_tuple = session.get('user')
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
@@ -60,7 +64,7 @@ def contacts():
 def passport():
     if request.method == 'GET':
         username = "tester"
-        if not TESTING:
+        if session.get('user') is not None:
             username = session.get('user')[0]
         ins = PassportData(username)
         data = ins.retrieve()
@@ -69,7 +73,8 @@ def passport():
         return render_template('passport.html', data=data)
     else:
         data = request.get_json(silent=True)
-        if TESTING:
+
+        if session.get('user') is not None:
             username = data['username']  #
         else:
             username = session.get('user')[0]
@@ -96,9 +101,14 @@ def upload_file():
     return render_template('portfolio.html')
 
 
-@profile_controller.route('/education')
+@profile_controller.route('/education', methods=['GET', 'POST'])
 def education():
-    return render_template('education.html')
+    if request.method == 'POST':
+        data = request.get_json(silent=True)
+    else:
+        data = {"0": {"input": "KSMS", "date": "20.06.2017"},
+                "1": {"input": "KSMS", "date": "20.06.2017"}}
+        return render_template('education.html', data=data)
 
 
 @profile_controller.route('/add_attachment', methods=['GET', 'POST'])
@@ -106,7 +116,8 @@ def add_attachment():
     if request.method == 'POST':
         data = request.get_json(silent=True)
         username = 'tester@tester.com'
-        if not TESTING:
+
+        if session.get('user') is not None:
             username = session.get('user')[0]
         print(data)
         attachment = data['attachment']
@@ -117,13 +128,13 @@ def add_attachment():
         return Response('added attachment successfully')
     else:
         username = 'tester@tester.com'
-        if not TESTING:
+
+        if session.get('user') is not None:
             username = session.get('user')[0]
         user_portfolio = Portfolio(username)
         data = user_portfolio.retrieve()
 
         print(data)
-
 
         return Response('got the picture')
 
@@ -141,7 +152,8 @@ def profile_picture():
         return Response('added photo successfully')
     else:
         username = "tester@tester.com"
-        if not TESTING:
+
+        if session.get('user') is not None:
             username = session.get('user')[0]
 
         # now we are going to retrieve data from the db

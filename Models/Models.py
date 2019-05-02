@@ -1,6 +1,5 @@
-import hashlib
-import os
 import base64
+import os
 
 import psycopg2
 
@@ -312,3 +311,53 @@ class Portfolio:
         cursor.close()
         print(record[0])
         return {'attachment': record[0]}
+
+
+class Test:
+    def __init__(self, username):
+        self.conn = db_connect()
+        self.username = username
+
+    def get_tests(self):
+        cursor = self.conn.cursor()
+
+        cursor.execute(
+            'SELECT * FROM tests_questions;'
+        )
+        if cursor.rowcount == 0:
+            cursor.close()
+            assert AssertionError
+
+        array_of_records = []
+        # print(records)
+        for record in cursor:
+            # print(record)
+            data = {
+                'question': record[1],
+                'choice1': record[2],
+                'choice2': record[3],
+                'choice3': record[4],
+                'choice4': record[5]
+            }
+            array_of_records.append(data)
+
+        return array_of_records
+
+    def get_num_records(self) -> int:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT COUNT(*) FROM tests_questions;'
+        )
+        ret = next(cursor)[0]
+        cursor.close()
+        return ret
+
+    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4) '
+            'VALUES (%s, %s, %s, %s, %s);',
+            (question, choice1, choice2, choice3, choice4)
+        )
+        self.conn.commit()
+        cursor.close()

@@ -24,21 +24,3 @@ def login():
             return Response("Username or Password incorrect")
     return render_template('login.html')
 
-
-@login_controller.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        user = User()
-        data = request.get_json(silent=True)
-        name = data['name']
-        sname = data['sname']
-        email = data['email']
-        bdate = data['bdate']
-        if data['password'] == data['cpassword']:
-            password = hash_password(data['password'])
-            user.register(email, password, name, sname, email, bdate)
-            return Response("Account successfully created")
-        else:
-            return Response("Password are not the same!")
-    return render_template('registration.html')
-
