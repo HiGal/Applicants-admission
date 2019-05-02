@@ -20,6 +20,22 @@ class User:
         self.conn = db_connect()
         self.username = username
         self.password = password
+        self.type = 'student'
+
+    def get_type(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT is_professor FROM sys_user WHERE username = %s;',
+            [self.username]
+        )
+        if cursor.rowcount == 0:
+            return 'student'
+        record = next(cursor)
+        if record[0]:
+            self.type = 'professor'
+        else:
+            self.type = 'student'
+        return self.type
 
     def verify(self):
         cursor = self.conn.cursor()
@@ -331,13 +347,21 @@ class Test:
         array_of_records = []
         # print(records)
         for record in cursor:
-            # print(record)
+            ans_letters = '__abcd'
+            answer = 'a'
+            for i in [2, 3, 4, 5]:
+                if record[i] == record[6]:
+                    answer = ans_letters[i]
+                    break
             data = {
                 'question': record[1],
-                'choice1': record[2],
-                'choice2': record[3],
-                'choice3': record[4],
-                'choice4': record[5]
+                'answers': {
+                    'a': record[2],
+                    'b': record[3],
+                    'c': record[4],
+                    'd': record[5]
+                },
+                'correctAnswer': answer
             }
             array_of_records.append(data)
 
@@ -352,12 +376,12 @@ class Test:
         cursor.close()
         return ret
 
-    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str):
+    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str, correct_choice: str):
         cursor = self.conn.cursor()
         cursor.execute(
-            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4) '
-            'VALUES (%s, %s, %s, %s, %s);',
-            (question, choice1, choice2, choice3, choice4)
+            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4, correct_choice) '
+            'VALUES (%s, %s, %s, %s, %s, %s);',
+            (question, choice1, choice2, choice3, choice4, correct_choice)
         )
         self.conn.commit()
         cursor.close()
