@@ -16,9 +16,12 @@ def login():
         data = request.get_json(silent=True)
         data['password'] = hash_password(data['password'])
         user = User(data['username'], data['password'])
-        print(user.verify())
+        #print(user.verify())
+
         if user.verify():
             session['user'] = (user.username, user.password)
+            if user.get_type() == 'professor':
+                return Response('/professor')
             return Response('/profile')
         else:
             return Response("Username or Password incorrect")

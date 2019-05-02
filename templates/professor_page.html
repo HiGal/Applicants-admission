@@ -23,15 +23,8 @@
 
             <a class="nav-link active" id="profile-prof" href="#profile-prof" role="tab"
                aria-controls="profile-prof" aria-selected="true">Personal info</a>
-            <a class="nav-link" id="contacts" href="#contacts" role="tab"
-               aria-controls="contacts"
-               aria-selected="false">Contacts</a>
-            <a class="nav-link" id="list-applicants" href="#list-applicants" role="tab"
-               aria-controls="list-applicants"
-               aria-selected="false">List of applicants <span>/</span> ID</a>
-            <a class="nav-link" id="portfolios" href="#portfolios" role="tab"
-               aria-controls="portfolios"
-               aria-selected="false">Portfolios</a>
+
+
             <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
                aria-selected="false">Tests</a>
 
@@ -44,11 +37,9 @@
         <div class="container header">
             <a class="btn btn-outline-primary logout" href="/login">Log out</a>
         </div>
-        <div id="message-to-user" style="text-align: justify;">
-            <p class="message">Please, fill out the form completely</p>
-        </div>
+
         <div class="container">
-            <img class="profile" src="../static/img/profile.png" width="128" height="128">
+            <img class="profile" src="../static/img/professor_profile.jpg" width="128" height="128">
         </div>
 
         <div class="container content">
@@ -58,7 +49,7 @@
                         <div id="div_name" style="display: block">
                             <label class="field">First name:</label>
                             <div class="text">
-                                {{ data['name'] }}
+                                {{ data['fname'] }}
                             </div>
                             <hr>
                         </div>
@@ -71,7 +62,7 @@
                         <div id="div_sname" style="display: block">
                             <label class="field">Second name:</label>
                             <div class="text">
-                                {{ data['surname'] }}
+                                {{ data['sname'] }}
                             </div>
                             <hr>
                         </div>
@@ -85,7 +76,7 @@
                         <div id="div_citizen" style="display: block">
                             <label class="field">Citezenship:</label>
                             <div class="text">
-                                {{ data['citizen'] }}
+                                {{ data['citizenship'] }}
                             </div>
                             <hr>
                         </div>
@@ -100,7 +91,7 @@
                         <div id="div_bdate" style="display: block">
                             <label class="field">Birth day (dd.mm.yyyy):</label>
                             <div class="text">
-                                {{ data['birthday'] }}
+                                {{ data['bdate'] }}
                             </div>
                             <hr>
                         </div>
@@ -131,7 +122,6 @@
             </div>
         </div>
         <div class="container">
-            <a class="btn btn-outline-primary edit" id="btn-edit" onclick="edit()" style="display: block">Edit</a>
             <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
 
         </div>
@@ -147,7 +137,9 @@
             'citizenship': document.getElementById('edit_citizen_in').value,
             'gender': document.getElementById('gender').value
         };
-
+        console.log(data);
+        //print("wtf")
+        //print(data)
         $.ajax({
             url: '/profile',
             method: 'POST',

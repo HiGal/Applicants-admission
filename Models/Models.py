@@ -20,6 +20,22 @@ class User:
         self.conn = db_connect()
         self.username = username
         self.password = password
+        self.type = 'student'
+
+    def get_type(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT is_professor FROM sys_user WHERE username = %s;',
+            [self.username]
+        )
+        if cursor.rowcount == 0:
+            return 'student'
+        record = next(cursor)
+        if record[0]:
+            self.type = 'professor'
+        else:
+            self.type = 'student'
+        return self.type
 
     def verify(self):
         cursor = self.conn.cursor()
