@@ -1,5 +1,6 @@
 import base64
 import os
+from typing import Dict, Optional
 
 import psycopg2
 
@@ -16,14 +17,34 @@ def db_connect():
 
 
 class User:
-    def __init__(self, username=None, password=None):
+    """
+    Model defines the User.
+    """
+
+    def __init__(self, username: str = None, password: str = None):
+        """
+        Create the new User.
+
+        Arguments are not needed for registration.
+
+        :param username: Username
+        :param password: Password
+        """
         self.conn = db_connect()
         self.username = username
         self.password = password
 
-    def verify(self):
+    def verify(self) -> bool:
+        """
+        Authorize the user.
+
+        Credentials should be set before verifying.
+
+        :return: True if successfully authorized, False otherwise
+        """
         cursor = self.conn.cursor()
         password = self.password
+        password = Secure.hash_password(password)
         cursor.execute(
             'SELECT * FROM sys_user WHERE username = %s AND password = %s;',
             (self.username, password)
@@ -36,7 +57,18 @@ class User:
         cursor.close()
         return False
 
-    def register(self, username, password, name, sname, email, bdate):
+    def register(self, username: str, password: str, name: str, sname: str, email: str, bdate: str):
+        """
+        Register the new user.
+
+        :param username: Username
+        :param password: Password
+        :param name: Name (first name)
+        :param sname: Surname (last name)
+        :param email: Email
+        :param bdate: Birth date in format yyyy-mm-dd
+        """
+        password = Secure.hash_password(password)
         self.password = password
         self.username = username
         cursor = self.conn.cursor()
@@ -48,7 +80,13 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def contacts(self):
+    def contacts(self) -> Optional[Dict[str, str, str, str, str, str, str]]:
+        """
+        Retrieve the user contacts.
+
+        :return: Dictionary in format `{ index: str, region: str,
+        city: str, street: str, building: str, corpus: str, flat: str }`
+        """
         cursor = self.conn.cursor()
         cursor.execute('SELECT * FROM user_contact WHERE uname = %s;', [self.username])
 
@@ -71,7 +109,18 @@ class User:
 
         return data
 
-    def update_contacts(self, index, region, city, street, building, corpus, flat):
+    def update_contacts(self, index: str, region: str, city: str, street: str, building: str, corpus: str, flat: str):
+        """
+        Update user contacts.
+
+        :param index: Index
+        :param region: Region
+        :param city: City
+        :param street: Street
+        :param building: Building
+        :param corpus: Corpus
+        :param flat: Flat
+        """
         cursor = self.conn.cursor()
 
         cursor.execute('SELECT * FROM user_contact WHERE uname = %s;', [self.username])
@@ -93,9 +142,15 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def get_info(self):
+    def get_info(self) -> Dict[str, str, str, str, str, str]:
+        """
+        Get main user information.
+
+        MAKE SURE YOU HAVE TURNED OFF THE TESTING FLAG!
+
+        :return: Dictionary in in format `{ name: str, surname: str, email: str, birthday: str, gender: str, citizen: str }`
+        """
         cursor = self.conn.cursor()
-        # MAKE SURE THAT YOU DISABLED TESTING !
         cursor.execute('SELECT * FROM sys_user WHERE username = %s;', [self.username])
         record = next(cursor)
         cursor.close()
@@ -112,8 +167,16 @@ class User:
 
         return data
 
-    def update_info(self, fname, sname, bdate, gender, citizenship):
+    def update_info(self, fname: str, sname: str, bdate: str, gender: str, citizenship: str):
+        """
+        Update main user info.
 
+        :param fname: First name
+        :param sname: Surname (last name)
+        :param bdate: Birth date in format `yyyy-mm-dd`
+        :param gender: Gender (M / F / ND)
+        :param citizenship: Citizenship country
+        """
         stuff = self.get_info()
         # print(stuff)
         if not bdate:
@@ -130,27 +193,48 @@ class User:
         self.conn.commit()
         cursor.close()
 
-    def add_photo(self, photo_binary_data, username):
-        # this function is to insert photos in the database
-        # Decode as integer and send to server and then decode it to binary form
-        query = """update sys_user set photo_data = '%s' where username= '%s'""" % (photo_binary_data, username)
+    def add_photo(self, photo_extension: str, photo_binary_data: int, byte_count: int, username: str):
+        """
+        Insert user profile photo into database.
+
+        Decode as integer and send to server and then decode it to binary form.
+
+        :param photo_extension: Photo file extension
+        :param photo_binary_data: Photo data
+        :param byte_count: Number of bytes in photo data
+        :param username: User username
+        """
+
+        photo_binary_data = photo_binary_data.to_bytes(byte_count, byteorder='big')
+
+        photo_binary_data = psycopg2.Binary(photo_binary_data)
+
         cursor = self.conn.cursor()
-        # print(query)
-        cursor.execute(query)
+        cursor.execute(
+            'UPDATE user_contact '
+            'SET photo_extension = %s, photo_data = %s '
+            'WHERE uname = %s;',
+            (photo_extension, photo_binary_data, username)
+        )
+
         self.conn.commit()
 
         cursor.close()
 
-    def get_photo(self, username):
+    def get_photo(self, username: str) -> Optional[Dict[str, int]]:
+        """
+        Retrieve the user profile photo from database.
+
+        :param username: Username
+        :return: Dictionary in format `{ photo_integer, byte_count }`
+        """
         try:
-            query = """select photo_data from sys_user where username = '%s';""" % username
-
             path = os.path.dirname(os.path.realpath(__file__))
-            print(path)
-            # print(query)
-
             cursor = self.conn.cursor()
-            cursor.execute(query)
+            cursor.execute(
+                'SELECT photo_data FROM sys_user '
+                'WHERE username = %s;', [username]
+            )
             photo_data = cursor.fetchall()[0][0]
             print(path + "/../static/img/profile.png")
             if photo_data is None:
@@ -166,10 +250,22 @@ class User:
 
 
 class PassportData:
+    """
+    Model defines the passport data.
+    """
     from typing import Optional
 
     def __init__(self, username, passport_series=None, passport_number=None, issue_date=None,
                  issuing_authority=None):
+        """
+        Create new Passport Data object.
+
+        :param username: Corresponding username
+        :param passport_series: Passport series
+        :param passport_number: Passport number
+        :param issue_date: Document issue date
+        :param issuing_authority: Document issuing authority
+        """
         self.conn = db_connect()
         self.username = username
         self.passport_series = passport_series
@@ -178,6 +274,12 @@ class PassportData:
         self.issuing_authority = issuing_authority
 
     def __get_user_hashed_pass__(self, cursor) -> Optional[str]:
+        """
+        (KINDA PRIVATE) User hashed pass.
+
+        :param cursor: Database cursor
+        :return: User hashed pass
+        """
         cursor.execute(
             'SELECT password FROM sys_user '
             'WHERE username = %s;', [self.username]
@@ -191,7 +293,18 @@ class PassportData:
 
         return record[0]
 
-    def register(self, passport_series: str, passport_num: str, issue_date: str, issuing_authority: str):
+    def register(self, passport_series: str, passport_num: str, issue_date: str, issuing_authority: str) -> bool:
+        """
+        Register new passport data.
+
+        Uses the user password to encrypt the data.
+
+        :param passport_series: Passport series
+        :param passport_num: Passport number
+        :param issue_date: Document issue date
+        :param issuing_authority: Document issuing authority
+        :return: False if user not found, True on success
+        """
         cursor = self.conn.cursor()
 
         user_password = self.__get_user_hashed_pass__(cursor)
@@ -205,7 +318,10 @@ class PassportData:
         date = Secure.encrypt(issue_date.encode(), encryption_key).decode()
         authority = Secure.encrypt(issuing_authority.encode(), encryption_key).decode()
 
-        cursor.execute('SELECT username FROM passport_data WHERE passport_data.username = %s;', [self.username])
+        cursor.execute(
+            'SELECT username FROM passport_data '
+            'WHERE passport_data.username = %s;', [self.username]
+        )
         if cursor.rowcount != 0:
             cursor.execute(
                 'UPDATE passport_data '
@@ -224,7 +340,14 @@ class PassportData:
         self.conn.commit()
         cursor.close()
 
+        return True
+
     def retrieve(self) -> bool:
+        """
+        Load passport data into this object.
+
+        :return: False if user not found, True on success
+        """
         cursor = self.conn.cursor()
 
         user_password = self.__get_user_hashed_pass__(cursor)
@@ -252,19 +375,43 @@ class PassportData:
 
         return True
 
-    def get_data_without_db(self):
-        return {'passport_series': self.passport_series, 'passport_number': self.passport_number,
-                'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority}
+    def get_data_without_db(self) -> Dict[str, str, str, str]:
+        """
+        Get passport data as dictionary.
+
+        Available keys: passport_series, passport_number, issue_date, issuing_authority
+
+        :return: Dictionary with data
+        """
+        return {
+            'passport_series': self.passport_series, 'passport_number': self.passport_number,
+            'issue_date': self.issue_date, 'issuing_authority': self.issuing_authority
+        }
 
 
 class Portfolio:
+    """
+    Model defines the Portfolio.
+    """
+
     def __init__(self, username: str):
+        """
+        Create new Portfolio object.
+
+        :param username: Portfolio owner username
+        """
         self.conn = db_connect()
         self.username = username
         self.document = b'0'
         self.byte_count = 0
 
     def insert_file(self, document):
+        """
+        Insert user portfolio into database.
+
+        :param document: Portfolio data
+        :return: Just True
+        """
 
         cursor = self.conn.cursor()
         print(self.username)
@@ -293,10 +440,15 @@ class Portfolio:
 
         self.document = document
 
-        print("returned")
+        print('returned')
         return True
 
-    def retrieve(self):
+    def retrieve(self) -> Optional[Dict[str, int]]:
+        """
+        Retrieve the portfolio.
+
+        :return: Dictionary with { attachment_integer: str, byte_count: int }
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             'SELECT document FROM portfolios '
@@ -305,7 +457,7 @@ class Portfolio:
         )
 
         if cursor.rowcount == 0:
-            return 0
+            return None
 
         record = next(cursor)
         cursor.close()

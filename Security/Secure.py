@@ -35,7 +35,7 @@ def encrypt(data: bytes, key: bytes) -> bytes:
 
     :param data: Data in bytes
     :param key: Key in bytes
-    :return: Encrypted data in bytes.
+    :return: Encrypted data in bytes
     """
     fernet = Fernet(key)
     return fernet.encrypt(data)
@@ -45,14 +45,20 @@ def decrypt(data: bytes, key: bytes) -> bytes:
     """
     Decrypts the data.
 
-    :param data: Encrypted data in bytes.
-    :param key: Key in bytes.
-    :return: Source data in bytes.
+    :param data: Encrypted data in bytes
+    :param key: Key in bytes
+    :return: Source data in bytes
     """
     fernet = Fernet(key)
     return fernet.decrypt(data)
 
 
 def hash_password(password: str) -> str:
+    """
+    Hash the password using MD5.
+
+    :param password: Password to hash
+    :return: Hashed password
+    """
     from hashlib import md5
     return md5(password.encode()).hexdigest()
