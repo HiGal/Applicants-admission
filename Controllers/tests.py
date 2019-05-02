@@ -15,11 +15,12 @@ def add_test():
     choice2 = data['choice2']
     choice3 = data['choice3']
     choice4 = data['choice4']
+    correct_choice = data['correct_choice']
     username = 'tester@tester.com'
     if session.get('user') is not None:
         username = session.get('user')[0]
     test = Test(username)
-    test.insert_test(question, choice1, choice2, choice3, choice4)
+    test.insert_test(question, choice1, choice2, choice3, choice4, correct_choice)
     return Response('Test added successfully')
 
 
@@ -32,4 +33,4 @@ def fetch_tests():
     data = test.get_tests()
 
     # render_template("sometemplate", data)
-    return Response('data fetched correctly')
+    return render_template('tests.html', data=data)

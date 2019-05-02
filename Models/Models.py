@@ -353,7 +353,8 @@ class Test:
                 'choice1': record[2],
                 'choice2': record[3],
                 'choice3': record[4],
-                'choice4': record[5]
+                'choice4': record[5],
+                'correct_choice': record[6]
             }
             array_of_records.append(data)
 
@@ -368,12 +369,12 @@ class Test:
         cursor.close()
         return ret
 
-    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str):
+    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str, correct_choice: str):
         cursor = self.conn.cursor()
         cursor.execute(
-            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4) '
-            'VALUES (%s, %s, %s, %s, %s);',
-            (question, choice1, choice2, choice3, choice4)
+            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4, correct_choice) '
+            'VALUES (%s, %s, %s, %s, %s, %s);',
+            (question, choice1, choice2, choice3, choice4, correct_choice)
         )
         self.conn.commit()
         cursor.close()
