@@ -312,6 +312,33 @@ class Portfolio:
         print("returned")
         return True
 
+    def insert_result(self, result):
+        cursor = self.conn.cursor()
+        print(self.username)
+
+        cursor.execute(
+            'SELECT username FROM portfolios WHERE username = %s;',
+            [self.username]
+        )
+
+        if cursor.rowcount == 0:
+            cursor.execute(
+                'INSERT INTO portfolios (username, test_result) '
+                'VALUES (%s, %s)', (self.username, result )
+            )
+        else:
+            cursor.execute(
+                'UPDATE portfolios '
+                'SET test_result = %s '
+                'WHERE username = %s;',
+                (result, self.username)
+            )
+
+        self.conn.commit()
+        cursor.close()
+
+        return True
+
     def retrieve(self):
         cursor = self.conn.cursor()
         cursor.execute(

@@ -55,3 +55,14 @@ def fetch_tests():
         return render_template("sometemplate", data=data)
     print(data)
     return b'data fetched correctly'
+
+
+@tests_controller.route('/update_result', methods=['POST'])
+def update_result():
+    username = 'tester@tester.com'
+    data = request.get_json(silent=True)
+    if session.get('user') is not None:
+        username = session.get('user')
+    portfolio = Portfolio(username=username)
+    portfolio.insert_result(result=data['result'])
+    return b'successfully updated the result'
