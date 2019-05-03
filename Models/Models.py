@@ -113,6 +113,7 @@ class User:
         cursor = self.conn.cursor()
         # MAKE SURE THAT YOU DISABLED TESTING !
         cursor.execute('SELECT * FROM sys_user WHERE username = %s;', [self.username])
+        print(self.username)
         record = next(cursor)
         cursor.close()
 

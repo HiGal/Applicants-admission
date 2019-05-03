@@ -11,7 +11,7 @@ profile_controller = Blueprint('profile_controller', __name__, template_folder='
 @profile_controller.route('/profile', methods=['GET', 'POST'])
 def profile():
     if request.method == 'GET':
-        user_tuple = ['tester', '12312312', 'null']
+        user_tuple = ['tester@tester.com', '12312312', 'null']
 
         if session.get('user') is not None:
             user_tuple = session.get('user')
@@ -20,7 +20,7 @@ def profile():
         data['birthday'] = data['birthday'].strftime('%d.%m.%Y')
         return render_template('profile.html', data=data)
     else:
-        user_tuple = ['tester', '12312312', 'null']
+        user_tuple = ['tester@tester.com', '12312312', 'null']
 
         if session.get('user') is not None:
             user_tuple = session.get('user')
@@ -74,7 +74,7 @@ def passport():
     else:
         data = request.get_json(silent=True)
 
-        if session.get('user') is not None:
+        if session.get('user') is None:
             username = data['username']  #
         else:
             username = session.get('user')[0]
@@ -146,6 +146,8 @@ def profile_picture():
         data = request.get_json(silent=True)
         print(data)
         user_data = session.get('user')
+        if user_data is None:
+            user_data = 'tester@tester.com'
         user = User(user_data[0])
         user.add_photo(data['photo_binary'], user.username)
 

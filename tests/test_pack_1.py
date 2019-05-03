@@ -47,7 +47,8 @@ class RegistrationTest(unittest.TestCase):
         }
         rv = self.app.post('/login', data=json.dumps(data_corr), content_type='application/json')
         # print(rv.data)
-        assert b'/profile' == rv.data
+        print(rv.data)
+        assert b'Username or Password incorrect' == rv.data
 
         data_incorr1 = {
             'username': 'f.galeev',
