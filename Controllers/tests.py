@@ -1,4 +1,4 @@
-from flask import Blueprint, session, render_template, request, Response,jsonify
+from flask import Blueprint, session, render_template, request, Response, jsonify
 import random
 from Models.Models import *
 
@@ -41,7 +41,6 @@ def get_the_test():
     return render_template('add_test.html', data=data)
 
 
-
 @tests_controller.route('/tests', methods=['GET'])
 def tests_page():
     return render_template('tests.html')
@@ -72,11 +71,11 @@ def update_result():
     portfolio.insert_result(result=data['result'])
     return b'successfully updated the result'
 
-@tests_controller.route('/retrieve_portfolio', methods='GET')
+
+@tests_controller.route('/retrieve_portfolio', methods=['GET'])
 def retrv_portfolio():
     username = 'tester@tester.com'
     if session.get('user') is not None:
         username = session.get('user')
 
     return Portfolio(username).retrieve()
-
