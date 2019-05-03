@@ -19,3 +19,13 @@ https://applicants-admission.herokuapp.com/
 Check out the project wiki:
 
 [Wiki Home](https://github.com/HiGal/Applicants-admission/wiki)
+
+
+*****************************************************************************
+
+
+_Applicants Admission team_
+
+_Jafar Badour, Madina Gafarova, Farit Galeev, Egor Klementev, Ruslan Shakirov_
+
+_[S19] Software Project, [Innopolis University](https://university.innopolis.ru), 2019_
