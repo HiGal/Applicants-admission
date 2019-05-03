@@ -27,6 +27,7 @@ def profile():
 
         user = User(user_tuple[0], user_tuple[1])
         data = request.get_json(silent=True)
+        print(data)
         fname = data['fname']
         sname = data['sname']
         bdate = data['bdate']

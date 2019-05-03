@@ -12,14 +12,13 @@ class AddTest(unittest.TestCase):
         self.app = app.app.test_client()
 
     def test_add_question(self):
-        record = [1, 'What is 2+2?', '3', '4', '2', 'I dont know', '5']
+        record = [1, 'What is 2+2?', '3', '4', '2', 'I dont know', '4']
         data = {
             'question': record[1],
-            'choice1': record[2],
-            'choice2': record[3],
+            'choice1': record[3],
+            'choice2': record[2],
             'choice3': record[4],
-            'choice4': record[5],
-            'correct_choice': record[6]
+            'choice4': record[5]
         }
         rv = self.app.post('/add_test', data=json.dumps(data), content_type='application/json')
         # assert b'Test added successfully' in rv.data
