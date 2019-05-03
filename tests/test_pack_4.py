@@ -29,10 +29,10 @@ class AddTest(unittest.TestCase):
         if rv.data is None:
             assert ChildProcessError
 
-
     def test_update_result(self):
+        x = random.randint(0, 100)
         data = {
-            'result': random.randint(0, 100)
+            'result': str(x) + " out of " + str(random.randint(x, 100))
         }
         rv = self.app.post('update_result', data=json.dumps(data), content_type='application/json')
         assert b'successfully updated the result'

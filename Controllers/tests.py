@@ -73,15 +73,16 @@ def update_result():
     return b'successfully updated the result'
 
 
-@tests_controller.route('/retrieve_portfolio', methods=['GET'])
+@tests_controller.route('/retrieve_portfolio', methods=['POST'])
 def retrv_portfolio():
     # this function returns a dictionary of
     # data = {
     #     'attachment': the actual pdf in base64 format
     # }
+    data = request.get_json(silent=True)
     username = 'tester@tester.com'
     if session.get('user') is not None:
-        username = session.get('user')[0]
+        username = data['username']
 
     return Portfolio(username).retrieve()
 
