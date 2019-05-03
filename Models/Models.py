@@ -389,7 +389,6 @@ class Portfolio:
 
         record = next(cursor)
         cursor.close()
-        print(record[0])
         return {'attachment': record[0]}
 
 

@@ -74,6 +74,7 @@
 </div>
 </body>
 <script>
+
     (function ($) {
         $(document).ready(function () {
             $('.submit').click(function (e) {
@@ -91,16 +92,26 @@
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function (data) {
-                        var a = document.createElement("a");
-                        document.body.appendChild(a);
-                        a.style = "display: none";
-                        var data_obj = data['attachment'],
-                            blob = new Blob([data_obj],{type:'data:application/pdf;base64'}),
-                            url = window.URL.createObjectURL(blob);
-                        a.href = url;
-                        a.download = 'portfolio.pdf';
-                        a.click();
-                        window.URL.revokeObjectURL(url);
+                        console.log(data);
+                        var dataURI = data['resp']['attachment'];
+                        var byteString = atob(dataURI.split(',')[1]);
+
+                        // separate out the mime component
+                        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+                        // write the bytes of the string to an ArrayBuffer
+                        var ab = new ArrayBuffer(byteString.length);
+                        var ia = new Uint8Array(ab);
+                        for (var i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                        }
+
+                        // write the ArrayBuffer to a blob, and you're done
+                        var blob = new Blob([ab], {type: 'application/pdf'});
+                        // IE doesn't allow using a blob object directly as link href
+                        // instead it is necessary to use msSaveOrOpenBlob
+                        var filesaver = saveAs(blob, data['username']+".pdf");
+                        console.log(filesaver)
 
                     }
                 })

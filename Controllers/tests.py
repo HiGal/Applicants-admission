@@ -41,7 +41,6 @@ def get_the_test():
     return render_template('add_test.html', data=data)
 
 
-
 @tests_controller.route('/tests', methods=['GET'])
 def tests_page():
     return render_template('tests.html')
@@ -84,16 +83,15 @@ def retrv_portfolio():
     if session.get('user') is not None:
         username = data['username']
 
-    return jsonify(Portfolio(username).retrieve())
-
+    return jsonify({'username': data['username'], 'resp': Portfolio(username).retrieve()})
 
 @tests_controller.route('/tests_professor', methods=['GET'])
 def get_applicant_list():
-    username = 'tester@tester.com'
-    if session.get('user') is not None:
-        username = session.get('user')[0]
-    retrv_portfolio = Portfolio(username=username)
-    data = retrv_portfolio.get_test_and_portfolio()
-    print(data)
+        username = 'tester@tester.com'
+        if session.get('user') is not None:
+            username = session.get('user')[0]
+        retrv_portfolio = Portfolio(username=username)
+        data = retrv_portfolio.get_test_and_portfolio()
+        print(data)
 
-    return render_template('tests_professor.html', data=data)
+        return render_template('tests_professor.html', data=data)
