@@ -341,6 +341,7 @@ class Portfolio:
 
     def retrieve(self):
         cursor = self.conn.cursor()
+        print(self.username)
         cursor.execute(
             'SELECT document FROM portfolios '
             'WHERE username = %s;',

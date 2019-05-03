@@ -66,7 +66,7 @@ def update_result():
     username = 'tester@tester.com'
     data = request.get_json(silent=True)
     if session.get('user') is not None:
-        username = session.get('user')
+        username = session.get('user')[0]
     portfolio = Portfolio(username=username)
     portfolio.insert_result(result=data['result'])
     return b'successfully updated the result'
@@ -74,8 +74,24 @@ def update_result():
 
 @tests_controller.route('/retrieve_portfolio', methods=['GET'])
 def retrv_portfolio():
+    # this function returns a dictionary of
+    # data = {
+    #     'attachment': the actual pdf in base64 format
+    # }
     username = 'tester@tester.com'
     if session.get('user') is not None:
-        username = session.get('user')
+        username = session.get('user')[0]
 
     return Portfolio(username).retrieve()
+
+
+
+@tests_controller.route('/tests_professor', methods=['GET'])
+def get_applicant_list():
+    username = 'tester@tester.com'
+    if session.get('user') is not None:
+        username = session.get('user')[0]
+    test = Test(username=username)
+    data = test.get_tests()
+    return render_template('tests_professor.html', data=data)
+
