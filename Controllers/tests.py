@@ -71,3 +71,12 @@ def update_result():
     portfolio = Portfolio(username=username)
     portfolio.insert_result(result=data['result'])
     return b'successfully updated the result'
+
+@tests_controller.route('/retrieve_portfolio', methods='GET')
+def retrv_portfolio():
+    username = 'tester@tester.com'
+    if session.get('user') is not None:
+        username = session.get('user')
+
+    return Portfolio(username).retrieve()
+
