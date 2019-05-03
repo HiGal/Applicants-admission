@@ -83,20 +83,21 @@
             'choice3': document.getElementById('edit_choice3_in').value,
             'choice4': document.getElementById('edit_choice4_in').value
         };
+
         $.ajax({
             url: '/add_test',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function (data) {
+
+                alert("Question added Yes hommie!");
                 if (data === 'Basic info successfully created')
                     document.location.reload();
             }
         })
 
     }
-
-
 
 
 </script>
