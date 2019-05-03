@@ -17,12 +17,15 @@
 <body>
 <div class="row">
     <div class="col-3">
-         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <img src="../static/img/logo.svg" class="img">
             <span><hr></span>
 
             <a class="nav-link active" id="profile-prof" href="#profile-prof" role="tab"
                aria-controls="profile-prof" aria-selected="true">Personal info</a>
+
+            <a class="nav-link" id="profile-prof" href="/add_test" role="tab"
+               aria-controls="profile-prof" aria-selected="true">Add a test</a>
 
 
             <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
@@ -121,11 +124,9 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <a class="btn btn-outline-primary edit" id="btn-save" onclick="send()" style="display: none">Save</a>
 
-        </div>
     </div>
+
 </div>
 </body>
 <script>

@@ -1,4 +1,5 @@
 import json
+import random
 import unittest
 
 import app
@@ -27,6 +28,13 @@ class AddTest(unittest.TestCase):
         rv = self.app.get('/get_test', content_type='application/json')
         # print(rv.data)
         assert b'data fetched correctly' in rv.data
+
+    def test_update_result(self):
+        data = {
+            'result': random.randint(0, 100)
+        }
+        rv = self.app.post('update_result', data=json.dumps(data), content_type='application/json')
+        assert b'successfully updated the result'
 
 
 if __name__ == '__main__':

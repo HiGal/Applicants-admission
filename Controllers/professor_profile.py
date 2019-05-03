@@ -15,3 +15,4 @@ def redirect():
         'gender': 'M'
     }
     return render_template('professor_page.html', data=data)
+
