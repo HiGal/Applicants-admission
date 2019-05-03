@@ -1,4 +1,4 @@
-from flask import Blueprint, session, render_template, request, Response
+from flask import Blueprint, session, render_template, request, Response, jsonify
 
 from Models.Models import *
 
@@ -22,8 +22,13 @@ def add_test():
     return Response('Test added successfully')
 
 
-@tests_controller.route('/get_test', methods=['GET'])
-def fetch_tests():
+@tests_controller.route('/tests', methods=['GET'])
+def tests_page():
+    return render_template('tests.html')
+
+
+@tests_controller.route('/get_tests', methods=['GET'])
+def fetch_date():
     username = 'tester@tester.com'
     testing = True
     if session.get('user') is not None:
@@ -31,8 +36,7 @@ def fetch_tests():
         username = session.get('user')[0]
     test = Test(username)
     data = test.get_tests()
-    print(testing)
-    if not testing:
-        return render_template("sometemplate", data=data)
     print(data)
+    if not testing:
+        return jsonify(data)
     return b'data fetched correctly'

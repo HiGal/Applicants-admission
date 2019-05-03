@@ -60,7 +60,7 @@
     const submitButton = document.getElementById("submit");
     let questions;
     $.ajax({
-        url: '/questions',
+        url: '/get_tests',
         method: 'GET',
         contentType: 'application/json',
         data: '',
@@ -75,6 +75,7 @@
         questions.forEach(
             (currentQuestion, questionNumber) => {
                 const answers = [];
+                console.log(currentQuestion);
                 for (letter in currentQuestion.answers) {
 
                     // ...add an HTML radio button
@@ -110,6 +111,7 @@
             const answerContainer = answerContainers[questionNumber];
             const selector = 'input[name=question' + questionNumber + ']:checked';
             const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+            console.log(correctAnswers[0]);
             if (userAnswer === correctAnswers[questionNumber].innerHTML) {
                 // add to the number of correct answers
                 numCorrect++;
