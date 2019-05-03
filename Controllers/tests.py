@@ -41,6 +41,7 @@ def get_the_test():
     return render_template('add_test.html', data=data)
 
 
+
 @tests_controller.route('/tests', methods=['GET'])
 def tests_page():
     return render_template('tests.html')
@@ -92,5 +93,6 @@ def get_applicant_list():
         username = session.get('user')[0]
     retrv_portfolio = Portfolio(username=username)
     data = retrv_portfolio.get_test_and_portfolio()
+    print(data)
 
     return render_template('tests_professor.html', data=data)
