@@ -324,7 +324,7 @@ class Portfolio:
         if cursor.rowcount == 0:
             cursor.execute(
                 'INSERT INTO portfolios (username, test_result) '
-                'VALUES (%s, %s)', (self.username, result )
+                'VALUES (%s, %s)', (self.username, result)
             )
         else:
             cursor.execute(
@@ -338,6 +338,37 @@ class Portfolio:
         cursor.close()
 
         return True
+
+    def get_test_and_portfolio(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT * FROM Portfolios;'
+        )
+        arr = []
+        for record in cursor:
+            data = {
+                'email': record[0],
+                'test_result': record[2]
+            }
+            arr.append(data)
+        frr = []
+        for data in arr:
+            cursor.execute(
+                'select name, surname, citizen from sys_user where username = %s',
+                [data['email']]
+            )
+            if cursor.rowcount == 0:
+                continue
+            record = next(cursor)
+            rdata = {
+                'email': data['email'],
+                'test_result': data['test_result'],
+                'name': record[0],
+                'surname': record[1],
+                'citizen': record[2]
+            }
+            frr.append(rdata)
+        return frr
 
     def retrieve(self):
         cursor = self.conn.cursor()
