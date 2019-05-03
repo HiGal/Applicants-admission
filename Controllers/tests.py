@@ -85,13 +85,12 @@ def retrv_portfolio():
     return Portfolio(username).retrieve()
 
 
-
 @tests_controller.route('/tests_professor', methods=['GET'])
 def get_applicant_list():
     username = 'tester@tester.com'
     if session.get('user') is not None:
         username = session.get('user')[0]
-    test = Test(username=username)
-    data = test.get_tests()
-    return render_template('tests_professor.html', data=data)
+    retrv_portfolio = Portfolio(username=username)
+    data = retrv_portfolio.get_test_and_portfolio()
 
+    return render_template('tests_professor.html', data=data)

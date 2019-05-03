@@ -359,6 +359,8 @@ class Portfolio:
             )
             if cursor.rowcount == 0:
                 continue
+            if data['test_result'] is None:
+                data['test_result'] = 'Not Yet Performed'
             record = next(cursor)
             rdata = {
                 'email': data['email'],
@@ -367,6 +369,8 @@ class Portfolio:
                 'surname': record[1],
                 'citizen': record[2]
             }
+            if rdata['citizen'] is None:
+                rdata['citizen'] = 'User hasnt chosen yet'
             frr.append(rdata)
         return frr
 
