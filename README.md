@@ -8,11 +8,14 @@ _[S19] Software Project, Innopolis University, 2019_
 
 https://applicants-admission.herokuapp.com/
 
+
 ## Issues are welcome
 
-Documentation is available in 
+[Add them](https://github.com/HiGal/Applicants-admission/issues/new) or suggest fixes via fork.
 
 
-[Link to documentation/home](https://github.com/HiGal/Applicants-admission/wiki/Models)
+## Wiki
 
-[Link to documentation/models](https://github.com/HiGal/Applicants-admission/wiki/Models)
+Check out the project wiki:
+
+[Wiki Home](https://github.com/HiGal/Applicants-admission/wiki)
