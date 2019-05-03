@@ -19,7 +19,7 @@ class PersonalInfoTest(unittest.TestCase):
         country = faker.country()
 
         data_pack = {
-            'username': name+sname,
+            'username': 'tester@tester.com',
             'fname': name,
             'sname': sname,
             'bdate': birthdate,
