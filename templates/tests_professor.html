@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Test info</title>
 </head>
-<body>
 <link rel="stylesheet" href="../static/css/profile.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,6 +14,9 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+<body>
+
 <div class="row">
     <div class="col-3">
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -59,10 +61,10 @@
                     <td>{{ row['name'] }}</td>
                     <td>{{ row['surname'] }}</td>
                     <td>{{ row['citizen'] }}</td>
-                    <td>{{ row['email'] }}</td>
+                    <td class="uname">{{ row['email'] }}</td>
                     <td>{{ row['test_result'] }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary" onclick="submit()">View</button>
+                        <button type="button" class="btn btn-primary submit">View</button>
                     </td>
                 </tr>
             {% endfor %}
@@ -72,9 +74,41 @@
 </div>
 </body>
 <script>
-    function submit() {
+    (function ($) {
+        $(document).ready(function () {
+            $('.submit').click(function (e) {
+                e.preventDefault();
+                var tr = $(this).closest('tr');
+                console.log(tr);
+                var uname = tr.find($('.uname'))['0'].innerText;
+                var data = {
+                    'username': uname
+                };
 
-    }
+                $.ajax({
+                    url: "/retrieve_portfolio",
+                    method: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (data) {
+                        var a = document.createElement("a");
+                        document.body.appendChild(a);
+                        a.style = "display: none";
+                        var data_obj = data['attachment'],
+                            blob = new Blob([data_obj],{type:'data:application/pdf;base64'}),
+                            url = window.URL.createObjectURL(blob);
+                        a.href = url;
+                        a.download = 'portfolio.pdf';
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+
+                    }
+                })
+            })
+
+        })
+    }(jQuery));
+
 </script>
 </html>
 

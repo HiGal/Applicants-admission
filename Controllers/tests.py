@@ -84,7 +84,7 @@ def retrv_portfolio():
     if session.get('user') is not None:
         username = data['username']
 
-    return Portfolio(username).retrieve()
+    return jsonify(Portfolio(username).retrieve())
 
 
 @tests_controller.route('/tests_professor', methods=['GET'])
