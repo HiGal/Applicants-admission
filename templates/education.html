@@ -57,7 +57,7 @@
                         <div id="div_school" style="display: block">
                             <label class="field">School:</label>
                             <div class="text">
-                                School
+                                {{ data[''] }}
                             </div>
                             <hr>
                         </div>
@@ -99,6 +99,27 @@
         document.getElementById('btn-edit').style.display = 'none';
         document.getElementById('message-to-user').style.display = 'none';
         document.getElementById('btn-save').style.display = 'block';
+    }
+    function send() {
+        var data = {
+            'index': document.getElementById('index').value,
+            'city': document.getElementById('city').value,
+            'building': document.getElementById('building').value,
+            'flat': document.getElementById('flat').value,
+            'region': document.getElementById('region').value,
+            'street': document.getElementById('street').value,
+            'corpus': document.getElementById('corpus').value
+        };
+        $.ajax({
+            url: '/contacts',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data === 'Successfully updated!')
+                    document.location.reload();
+            }
+        })
     }
     let count = 0;
     let max_count = 5;
