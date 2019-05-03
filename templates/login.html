@@ -57,11 +57,12 @@
             contentType: "application/json",
             data: JSON.stringify(data),
             success: function (resp) {
-                document.location.assign(resp);
+                if (resp === "Username or Password incorrect")
+                    alert(resp);
+                else {
+                    document.location.assign(resp);
+                }
             }
-
         });
-
     }
 </script>
-</html>

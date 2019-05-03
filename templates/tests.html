@@ -4,7 +4,131 @@
     <meta charset="UTF-8">
     <title>Tests</title>
 </head>
+<link rel="stylesheet" href="../static/css/profile.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <body>
-<h1>In the development</h1>
+<div class="row">
+    <div class="col-3">
+        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <img src="../static/img/logo.svg" class="img">
+            <span><hr></span>
+
+            <a class="nav-link active" id="profile-prof" href="#profile-prof" role="tab"
+               aria-controls="profile-prof" aria-selected="true">Personal info</a>
+            <a class="nav-link" id="contacts" href="#contacts" role="tab"
+               aria-controls="contacts"
+               aria-selected="false">Contacts</a>
+            <a class="nav-link" id="list-applicants" href="#list-applicants" role="tab"
+               aria-controls="list-applicants"
+               aria-selected="false">List of applicants <span>/</span> ID</a>
+            <a class="nav-link" id="portfolios" href="#portfolios" role="tab"
+               aria-controls="portfolios"
+               aria-selected="false">Portfolios</a>
+            <a class="nav-link" id="tests" href="#tests" role="tab" aria-controls="tests"
+               aria-selected="false">Tests</a>
+
+            <div class="kostyl">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="container header">
+            <a class="btn btn-outline-primary logout" href="/login">Log out</a>
+        </div>
+
+        <div id="quiz"></div>
+
+        <button type="button" class="btn btn-primary" id="submit">Submit Quiz</button>
+
+        <div id="results"></div>
+
+    </div>
+</div>
 </body>
+<script>
+    const quizContainer = document.getElementById("quiz");
+    const resultsContainer = document.getElementById("results");
+    const submitButton = document.getElementById("submit");
+    let questions;
+    $.ajax({
+        url: '/get_tests',
+        method: 'GET',
+        contentType: 'application/json',
+        data: '',
+        success: function (data) {
+            buildQuiz(data);
+        }
+    });
+    function buildQuiz(questions) {
+        const output = [];
+        console.log(questions);
+        questions.forEach(
+            (currentQuestion, questionNumber) => {
+                const answers = [];
+                console.log(currentQuestion);
+                for (letter in currentQuestion.answers) {
+                    // ...add an HTML radio button
+                    answers.push(
+                        `<div>
+            <input type="radio" name="question${questionNumber}" value="${letter}">
+            ${letter} :
+            ${currentQuestion.answers[letter]}
+          </div>`
+                    );
+                }
+                // add this question and its answers to the output
+                output.push(
+                    `<div class="question" > ${questionNumber + 1}. ${currentQuestion.question} </div>
+                    <div class="corr_answer" style="display:none">${currentQuestion.correctAnswer}</div>
+        <div class="answers"> ${answers.join('')} </div>`
+                );
+            }
+        );
+        quizContainer.innerHTML = output.join('');
+    }
+    function showResults() {
+        // gather answer containers from our quiz
+        const answerContainers = quizContainer.querySelectorAll('.answers');
+        const correctAnswers = quizContainer.querySelectorAll('.corr_answer');
+        // keep track of user's answers
+        let numCorrect = 0;
+        answerContainers.forEach((currentQuestion, questionNumber) => {
+            const answerContainer = answerContainers[questionNumber];
+            const selector = 'input[name=question' + questionNumber + ']:checked';
+            const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+            console.log(correctAnswers[0]);
+            if (userAnswer === correctAnswers[questionNumber].innerHTML) {
+                // add to the number of correct answers
+                numCorrect++;
+                // color the answers green
+                answerContainers[questionNumber].style.color = 'lightgreen';
+            } else {
+                // color the answers red
+                answerContainers[questionNumber].style.color = 'red';
+            }
+        });
+        // show number of correct answers out of total
+        submitButton.disabled = true;
+        var resp_data = {result: numCorrect + ' out of ' + answerContainers.length};
+        $.ajax({
+            url: "/result",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(resp_data),
+            success: function () {
+                resultsContainer.innerHTML = "Thank you for passing test!";
+            }
+        })
+    }
+    submitButton.addEventListener('click', showResults);
+</script>
 </html>

@@ -1,6 +1,5 @@
-import hashlib
-import os
 import base64
+import os
 
 import psycopg2
 
@@ -21,6 +20,22 @@ class User:
         self.conn = db_connect()
         self.username = username
         self.password = password
+        self.type = 'student'
+
+    def get_type(self):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT is_professor FROM sys_user WHERE username = %s;',
+            [self.username]
+        )
+        if cursor.rowcount == 0:
+            return 'student'
+        record = next(cursor)
+        if record[0]:
+            self.type = 'professor'
+        else:
+            self.type = 'student'
+        return self.type
 
     def verify(self):
         cursor = self.conn.cursor()
@@ -312,3 +327,61 @@ class Portfolio:
         cursor.close()
         print(record[0])
         return {'attachment': record[0]}
+
+
+class Test:
+    def __init__(self, username):
+        self.conn = db_connect()
+        self.username = username
+
+    def get_tests(self):
+        cursor = self.conn.cursor()
+
+        cursor.execute(
+            'SELECT * FROM tests_questions;'
+        )
+        if cursor.rowcount == 0:
+            cursor.close()
+            assert AssertionError
+
+        array_of_records = []
+        # print(records)
+        for record in cursor:
+            ans_letters = '__abcd'
+            answer = 'a'
+            for i in [2, 3, 4, 5]:
+                if record[i] == record[6]:
+                    answer = ans_letters[i]
+                    break
+            data = {
+                'question': record[1],
+                'answers': {
+                    'a': record[2],
+                    'b': record[3],
+                    'c': record[4],
+                    'd': record[5]
+                },
+                'correctAnswer': answer
+            }
+            array_of_records.append(data)
+
+        return array_of_records
+
+    def get_num_records(self) -> int:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'SELECT COUNT(*) FROM tests_questions;'
+        )
+        ret = next(cursor)[0]
+        cursor.close()
+        return ret
+
+    def insert_test(self, question: str, choice1: str, choice2: str, choice3: str, choice4: str, correct_choice: str):
+        cursor = self.conn.cursor()
+        cursor.execute(
+            'INSERT INTO tests_questions (question, choice1, choice2, choice3, choice4, correct_choice) '
+            'VALUES (%s, %s, %s, %s, %s, %s);',
+            (question, choice1, choice2, choice3, choice4, correct_choice)
+        )
+        self.conn.commit()
+        cursor.close()
